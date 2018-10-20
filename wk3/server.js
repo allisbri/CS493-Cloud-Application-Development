@@ -39,11 +39,33 @@ function post_slip(number){
     return datastore.save({"key":key, "data":new_slip}).then(() => {return key});
 }
 
-function get_slip(){
+function get_slips(){
     const slipQuery = datastore.createQuery(SLIP);
     return datastore.runQuery(slipQuery).then( (entities) => {
             return entities[0].map(fromDatastore);
         });
+}
+
+//used https://cloud.google.com/datastore/docs/concepts/entities
+//for help with this function
+function get_slip(id){
+    //returns undefined if id does not exist
+        return datastore.get(id).then(results => {
+            //returns entity if id does exist
+            const entity = results[0];
+            return fromDatastore(entity);
+    });
+}
+
+//used https://cloud.google.com/datastore/docs/concepts/entities
+//for help with this function
+function get_ship(id){
+    //returns undefined if id does not exist
+        return datastore.get(id).then(results => {
+            //returns entity if id does exist
+            const entity = results[0];
+            return fromDatastore(entity);
+    });
 }
 
 function put_slip(id, number, current_boat, arrival_date){
@@ -99,6 +121,23 @@ router.post('/slips', function(req, res){
     post_ship(req.body.number)
     .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
 });
+
+router.get('/slips/:id', function(req, res){
+    const slip = get_slip(req.params.id);
+    .then( (slip) => {
+        console.log(slip);
+        res.status(200).json(slip);
+    });
+});
+
+router.get('/ships/:id', function(req, res){
+    const ship = get_slip(req.params.id);
+    .then( (ship) => {
+        console.log(ship);
+        res.status(200).json(slip);
+    });
+});
+
 
 router.put('/slips/:id', function(req, res){
     put_slip(req.params.id, req.body.number, req.body.current_boat, req.body.arrival_date)
