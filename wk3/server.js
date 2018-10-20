@@ -51,7 +51,8 @@ function get_slips(){
 //for help with this function
 function get_slip(id){
     //returns undefined if id does not exist
-        return datastore.get(id).then(results => {
+        const key = datastore.key([SLIP, parseInt(id,10)]);
+        return datastore.get(key).then(results => {
             //returns entity if id does exist
             const entity = results[0];
             return fromDatastore(entity);
@@ -62,15 +63,18 @@ function get_slip(id){
 //for help with this function
 function get_ship(id){
     //returns undefined if id does not exist
-        return datastore.get(id).then(results => {
+        const key = datastore.key([SHIP, parseInt(id,10)]);
+        console.log("logging key" + key);
+        return datastore.get(key).then(results => {
             //returns entity if id does exist
             const entity = results[0];
-            return fromDatastore(entity);
+            entity.id = id;
+            return entity;
     });
 }
 
 function put_slip(id, number, current_boat, arrival_date){
-    const key = datastore.key([SHIP, parseInt(id,10)]);
+    const key = datastore.key([SLIP, parseInt(id,10)]);
     const current_slip = {"number": number, "current_boat": current_boat, "arrival_date": arrival_date};
     return datastore.save({"key":key, "data":current_slip});
 }
@@ -149,23 +153,21 @@ router.get('/slips', function(req, res){
 
 router.post('/slips', function(req, res){
     console.log(req.body);
-    post_ship(req.body.number)
+    post_slip(req.body.number)
     .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
 });
 
 router.get('/slips/:id', function(req, res){
-    const slip = get_slip(req.params.id);
-    .then( (slip) => {
+        get_slip(req.params.id).then( (slip) => {
         console.log(slip);
         res.status(200).json(slip);
     });
 });
 
 router.get('/ships/:id', function(req, res){
-    const ship = get_slip(req.params.id);
-    .then( (ship) => {
+    get_ship(req.params.id).then( (ship) => {
         console.log(ship);
-        res.status(200).json(slip);
+        res.status(200).json(ship);
     });
 });
 
