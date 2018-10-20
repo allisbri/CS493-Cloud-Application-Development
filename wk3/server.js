@@ -14,6 +14,7 @@ const router = express.Router();
 
 app.use(bodyParser.json());
 
+//adds id to entity since it is not automatically provided by datastore
 function fromDatastore(item){
     item.id = item[Datastore.KEY].id;
     return item;
@@ -35,7 +36,7 @@ function get_ships(){
 
 function post_slip(number){
     var key = datastore.key(SLIP);
-    const new_slip = {"number": number};
+    const new_slip = {"number": number, "current_boat": '', "arrival_date": ''};
     return datastore.save({"key":key, "data":new_slip}).then(() => {return key});
 }
 
@@ -71,7 +72,7 @@ function get_ship(id){
 function put_slip(id, number, current_boat, arrival_date){
     const key = datastore.key([SHIP, parseInt(id,10)]);
     const current_slip = {"number": number, "current_boat": current_boat, "arrival_date": arrival_date};
-    return datastore.save({"key":key, "data":current_slip);
+    return datastore.save({"key":key, "data":current_slip});
 }
 
 function put_ship(id, name, type, length){
@@ -88,6 +89,36 @@ function delete_ship(id){
 function delete_slip(id){
     const key = datastore.key([SLIP, parseInt(id,10)]);
     return datastore.delete(key);
+}
+
+function dock(slip_id, ship_id, arrival_date){
+    const key = datastore.key([SLIP, parseInt(slip_id,10)]);
+    datastore.get(key).then(result => {
+        const slip = result[0];
+        if (!(slip.current_boat)){
+            slip.current_boat = ship_id;
+            slip.arrival_date = arrival_date;
+            return datastore.save({"key":key, "data":slip});
+        }
+        else {
+            return undefined;
+        }
+    });
+}
+
+function undock(slip_id, ship_id){
+     const key = datastore.key([SLIP, parseInt(slip_id,10)]);
+    datastore.get(key).then(result => {
+        const slip = result[0];
+        if (!(slip.current_boat == ship_id)){
+            slip.current_boat = '';
+            slip.arrival_date = '';
+            return datastore.save({"key":key, "data":slip});
+        }
+        else {
+            return undefined;
+        }
+    });
 }
 /* ------------- End Model Functions ------------- */
 
@@ -150,11 +181,21 @@ router.put('/ships/:id', function(req, res){
 });
 
 router.delete('slips/:id', function(req, res){
-    delete_slip(req.params.id).then(res.status(200).end())
+    delete_slip(req.params.id).then(res.status(200).end());
 });
 
 router.delete('ships/:id', function(req, res){
-    delete_ship(req.params.id).then(res.status(200).end())
+    delete_ship(req.params.id).then(res.status(200).end());
+});
+
+router.delete('slips/:slip_id/ships/:ship_id', function(req, res){
+    undock(req.params.slip_id, req.params.ship_id).then(res.status(200).end());
+});
+
+router.post('slips/:slip_id/ships/:ship_id', function(req, res){
+   dock(req.params.slip_id, req.params.ship_id, arrival_date).then( 
+    key => {res.status(200).send('{ "id": ' + key.id + ' }')}, () =>
+        res.status(403).send('That slip is occupied')) ;
 });
 
 
