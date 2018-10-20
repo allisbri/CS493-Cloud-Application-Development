@@ -26,11 +26,24 @@ function post_ship(name, type, length, state){
 	return datastore.save({"key":key, "data":new_ship}).then(() => {return key});
 }
 
-function get_lodgings(){
-	const q = datastore.createQuery(LODGING);
-	return datastore.runQuery(q).then( (entities) => {
+function get_ships(){
+	const shipQuery = datastore.createQuery(SHIP);
+	return datastore.runQuery(shipQuery).then( (entities) => {
 			return entities[0].map(fromDatastore);
 		});
+}
+
+function post_slip(number, current_boat, arrival_date, state){
+    var key = datastore.key(SLIP);
+    const new_slip = {"number": number, "current_boat": current_boat, "arrival_date": arrival_date};
+    return datastore.save({"key":key, "data":new_slip}).then(() => {return key});
+}
+
+function get_slip(){
+    const shipQuery = datastore.createQuery(SHIP);
+    return datastore.runQuery(shipQuery).then( (entities) => {
+            return entities[0].map(fromDatastore);
+        });
 }
 
 function put_lodging(id, name, description, price){
@@ -49,16 +62,16 @@ function delete_lodging(id){
 /* ------------- Begin Controller Functions ------------- */
 
 router.get('/ships', function(req, res){
-    const lodgings = get_lodgings()
-	.then( (lodgings) => {
-        console.log(lodgings);
-        res.status(200).json(lodgings);
+    const ships = get_ships()
+	.then( (ships) => {
+        console.log(ships);
+        res.status(200).json(ships);
     });
 });
 
 router.post('/ships', function(req, res){
     console.log(req.body);
-    post_lodging(req.body.name, req.body.type, req.body.length, req.body.state)
+    post_ship(req.body.name, req.body.type, req.body.length, req.body.state)
     .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
 });
 
