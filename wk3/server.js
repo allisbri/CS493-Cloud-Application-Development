@@ -20,9 +20,9 @@ function fromDatastore(item){
 }
 
 /* ------------- Begin Lodging Model Functions ------------- */
-function post_ship(name, type, length, state){
+function post_ship(name, type, length){
     var key = datastore.key(SHIP);
-	const new_ship = {"name": name, "type": type, "length": length, "state": state};
+	const new_ship = {"name": name, "type": type, "length": length};
 	return datastore.save({"key":key, "data":new_ship}).then(() => {return key});
 }
 
@@ -33,22 +33,28 @@ function get_ships(){
 		});
 }
 
-function post_slip(number, current_boat, arrival_date, state){
+function post_slip(number){
     var key = datastore.key(SLIP);
-    const new_slip = {"number": number, "current_boat": current_boat, "arrival_date": arrival_date};
+    const new_slip = {"number": number};
     return datastore.save({"key":key, "data":new_slip}).then(() => {return key});
 }
 
 function get_slip(){
-    const shipQuery = datastore.createQuery(SHIP);
-    return datastore.runQuery(shipQuery).then( (entities) => {
+    const slipQuery = datastore.createQuery(SLIP);
+    return datastore.runQuery(slipQuery).then( (entities) => {
             return entities[0].map(fromDatastore);
         });
 }
 
-function put_lodging(id, name, description, price){
-    const key = datastore.key([LODGING, parseInt(id,10)]);
-    const lodging = {"name": name, "description": description, "price": price};
+function put_slip(number, current_boat, arrival_date){
+    const key = datastore.key([SHIP, parseInt(id,10)]);
+    const current_slip = {"number": number, "current_boat": current_boat, "arrival_date": arrival_date};
+    return datastore.save({"key":key, "data":lodging});
+}
+
+function put_ship(number, current_boat, arrival_date){
+    const key = datastore.key([SHIP, parseInt(id,10)]);
+    const current_ship = {"name": name, "type": type, "length": length};
     return datastore.save({"key":key, "data":lodging});
 }
 
@@ -71,13 +77,28 @@ router.get('/ships', function(req, res){
 
 router.post('/ships', function(req, res){
     console.log(req.body);
-    post_ship(req.body.name, req.body.type, req.body.length, req.body.state)
+    post_ship(req.body.name, req.body.type, req.body.length)
+    .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
+});
+
+
+router.get('/slips', function(req, res){
+    const slips = get_slips()
+    .then( (slips) => {
+        console.log(slips);
+        res.status(200).json(slips);
+    });
+});
+
+router.post('/slips', function(req, res){
+    console.log(req.body);
+    post_ship(req.body.number)
     .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
 });
 
 router.put('/:id', function(req, res){
     put_lodging(req.params.id, req.body.name, req.body.description, req.body.price)
-    .then(res.status(200));
+    .then(res.status(200).end());
 });
 
 router.delete('/:id', function(req, res){
