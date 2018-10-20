@@ -46,23 +46,27 @@ function get_slip(){
         });
 }
 
-function put_slip(number, current_boat, arrival_date){
+function put_slip(id, number, current_boat, arrival_date){
     const key = datastore.key([SHIP, parseInt(id,10)]);
     const current_slip = {"number": number, "current_boat": current_boat, "arrival_date": arrival_date};
-    return datastore.save({"key":key, "data":lodging});
+    return datastore.save({"key":key, "data":current_slip);
 }
 
-function put_ship(number, current_boat, arrival_date){
+function put_ship(id, name, type, length){
     const key = datastore.key([SHIP, parseInt(id,10)]);
     const current_ship = {"name": name, "type": type, "length": length};
-    return datastore.save({"key":key, "data":lodging});
+    return datastore.save({"key":key, "data":current_ship});
 }
 
-function delete_lodging(id){
-    const key = datastore.key([LODGING, parseInt(id,10)]);
+function delete_ship(id){
+    const key = datastore.key([SHIP, parseInt(id,10)]);
     return datastore.delete(key);
 }
 
+function delete_slip(id){
+    const key = datastore.key([SLIP, parseInt(id,10)]);
+    return datastore.delete(key);
+}
 /* ------------- End Model Functions ------------- */
 
 /* ------------- Begin Controller Functions ------------- */
@@ -96,14 +100,24 @@ router.post('/slips', function(req, res){
     .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
 });
 
-router.put('/:id', function(req, res){
-    put_lodging(req.params.id, req.body.name, req.body.description, req.body.price)
+router.put('/slips/:id', function(req, res){
+    put_slip(req.params.id, req.body.number, req.body.current_boat, req.body.arrival_date)
     .then(res.status(200).end());
 });
 
-router.delete('/:id', function(req, res){
-    delete_lodging(req.params.id).then(res.status(200).end())
+router.put('/ships/:id', function(req, res){
+    put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
+    .then(res.status(200).end());
 });
+
+router.delete('slips/:id', function(req, res){
+    delete_slip(req.params.id).then(res.status(200).end())
+});
+
+router.delete('ships/:id', function(req, res){
+    delete_ship(req.params.id).then(res.status(200).end())
+});
+
 
 /* ------------- End Controller Functions ------------- */
 
