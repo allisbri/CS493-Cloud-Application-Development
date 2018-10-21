@@ -20,6 +20,16 @@ function fromDatastore(item){
     return item;
 }
 
+function addURL(item){
+    var url = 'http://localhost:8080/ships/';
+    if (item.current_boat){
+        item.boat_url = url + item.current_boat;
+    }
+    else{
+        item.boat_url = '';
+    }
+}
+
 /* ------------- Begin Lodging Model Functions ------------- */
 function post_ship(name, type, length){
     var key = datastore.key(SHIP);
@@ -43,6 +53,7 @@ function post_slip(number){
 function get_slips(){
     const slipQuery = datastore.createQuery(SLIP);
     return datastore.runQuery(slipQuery).then( (entities) => {
+            entities[0].map(addURL);
             return entities[0].map(fromDatastore);
         });
 }
@@ -55,6 +66,7 @@ function get_slip(id){
         return datastore.get(key).then(results => {
             //returns entity if id does exist
             const entity = results[0];
+            addURL(entity);
             return fromDatastore(entity);
     });
 }
@@ -203,7 +215,7 @@ router.post('/ships', function(req, res){
         .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')});
     }
     else{
-        res.status(403).send();
+        res.status(200).send("invalid info");
     }
 });
 
@@ -222,9 +234,9 @@ router.post('/slips', function(req, res){
          post_slip(req.body.number)
         .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
     }
-    else{
+    /*else{
         res.status(403).send();
-    }
+    }*/
 });
 
 router.get('/slips/:id', function(req, res){
@@ -243,13 +255,25 @@ router.get('/ships/:id', function(req, res){
 
 
 router.put('/slips/:id', function(req, res){
+    if ((typeof req.body.number == 'number') && (typeof req.body.current_boat == 'string')
+        && (typeof req.body.arrival_date == string)) {
     put_slip(req.params.id, req.body.number, req.body.current_boat, req.body.arrival_date)
     .then(res.status(200).end());
+    }
+    /*else{
+        res.status(403).end();
+    }*/
 });
 
 router.put('/ships/:id', function(req, res){
-    put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
-    .then(res.status(200).end());
+    if ((typeof req.body.name == 'string') && (typeof req.body.type == 'string')
+     && (typeof req.body.length == 'number')){
+        put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
+        .then(res.status(200).end());
+    }
+    /*else{
+        res.status(403).end();
+    }*/
 });
 
 router.delete('/slips/:id', function(req, res){
@@ -273,6 +297,7 @@ router.delete('/slips/:slip_id/ships/:ship_id', function(req, res){
 });
 
 router.post('/slips/:slip_id/ships/:ship_id', function(req, res){
+    if(typeof req.body.arrival_date == 'string'){
    dock(req.params.slip_id, req.params.ship_id, req.body.arrival_date).then( (value) => {
     if (value == true){
         res.status(200).end();
@@ -281,6 +306,10 @@ router.post('/slips/:slip_id/ships/:ship_id', function(req, res){
         res.status(403).end();
     }
     })
+}
+/*else{
+    res.status(403).end();
+}*/
   
 });
 
