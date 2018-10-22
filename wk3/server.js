@@ -1,3 +1,11 @@
+//Name: Brian Allison
+//Course: CS493 
+//Date: 10/21/2018
+
+//References: Google's API for datastore and the course lectures were 
+//the primary resources used for this assignment. As a result, some of the
+//functions are pretty similar to what is shown in those resources.
+
 const express = require('express');
 const app = express();
 
@@ -21,7 +29,7 @@ function fromDatastore(item){
 }
 
 function addURL(item){
-    var url = 'http://localhost:8080/ships/';
+    var url = 'http://service-218004.appspot.com/ships/';
     if (item.current_boat){
         item.boat_url = url + item.current_boat;
     }
@@ -88,13 +96,13 @@ function get_ship(id){
 function put_slip(id, number, current_boat, arrival_date){
     const key = datastore.key([SLIP, parseInt(id,10)]);
     const current_slip = {"number": number, "current_boat": current_boat, "arrival_date": arrival_date};
-    return datastore.save({"key":key, "data":current_slip});
+    return datastore.save({"key": key, "data": current_slip});
 }
 
 function put_ship(id, name, type, length){
     const key = datastore.key([SHIP, parseInt(id,10)]);
     const current_ship = {"name": name, "type": type, "length": length};
-    return datastore.save({"key":key, "data":current_ship});
+    return datastore.save({"key": key, "data": current_ship});
 }
 
 function delete_ship(id){
@@ -234,9 +242,9 @@ router.post('/slips', function(req, res){
          post_slip(req.body.number)
         .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
     }
-    /*else{
-        res.status(403).send();
-    }*/
+    else{
+        res.status(200).send("invalid info");
+    }
 });
 
 router.get('/slips/:id', function(req, res){
@@ -256,13 +264,13 @@ router.get('/ships/:id', function(req, res){
 
 router.put('/slips/:id', function(req, res){
     if ((typeof req.body.number == 'number') && (typeof req.body.current_boat == 'string')
-        && (typeof req.body.arrival_date == string)) {
+        && (typeof req.body.arrival_date == 'string')) {
     put_slip(req.params.id, req.body.number, req.body.current_boat, req.body.arrival_date)
     .then(res.status(200).end());
     }
-    /*else{
-        res.status(403).end();
-    }*/
+    else{
+        res.status(200).send("invalid info");
+    }
 });
 
 router.put('/ships/:id', function(req, res){
@@ -271,9 +279,9 @@ router.put('/ships/:id', function(req, res){
         put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
         .then(res.status(200).end());
     }
-    /*else{
-        res.status(403).end();
-    }*/
+  else{
+        res.status(200).send("invalid info");
+    }
 });
 
 router.delete('/slips/:id', function(req, res){
@@ -303,13 +311,13 @@ router.post('/slips/:slip_id/ships/:ship_id', function(req, res){
         res.status(200).end();
     }
     else{
-        res.status(403).end();
+        res.status(403).end('slip occupied');
     }
     })
 }
-/*else{
-    res.status(403).end();
-}*/
+else{
+    res.status(200).send('invalid info');
+}
   
 });
 
