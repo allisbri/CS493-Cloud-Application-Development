@@ -38,9 +38,9 @@ function addShipURL(item, req){
 }
 
 function addSelfURL(item, type, req){
-    console.log("adding self url for " + item);
+    //console.log("adding self url for " + item);
     item.self = req.protocol + "://" + req.get("host") + req.baseUrl + "/" + type + "/" + item.id;
-    console.log(item.self);
+    //console.log(item.self);
 }
 
 
@@ -55,8 +55,8 @@ function addNextURL(queryResults, req, category, URLquery){
     if (queryResults.moreResults !== datastore.NO_MORE_RESULTS){
         next = req.protocol + "://" + req.get("host") + req.baseUrl + "/" + category + "?" + URLquery + "=" + queryResults.endCursor;
     }
-    console.log("printing endcursor " + queryResults.endCursor);
-    console.log("printing next: " + next);
+    //console.log("printing endcursor " + queryResults.endCursor);
+    //console.log("printing next: " + next);
     return next;
 }
 /* ------------- Begin Lodging Model Functions ------------- */
@@ -72,11 +72,13 @@ function post_ship(name, type, length){
 function get_ships(req){
     var shipQuery = datastore.createQuery(SHIP).limit(3);
     var cargoQuery = datastore.createQuery(CARGO);
+    var all = {};
+    var path = "/ships/"
     if (Object.keys(req.query).includes("cursor")){
         shipQuery = shipQuery.start(req.query.cursor);
     }
     return datastore.runQuery(shipQuery).then( (queryResults) => {
-            console.log("printing end cursor from get ships " + queryResults[1].endCursor);
+            //console.log("printing end cursor from get ships " + queryResults[1].endCursor);
             queryResults[0].map(fromDatastore);
             addSelfURLs(queryResults[0], "ships", req);
             return datastore.runQuery(cargoQuery).then( (cargoResults) => {
@@ -93,9 +95,11 @@ function get_ships(req){
                         }
                     }
                     
-                    console.log("printing query Results[0][i] " + queryResults[0][i]);
+                    //console.log("printing query Results[0][i] " + queryResults[0][i]);
                 }
-                return queryResults[0];
+                all.items = queryResults[0];
+                all.next = addNextURL(queryResults[1], req, path, "cursor");
+                return all;
         });
 });
 }
@@ -130,14 +134,29 @@ function post_cargo(weight, content, delivery_date){
 }
 
 function get_cargo(id, req){
+    var briefShip = {};
     var key = datastore.key([CARGO, parseInt(id,10)]);
     return datastore.get(key).then(results => {
         const entity = results[0];
-        entity.id = id;
-        addSelfURL(entity, "cargo", req);
-           
-        return entity;
-    })
+        if (entity.carrier){
+            const sId = entity.carrier;
+            var shipKey = datastore.key([SHIP, parseInt(sId,10)]);
+            return datastore.get(shipKey).then((ship) => {
+                briefShip.id = entity.carrier;
+                briefShip.name = ship[0].name;
+                addSelfURL(briefShip, "ships", req);
+                entity.carrier = briefShip;
+                entity.id = id;
+                addSelfURL(entity, "cargo", req);
+                return entity;
+            });
+        }
+        else{
+            entity.id = id;
+            addSelfURL(entity, "cargo", req);
+            return entity;
+        }
+    });       
 }
 
 
@@ -147,15 +166,27 @@ function get_ship(id, req){
     //returns undefined if id does not exist
         const key = datastore.key([SHIP, parseInt(id,10)]);
         //console.log("logging key" + key);
+        var cargoQuery = datastore.createQuery(CARGO);
         return datastore.get(key).then(results => {
             //returns entity if id does exist
             const entity = results[0];
             entity.id = id;
+            entity.cargo = [];
             addSelfURL(entity, "ships", req);
-            return entity;
+            return datastore.runQuery(cargoQuery).then( (cargoResults) => {
+                cargoResults[0].map(fromDatastore);
+                for (var i = 0; i < cargoResults[0].length; i++){
+                    if (cargoResults[0][i].carrier === entity.id){
+                        var tempCargo = new Object();
+                        tempCargo.id = cargoResults[0][i].id;
+                        addSelfURL(tempCargo, "cargo", req);
+                        entity.cargo.push(tempCargo);
+                    }
+                }
+                return entity;
+            });
     });
 }
-
 
 
 //creates new slip
@@ -189,7 +220,7 @@ function get_ship_cargo(id, req){
         query = query.start(req.query.cursor);
     }
     return datastore.runQuery(query).then( (queryResults) => {
-            console.log("printing ship cargo query results " + queryResults[0]);
+            //console.log("printing ship cargo query results " + queryResults[0]);
             queryResults[0].map(fromDatastore);
             addSelfURLs(queryResults[0], "cargo", req);
             all.items = queryResults[0];
@@ -201,18 +232,36 @@ function get_ship_cargo(id, req){
 //returns list of all slip entities
 function get_all_cargo(req){
     var query = datastore.createQuery(CARGO).limit(3);
-    const all = {};
+    var shipQuery = datastore.createQuery(SHIP);
+    var all = {};
+
     if (Object.keys(req.query).includes("cursor")){
         query = query.start(req.query.cursor);
     }
     return datastore.runQuery(query).then( (queryResults) => {
-            console.log("printing end cursor from get cargo " + queryResults[1].endCursor);
             queryResults[0].map(fromDatastore);
             addSelfURLs(queryResults[0], "cargo", req);
+            return datastore.runQuery(shipQuery).then((shipResults) => {
+                shipResults[0].map(fromDatastore);
+                addSelfURLs(shipResults[0], "ships", req);
+                for(var i = 0; i < queryResults[0].length; i++){
+                     var ship = new Object();
+                    for(var j = 0; j < shipResults[0].length; j++){
+                        if (queryResults[0][i].carrier === shipResults[0][j].id){
+                            ship.id = shipResults[0][j].id;
+                            ship.name = shipResults[0][j].name;
+                            ship.self = shipResults[0][j].self;
+                            queryResults[0][i].carrier = ship;
+                        }
+
+                    }
+                }
             all.items = queryResults[0];
             all.next = addNextURL(queryResults[1], req, "cargo", "cursor");
             return all;
+            });
         });
+
 }
 
 //used https://cloud.google.com/datastore/docs/concepts/entities
@@ -377,9 +426,9 @@ function dock(slip_id, ship_id, arrival_date){
     const key = datastore.key([SLIP, parseInt(slip_id,10)]);
     return datastore.get(key).then( result => {
         const slip = result[0];
-        console.log("printing slip.current_boat " + slip.current_boat);
+        //console.log("printing slip.current_boat " + slip.current_boat);
         if (!(slip.current_boat)){
-            console.log("in if condition !slip.currentboat");
+            //console.log("in if condition !slip.currentboat");
             slip.current_boat = ship_id;
             slip.arrival_date = arrival_date;
             return datastore.save({"key":key, "data":slip});
@@ -422,7 +471,7 @@ function unload(ship_id, cargo_id){
 router.get('/ships', function(req, res){
     const ships = get_ships(req)
 	.then( (ships) => {
-        console.log(ships);
+        //console.log(ships);
         res.status(200).json(ships);
     });
 });
@@ -498,7 +547,13 @@ router.get('/slips/:id', function(req, res){
 router.get('/ships/:id', function(req, res){
     get_ship(req.params.id, req).then( (ship) => {
         //console.log(ship);
-        res.status(200).json(ship);
+        if (ship.id){
+            res.status(200).json(ship);
+        }
+        else{
+            res.states(200).send("invalid input");
+        }
+        
     });
 });
 
@@ -592,7 +647,7 @@ router.delete('/slips/:slip_id/ships/:ship_id', function(req, res){
 router.post('/slips/:slip_id/ships/:ship_id', function(req, res){
     if(typeof req.body.arrival_date == 'string'){
         dock(req.params.slip_id, req.params.ship_id, req.body.arrival_date).then( (value) => {
-            console.log("printing value " + value);
+            //console.log("printing value " + value);
             if (value){
                 res.status(200).end();
             }
@@ -638,5 +693,5 @@ app.use('', router);
 // Listen to the App Engine-specified port, or 8080 otherwise
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}...`);
+  //console.log(`Server listening on port ${PORT}...`);
 });
