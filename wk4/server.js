@@ -37,19 +37,21 @@ function addShipURL(item, req){
     }
 }
 
+//adds self url singular
 function addSelfURL(item, type, req){
     //console.log("adding self url for " + item);
     item.self = req.protocol + "://" + req.get("host") + req.baseUrl + "/" + type + "/" + item.id;
     //console.log(item.self);
 }
 
-
+//adds self URLs plural
 function addSelfURLs(obj, type, req){
     for (var i = 0; i < obj.length; i++){
         addSelfURL(obj[i], type, req);
     }
 }
 
+//adds next url
 function addNextURL(queryResults, req, category, URLquery){
     var next = {};
     if (queryResults.moreResults !== datastore.NO_MORE_RESULTS){
@@ -133,6 +135,7 @@ function post_cargo(weight, content, delivery_date){
     return datastore.save({"key":key, "data":new_cargo}).then(() => {return key});
 }
 
+//gets cargo data singular
 function get_cargo(id, req){
     var briefShip = {};
     var key = datastore.key([CARGO, parseInt(id,10)]);
@@ -160,8 +163,7 @@ function get_cargo(id, req){
 }
 
 
-//used https://cloud.google.com/datastore/docs/concepts/entities
-//for help with this function. Returns a single ship
+//gets ship singular
 function get_ship(id, req){
     //returns undefined if id does not exist
         const key = datastore.key([SHIP, parseInt(id,10)]);
@@ -209,6 +211,7 @@ function get_slips(req){
         });
 }
 
+//returns list of cargo on ship
 function get_ship_cargo(id, req){
     var query = datastore
     .createQuery(CARGO)
@@ -229,7 +232,7 @@ function get_ship_cargo(id, req){
         });
 }
 
-//returns list of all slip entities
+//returns list of all cargo
 function get_all_cargo(req){
     var query = datastore.createQuery(CARGO).limit(3);
     var shipQuery = datastore.createQuery(SHIP);
@@ -286,7 +289,7 @@ function put_slip(id, number, current_boat, arrival_date){
     return datastore.save({"key": key, "data": current_slip});
 }
 
-//Changes all data in a slip to passed in data
+//Changes all data in cargo item
 function put_cargo(id, weight, content, delivery_date){
     const key = datastore.key([CARGO, parseInt(id,10)]);
     const current_cargo = {"weight": weight, "content": content, "delivery_date": delivery_date};
@@ -307,33 +310,48 @@ function delete_ship(id, req){
     const slips = get_slips(req);
     const blank1 = '';
     const blank2 = '';
+    const carrier = '';
+    const delivery_date = '';
     //console.log("test!");
     const slipQuery = datastore.createQuery(SLIP);
     //added return 10-27-18
+    const cargoQuery = datastore.createQuery(CARGO);
+
     return datastore.runQuery(slipQuery).then( (results) => {
         //gcloud documentation
         const slips = results[0].map(fromDatastore);
         //console.log(slips.length);
         for (var i = 0; i < slips.length; i++){
         //console.log("in loop");
-        if (slips[i].current_boat == id){
-            console.log("found boat");
-            put_slip(slips[i].id, slips[i].number, blank1, blank2);
+            if (slips[i].current_boat == id){
+                //console.log("found boat");
+                 put_slip(slips[i].id, slips[i].number, blank1, blank2);
+            }
         }
-        return datastore.delete(key);
-    }
-    });
-    
+        //console.log("before return");
+        return datastore.runQuery(cargoQuery).then((cargoResults) =>{
+            //console.log("after return");
+            const cargo = cargoResults[0].map(fromDatastore);
+           // console.log("logging cargo" + cargo);
+            for (var j = 0; j < cargo.length; j++){
+                if (cargo[i].carrier === id){
+                    put_cargo(cargo[i].id, cargo[i].weight, 
+                        cargo[i].content);
+                }
+            }
+            return datastore.delete(key);
+        });
+    });  
 }
 
-//deletes ship and removes it from slip if it is docked
+//deletes cargo
 function delete_cargo(id){
     //deletes slip
     const key = datastore.key([CARGO, parseInt(id,10)]);
     return datastore.delete(key);
 }
 
-//deletes all slips
+//deletes all cargo
 function delete_all_cargo(){
     const cargoQuery = datastore.createQuery(CARGO);
     //got error unless used return here. Has something to do with promises, but not sure
@@ -401,7 +419,7 @@ function delete_slip(id){
     return datastore.delete(key);
 }
 
-//docks ship to passed in slip
+//loads cargo on ship
 function load(ship_id, cargo_id, delivery_date){
     const key = datastore.key([CARGO, parseInt(cargo_id,10)]);
     return datastore.get(key).then( result => {
@@ -452,7 +470,7 @@ function undock(slip_id, ship_id){
     });
 }
 
-//undocks ship from passed in slip
+//unloads cargo from ship
 function unload(ship_id, cargo_id){
      const key = datastore.key([CARGO, parseInt(cargo_id,10)]);
     return datastore.get(key).then(result => {
@@ -491,6 +509,7 @@ router.post('/ships', function(req, res){
     }
 });
 
+//add cargo
 router.post('/cargo', function(req, res){
     //console.log(req.body);
     //console.log(typeof req.body.name);
@@ -514,7 +533,7 @@ router.get('/slips', function(req, res){
     });
 });
 
-//GET list of slips
+//GET list of cargo
 router.get('/cargo', function(req, res){
     const cargo = get_all_cargo(req)
     .then( (cargo) => {
@@ -557,6 +576,7 @@ router.get('/ships/:id', function(req, res){
     });
 });
 
+//get cargo info
 router.get('/cargo/:id', function(req, res){
     get_cargo(req.params.id, req).then( (cargo) => {
         //console.log(ship);
@@ -618,7 +638,7 @@ router.delete('/ships/:id', function(req, res){
     delete_ship(req.params.id).then(res.status(200).end());
 });
 
-
+//delete cargo
 router.delete('/cargo/:id', function(req, res){
     delete_cargo(req.params.id).then(res.status(200).end());
 });
@@ -663,7 +683,7 @@ router.post('/slips/:slip_id/ships/:ship_id', function(req, res){
   
 });
 
-//add ship to slip
+//add cargo to ship
 router.post('/ships/:ship_id/cargo/:cargo_id', function(req, res){
     if(typeof req.body.delivery_date == 'string'){
         load(req.params.ship_id, req.params.cargo_id, req.body.delivery_date).then( (value) => {
@@ -682,6 +702,7 @@ router.post('/ships/:ship_id/cargo/:cargo_id', function(req, res){
   
 });
 
+//remove cargo from ship
 router.delete('/ships/:ship_id/cargo/:cargo_id', function(req, res){
     unload(req.params.ship_id, req.params.cargo_id).then(res.status(200).end());
 });
@@ -693,5 +714,5 @@ app.use('', router);
 // Listen to the App Engine-specified port, or 8080 otherwise
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  //console.log(`Server listening on port ${PORT}...`);
+  console.log(`Server listening on port ${PORT}...`);
 });
