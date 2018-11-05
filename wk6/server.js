@@ -61,6 +61,26 @@ function addNextURL(queryResults, req, category, URLquery){
     //console.log("printing next: " + next);
     return next;
 }
+
+function findObject(id, type){
+    var q = datastore.createQuery(type);
+    return datastore.runQuery(q).then( (queryResults) => {
+            //console.log("printing end cursor from get ships " + queryResults[1].endCursor);
+            queryResults[0].map(fromDatastore);
+            //console.log(queryResults[0]);
+            //console.log('before loop');
+            var found = false;
+            for (var i = 0; i < queryResults[0].length; i++){
+                //console.log('here now');
+                if (queryResults[0][i].id === id){
+                    found = true; 
+                }
+            }
+            //console.log('before return false');
+            return found;
+    });
+
+}
 /* ------------- Begin Lodging Model Functions ------------- */
 //creates a new ship
 function post_ship(name, type, length){
@@ -72,7 +92,7 @@ function post_ship(name, type, length){
 
 //returns a list of all ship entities
 function get_ships(req){
-    var shipQuery = datastore.createQuery(SHIP).limit(3);
+    var shipQuery = datastore.createQuery(SHIP);
     var cargoQuery = datastore.createQuery(CARGO);
     var all = {};
     var path = "/ships/"
@@ -83,7 +103,7 @@ function get_ships(req){
             //console.log("printing end cursor from get ships " + queryResults[1].endCursor);
             queryResults[0].map(fromDatastore);
             addSelfURLs(queryResults[0], "ships", req);
-            return datastore.runQuery(cargoQuery).then( (cargoResults) => {
+            /*return datastore.runQuery(cargoQuery).then( (cargoResults) => {
                 cargoResults[0].map(fromDatastore);
                  addSelfURLs(cargoResults[0], "cargo", req);
                 for (var i = 0; i < queryResults[0].length; i++){
@@ -95,15 +115,15 @@ function get_ships(req){
                             carg.self = cargoResults[0][j].self;
                             queryResults[0][i].cargo.push(carg);
                         }
-                    }
-                    
+                    }*/
+                    return queryResults[0];
                     //console.log("printing query Results[0][i] " + queryResults[0][i]);
-                }
-                all.items = queryResults[0];
-                all.next = addNextURL(queryResults[1], req, path, "cursor");
-                return all;
-        });
-});
+                });
+                //all.items = queryResults[0];
+                //all.next = addNextURL(queryResults[1], req, path, "cursor");
+                
+       // });
+
 }
 
 /*function appendShipCargo(ship){
@@ -168,25 +188,25 @@ function get_ship(id, req){
     //returns undefined if id does not exist
         const key = datastore.key([SHIP, parseInt(id,10)]);
         //console.log("logging key" + key);
-        var cargoQuery = datastore.createQuery(CARGO);
+        //var cargoQuery = datastore.createQuery(CARGO);
         return datastore.get(key).then(results => {
             //returns entity if id does exist
             const entity = results[0];
             entity.id = id;
-            entity.cargo = [];
+            //entity.cargo = [];
             addSelfURL(entity, "ships", req);
-            return datastore.runQuery(cargoQuery).then( (cargoResults) => {
-                cargoResults[0].map(fromDatastore);
-                for (var i = 0; i < cargoResults[0].length; i++){
-                    if (cargoResults[0][i].carrier === entity.id){
-                        var tempCargo = new Object();
-                        tempCargo.id = cargoResults[0][i].id;
-                        addSelfURL(tempCargo, "cargo", req);
-                        entity.cargo.push(tempCargo);
-                    }
-                }
+            //return datastore.runQuery(cargoQuery).then( (cargoResults) => {
+                //cargoResults[0].map(fromDatastore);
+                //for (var i = 0; i < cargoResults[0].length; i++){
+                    //if (cargoResults[0][i].carrier === entity.id){
+                       // var tempCargo = new Object();
+                        //tempCargo.id = cargoResults[0][i].id;
+                        //addSelfURL(tempCargo, "cargo", req);
+                        //entity.cargo.push(tempCargo);
+                    //}
+                //}
                 return entity;
-            });
+            //});
     });
 }
 
@@ -487,7 +507,7 @@ function unload(ship_id, cargo_id){
 /* ------------- Begin Ship Controller Functions ------------- */
 //GET list of ships
 router.get('/ships', function(req, res){
-    const accepts = req.accepts(['application/json', 'text/html']);
+    const accepts = req.accepts(['application/json']);
     if(!accepts){
             res.status(406).send('Not Acceptable');
         }
@@ -505,9 +525,18 @@ router.post('/ships', function(req, res){
     //console.log(req.body);
     //console.log(typeof req.body.name);
     //console.log(typeof req.body.length);
+    if (!((typeof req.body.name == 'string') && (typeof req.body.type == 'string')
+     && (typeof req.body.length == 'number'))){
+        res.status(400).send("invalid info");
+    }
+    else{
     var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/ships/';
+    const accepts = req.accepts(['application/json']);
     if(req.get('content-type') !== 'application/json'){
         res.status(415).send('The server only accepts application/json data.');
+    }
+    if(!accepts){
+            res.status(406).send('Not Acceptable');
     }
     post_ship(req.body.name, req.body.type, req.body.length)
         .then( key => 
@@ -515,14 +544,18 @@ router.post('/ships', function(req, res){
             res.location(reqUrl + key.id);
             res.status(201).send('{ "id": ' + key.id + ' }');
         });
+    }
 });
 
 //GET specific ship
 router.get('/ships/:id', function(req, res){
     //add 404 not found cases
     //add 415 cases
-    const accepts = req.accepts(['application/json', 'text/html']);
-    get_ship(req.params.id, req).then( (ship) => {
+   
+    findObject(req.params.id, SHIP).then(result => {
+        const accepts = req.accepts(['application/json', 'text/html']);
+        if (result === true){
+            get_ship(req.params.id, req).then( (ship) => {
         //console.log(ship);
         if(!accepts){
             res.status(406).send('Not Acceptable');
@@ -547,36 +580,68 @@ router.get('/ships/:id', function(req, res){
             //res.status(200).send(json2html(ship).slice(1,-1);
         }
         else{
-            res.states(500).send("There was an error with the content type");
+            res.status(500).send("There was an error with the content type");
         }
         
     });
+        }
+        else{
+            res.status(404).end();
+        }
+    });
+    
 });
 
 //PUT to edit specific ship
 router.put('/ships/:id', function(req, res){
-    /*if ((typeof req.body.name == 'string') && (typeof req.body.type == 'string')
-     && (typeof req.body.length == 'number')){
-        put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
-        .then(res.status(200).end());
+    if (!((typeof req.body.name == 'string') && (typeof req.body.type == 'string')
+     && (typeof req.body.length == 'number'))){
+        res.status(400).end();
     }
-    else{
-        res.status(200).send("invalid info");
-    }*/
-    put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
-        .then(res.status(303).end());
+    else {
+    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/ships/';
+    findObject(req.params.id, SHIP).then(result => {
+        if (result === true){
+            if(req.get('content-type') !== 'application/json'){
+                res.status(415).send('The server only accepts application/json data.');
+            }
+            put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
+            .then(() =>
+                {
+                    var location = reqUrl + req.params.id;
+                    res.location(location);
+                    res.status(303).end();
+                });
+        }
+        else{
+            res.status(404).end();
+        }
+    });
+}
+    
 });
 
 //delete specific ship
 router.delete('/ships/:id', function(req, res){
-    delete_ship(req.params.id).then(res.status(204).end());
+    //console.log('test');
+    findObject(req.params.id, SHIP).then((result) => {
+        //console.log("logging result " + result);
+       if (result){
+            //console.log('deleting ship');
+            delete_ship(req.params.id).then(res.status(204).end());
+        }
+        else{
+            res.status(404).end();
+        }
+    });
+    
 });
 
 //delete all ships
 router.delete('/ships', function(req, res){
-    /*res.set('Accept', 'GET, POST');
-    res.status(405).end();*/
-    delete_all_ships().then(res.status(200).end());
+    res.set('Accept', 'GET, POST');
+    res.status(405).end();
+    //delete_all_ships().then(res.status(200).end());
 });
 
 //delete all ships
