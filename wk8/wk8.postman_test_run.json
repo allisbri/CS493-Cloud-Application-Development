@@ -1,0 +1,563 @@
+{
+	"id": "fc930604-a278-4fc9-b147-3d2c62997a81",
+	"name": "wk8",
+	"allTests": [],
+	"timestamp": "2018-11-18T06:01:47.493Z",
+	"collection_id": "1b66ce03-0576-4469-aa96-523e4b1ca1b9",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "0",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "1b66ce03-0576-4469-aa96-523e4b1ca1b9",
+		"name": "wk8",
+		"description": null,
+		"auth": null,
+		"events": null,
+		"variables": null,
+		"order": [
+			"75879393-6634-4e36-807c-3c2f9c047dc9",
+			"91a6b925-26dc-4c41-af94-289383a7bd7d",
+			"f31c91dc-6a8a-405d-adbe-f7018aa90d7e",
+			"e7bfe6d4-1129-4687-96af-1c5482dc0d7e",
+			"ec56820d-0acc-4d56-aab8-b5b7fa6615fb"
+		],
+		"folders_order": [],
+		"owner": "5540709",
+		"permissions": {},
+		"favorite": false,
+		"shared": false,
+		"type": "collection",
+		"depth": 0
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"value": {
+				"description": "d",
+				"public": "true",
+				"files": {
+					"test.txt": "test file"
+				}
+			},
+			"key": "contentsObj",
+			"enabled": true
+		},
+		{
+			"value": "{\"description\":\"d\",\"public\": true,\"files\":{ \"test.txt\":  {\"content\": \"test file\" }}}",
+			"key": "contentsString",
+			"enabled": true
+		},
+		{
+			"value": "8e5b8117bd03b0a3d7ae2233ab71fbf2",
+			"key": "id",
+			"enabled": true
+		},
+		{
+			"value": "{\"description\":\"a\",\"files\":{ \"test2.txt\":  {\"content\": \"test file2\" }}}",
+			"key": "contentsString2",
+			"enabled": true
+		},
+		{
+			"value": 16,
+			"key": "len",
+			"enabled": true
+		},
+		{
+			"value": "starredGists",
+			"key": "starredGists",
+			"enabled": true
+		},
+		{
+			"value": "ids",
+			"key": "ids",
+			"enabled": true
+		},
+		{
+			"value": "testship",
+			"key": "ship",
+			"enabled": true
+		},
+		{
+			"value": 5652161459388416,
+			"key": "ship_id",
+			"enabled": true
+		},
+		{
+			"value": 20,
+			"key": "ship_length",
+			"enabled": true
+		},
+		{
+			"value": "testship",
+			"key": "ship_name",
+			"enabled": true
+		},
+		{
+			"value": "rowboat",
+			"key": "ship_type",
+			"enabled": true
+		},
+		{
+			"value": "",
+			"key": "slip_arrival_date",
+			"enabled": true
+		},
+		{
+			"value": "",
+			"key": "slip_current_ship",
+			"enabled": true
+		},
+		{
+			"value": 5736627494191104,
+			"key": "slip_id",
+			"enabled": true
+		},
+		{
+			"value": "5",
+			"key": "slip_number",
+			"enabled": true
+		},
+		{
+			"value": 30,
+			"key": "invalid_ship_length",
+			"enabled": true
+		},
+		{
+			"value": 5,
+			"key": "invalid_ship_name",
+			"enabled": true
+		},
+		{
+			"value": 2,
+			"key": "invalid_ship_type",
+			"enabled": true
+		},
+		{
+			"value": "10/21/2001",
+			"key": "invalid_slip_arrival",
+			"enabled": true
+		},
+		{
+			"value": "h",
+			"key": "invalid_slip_number",
+			"enabled": true
+		},
+		{
+			"value": 2000,
+			"key": "mod_ship_length",
+			"enabled": true
+		},
+		{
+			"value": "thunder",
+			"key": "mod_ship_name",
+			"enabled": true
+		},
+		{
+			"value": "cruise ship",
+			"key": "mod_ship_type",
+			"enabled": true
+		},
+		{
+			"value": 200,
+			"key": "mod_slip_number",
+			"enabled": true
+		},
+		{
+			"value": 5752256343310336,
+			"key": "slip2_id",
+			"enabled": true
+		},
+		{
+			"value": 5639445604728832,
+			"key": "ship2_id",
+			"enabled": true
+		},
+		{
+			"value": "cool stuff",
+			"key": "cargo_content",
+			"enabled": true
+		},
+		{
+			"value": "1/1/2019",
+			"key": "cargo_delivery_date",
+			"enabled": true
+		},
+		{
+			"value": 6,
+			"key": "cargo_weight",
+			"enabled": true
+		},
+		{
+			"value": 5126463837700096,
+			"key": "cargo_id",
+			"enabled": true
+		},
+		{
+			"value": "1/1/1999",
+			"key": "mod_cargo_arrival_date",
+			"enabled": true
+		},
+		{
+			"value": "cheese",
+			"key": "mod_cargo_content ",
+			"enabled": true
+		},
+		{
+			"value": 20,
+			"key": "mod_cargo_weight",
+			"enabled": true
+		},
+		{
+			"value": 5682446615969792,
+			"key": "cargo2_id",
+			"enabled": true
+		},
+		{
+			"value": 4,
+			"key": "invalid_cargo_content",
+			"enabled": true
+		},
+		{
+			"value": 5758578199625728,
+			"key": "cargo3_id",
+			"enabled": true
+		},
+		{
+			"value": "cheese",
+			"key": "mod_cargo_content",
+			"enabled": true
+		},
+		{
+			"value": 5719666668339200,
+			"key": "cargo4_id",
+			"enabled": true
+		},
+		{
+			"value": {},
+			"key": "cargo_next",
+			"enabled": true
+		},
+		{
+			"value": null,
+			"key": "ship_next",
+			"enabled": true
+		},
+		{
+			"value": 5636635823702016,
+			"key": "ship3_id",
+			"enabled": true
+		},
+		{
+			"value": 5731568492478464,
+			"key": "ship4_id",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080/ships/5186378094608384",
+			"key": "ship_self",
+			"enabled": true
+		},
+		{
+			"value": "http://week5proj2992929.appspot.com/cargo/5126463837700096",
+			"key": "cargo_self",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080/ships/5186378094608384",
+			"key": "loc",
+			"enabled": true
+		},
+		{
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJuaWNrbmFtZSI6ImpkMTU2ODIiLCJuYW1lIjoiamQxNTY4MkBzb21ld2hlcmUuY29tIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzBiY2MxY2YxYjhmYTM0MTRmNWVmOTU0MGE1OThjYjUzP3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGamQucG5nIiwidXBkYXRlZF9hdCI6IjIwMTgtMTEtMThUMDU6NTk6NTkuNzM1WiIsImVtYWlsIjoiamQxNTY4MkBzb21ld2hlcmUuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWJmMGZmZGEwZjliMTk3NDBkMTA4NGRkIiwiYXVkIjoiQk9xNENzSkMxRDBSVVhzTmh6NUxkUHgxR3JaMzFnekciLCJpYXQiOjE1NDI1MjA3OTksImV4cCI6MTU0MjU1Njc5OX0.bKzIf0vHacwm7tW9gWt86EFesJf3GStaNtbDxDtNTF9yKlTlX0j1seSapi_azl4VlYO4ALwQDHw8ZTjZyDxt6Hwhy7aRm-TkOXRMQ0uAFjMir6_letoi6MKtI7cY7OEok53mM4tu3DBB8EEPGSO6FMwd-Yp3H49p34PlBuLPPdTcjsShRMMLkjPD1kEtKyD-xltl_6z1MIfYVQi_0ZekjSMZzerB3qWLMvWYO-1BwtxQWRlQIiPgspO5_T4u9Ab4oY8ioqpLb-DNWn6RiFp_QLtG3B0tgKF5i6klG0BfNII6TjuJCX34STSaWo2hnpnglwFePHSi9V9jQ8BMUR-SVA",
+			"key": "user1tok",
+			"enabled": true
+		},
+		{
+			"value": "jd15682@somewhere.com",
+			"key": "newUser",
+			"enabled": true
+		},
+		{
+			"value": "jd15682@somewhere.comp",
+			"key": "password",
+			"enabled": true
+		},
+		{
+			"value": 7,
+			"key": "num",
+			"enabled": true
+		}
+	],
+	"results": [
+		{
+			"name": "delete all ships",
+			"id": "75879393-6634-4e36-807c-3c2f9c047dc9",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"2441"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "2441",
+			"totalRequestTime": "2441",
+			"iterationResults": {}
+		},
+		{
+			"name": "create user",
+			"id": "91a6b925-26dc-4c41-af94-289383a7bd7d",
+			"url": "https://week6ships.appspot.com/users",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"1175"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "1175",
+			"totalRequestTime": "1175",
+			"iterationResults": {}
+		},
+		{
+			"name": "login",
+			"id": "f31c91dc-6a8a-405d-adbe-f7018aa90d7e",
+			"url": "https://week6ships.appspot.com/login",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"630"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "630",
+			"totalRequestTime": "630",
+			"iterationResults": {}
+		},
+		{
+			"name": "add ship",
+			"id": "e7bfe6d4-1129-4687-96af-1c5482dc0d7e",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"543"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "543",
+			"totalRequestTime": "543",
+			"iterationResults": {}
+		},
+		{
+			"name": "get list of ships by user",
+			"id": "ec56820d-0acc-4d56-aab8-b5b7fa6615fb",
+			"url": "https://week6ships.appspot.com/users/jd8703@somewhere.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"117"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "117",
+			"totalRequestTime": "117",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 4,
+	"totalFail": 0,
+	"totalTime": 4906,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "delete all ships",
+			"id": "75879393-6634-4e36-807c-3c2f9c047dc9",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-18T06:01:47.493Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "create user",
+			"id": "91a6b925-26dc-4c41-af94-289383a7bd7d",
+			"url": "https://week6ships.appspot.com/users",
+			"time": "2018-11-18T06:01:47.493Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "login",
+			"id": "f31c91dc-6a8a-405d-adbe-f7018aa90d7e",
+			"url": "https://week6ships.appspot.com/login",
+			"time": "2018-11-18T06:01:47.493Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add ship",
+			"id": "e7bfe6d4-1129-4687-96af-1c5482dc0d7e",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-18T06:01:47.493Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get list of ships by user",
+			"id": "ec56820d-0acc-4d56-aab8-b5b7fa6615fb",
+			"url": "https://week6ships.appspot.com/users/jd8703@somewhere.com/ships",
+			"time": "2018-11-18T06:01:47.493Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}

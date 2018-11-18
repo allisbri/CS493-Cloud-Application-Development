@@ -1,0 +1,1042 @@
+{
+	"info": {
+		"_postman_id": "0a1de7ef-501d-436e-822b-85ccb6e892b9",
+		"name": "wk6 ships",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "405 status: delete all ships",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "201 status: add ship",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							"//get id for problem 4",
+							"ship_name = \"testship\";",
+							"ship_type = \"rowboat\";",
+							"ship_length = 20;",
+							"",
+							"pm.globals.set(\"ship_name\", ship_name);",
+							"pm.globals.set(\"ship_type\", ship_type);",
+							"pm.globals.set(\"ship_length\", ship_length);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var ship_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"ship_id\", ship_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"testship\",\n\t\"type\": \"rowboat\",\n\t\"length\": 20\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "200 status: get ship + match added ship contents and id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6da2712-e21d-40a0-b2b7-f7d404c58b07",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(String(pm.globals.get(\"ship_id\"))).to.equal(res.id);\r",
+							"    \r",
+							"    \r",
+							"    pm.expect(pm.globals.get(\"ship_name\")).to.equal(res.name);\r",
+							"    pm.expect(pm.globals.get(\"ship_type\")).to.equal(res.type);\r",
+							"    pm.expect(pm.globals.get(\"ship_length\")).to.equal(res.length);\r",
+							"    pm.expect(res.self !== null);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"var res = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"ship_self\", res.self);\r",
+							"//pm.globals.get(\"variable_key\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "406 status: get application/xml for specific ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"thunder\",\n\t\"type\": \"cruise ship\",\n\t\"length\": 2000\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check json returned for ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6da2712-e21d-40a0-b2b7-f7d404c58b07",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var type = postman.getResponseHeader(\"Content-Type\");\r",
+							"    var extype = \"application/json; charset=utf-8\";\r",
+							"    var expected = 0;\r",
+							"    if (extype === type){\r",
+							"        expected++;\r",
+							"    }\r",
+							"    \r",
+							"    pm.expect(expected).to.eql(1);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check html returned for ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e6da2712-e21d-40a0-b2b7-f7d404c58b07",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var type = postman.getResponseHeader(\"Content-Type\");\r",
+							"    var extype = \"text/html; charset=utf-8\";\r",
+							"    var expected = 0;\r",
+							"    if (extype === type){\r",
+							"        expected++;\r",
+							"    }\r",
+							"    \r",
+							"    pm.expect(expected).to.eql(1);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "text/html",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add ship2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "040a32f6-830b-4e11-828f-96dcd65d7635",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var ship2_id = res.id;\r",
+							"pm.globals.set(\"ship2_id\", ship2_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"testship2\",\n\t\"type\": \"rowboat2\",\n\t\"length\": 30\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add ship3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "040a32f6-830b-4e11-828f-96dcd65d7635",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"    \r",
+							"});\r",
+							"\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var ship3_id = res.id;\r",
+							"pm.globals.set(\"ship3_id\", ship3_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"testship3\",\n\t\"type\": \"rowboat3\",\n\t\"length\": 40\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "200 status: get list of ships",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "400 status: add ship with invalid info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "217a1228-65a1-46c9-a6a0-b25652ec2332",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    //var res = JSON.parse(responseBody);\r",
+							"    pm.expect(responseBody).to.equal('invalid info');\r",
+							"});\r",
+							"\r",
+							"pm.globals.set(\"invalid_ship_name\", 5);\r",
+							"pm.globals.set(\"invalid_ship_type\", 2);\r",
+							"pm.globals.set(\"invalid_ship_length\", 30);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": 4,\n\t\"type\": 2,\n\t\"length\": 30\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list of ships, make sure invalid ship was not added and all ships are there",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(res.length).to.equal(3);\r",
+							"    var expected = 0;\r",
+							"    if (res[0].id == pm.globals.get(\"ship_id\") || res[1].id == pm.globals.get(\"ship_id\") ||res[2].id == pm.globals.get(\"ship_id\")){\r",
+							"        expected++;\r",
+							"    }\r",
+							"    if (res[0].id == pm.globals.get(\"ship2_id\") || res[1].id == pm.globals.get(\"ship2_id\") ||res[2].id == pm.globals.get(\"ship2_id\")){\r",
+							"        expected++;\r",
+							"    }\r",
+							"    if (res[0].id == pm.globals.get(\"ship3_id\") || res[1].id == pm.globals.get(\"ship3_id\") ||res[2].id == pm.globals.get(\"ship3_id\")){\r",
+							"        expected++;\r",
+							"    }\r",
+							"    \r",
+							"    pm.expect(expected === 3);\r",
+							"    //pm.expect(res.next !== typeof null);\r",
+							"});\r",
+							"var res = JSON.parse(responseBody);\r",
+							"pm.globals.set(\"ship_next\", res.next);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "303 status: modify ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69a6f527-b3c6-4600-ab92-523803fbeeee",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(303);\r",
+							"});\r",
+							"\r",
+							"loc = postman.getResponseHeader(\"Location\");\r",
+							"\r",
+							"pm.globals.set(\"loc\", loc);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9e0bb3df-75ef-4097-9dfd-07e80dec169f",
+						"exec": [
+							"var mod_ship_name = \"thunder\";",
+							"var mod_ship_type = \"cruise ship\";",
+							"var mod_ship_length = 2000;",
+							"",
+							"pm.globals.set(\"mod_ship_name\", mod_ship_name);",
+							"pm.globals.set(\"mod_ship_type\", mod_ship_type);",
+							"pm.globals.set(\"mod_ship_length\", mod_ship_length);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"thunder\",\n\t\"type\": \"cruise ship\",\n\t\"length\": 2000\n}\n\n"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "check modified redirect url and match put content",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(String(pm.globals.get(\"ship_id\"))).to.equal(res.id);\r",
+							"    \r",
+							"    pm.expect(pm.globals.get(\"mod_ship_name\")).to.equal(res.name);\r",
+							"    pm.expect(pm.globals.get(\"mod_ship_type\")).to.equal(res.type);\r",
+							"    pm.expect(pm.globals.get(\"mod_ship_length\")).to.equal(res.length);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"thunder\",\n\t\"type\": \"cruise ship\",\n\t\"length\": 2000\n}"
+				},
+				"url": {
+					"raw": "{{loc}}",
+					"host": [
+						"{{loc}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modify ship with invalid info check 400 bad request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc1c9043-a843-4a34-888d-b96e31c3d239",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    //var res = JSON.parse(responseBody);\r",
+							"     pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": 4,\n\t\"type\": 2,\n\t\"length\": 30\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "make sure ship was not modified with invalid info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(String(pm.globals.get(\"ship_id\"))).to.equal(res.id);\r",
+							"    \r",
+							"    pm.expect(pm.globals.get(\"mod_ship_name\")).to.equal(res.name);\r",
+							"    pm.expect(pm.globals.get(\"mod_ship_type\")).to.equal(res.type);\r",
+							"    pm.expect(pm.globals.get(\"mod_ship_length\")).to.equal(res.length);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"thunder\",\n\t\"type\": \"cruise ship\",\n\t\"length\": 2000\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "204 status: delete ship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3883d68-edcc-4068-88f1-87a813b7aee7",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "make sure ship is deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd611e84-c3fc-4b6f-9afb-1f37361c764f",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(res.length).to.equal(2);\r",
+							"    pm.expect(res[0].id != pm.globals.get(\"ship_id\") && res[1].id != pm.globals.get(\"ship_id\"));\r",
+							"     //pm.expect(String(pm.globals.get(\"invalid_ship_name\")).to.equal(res[i].name));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"number\": 40,\n\t\"current_boat\": ,\n\t\"arrival_time\": 2000\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405 status: put on ship collection",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bc1c9043-a843-4a34-888d-b96e31c3d239",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    //var res = JSON.parse(responseBody);\r",
+							"     pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": 4,\n\t\"type\": 2,\n\t\"length\": 30\n}"
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete ship 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3883d68-edcc-4068-88f1-87a813b7aee7",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship2_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete ship 3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e3883d68-edcc-4068-88f1-87a813b7aee7",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://week6ships.appspot.com/ships/{{ship3_id}}",
+					"protocol": "https",
+					"host": [
+						"week6ships",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"ships",
+						"{{ship3_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

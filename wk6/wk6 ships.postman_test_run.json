@@ -1,0 +1,1399 @@
+{
+	"id": "51a4932a-13de-4004-af3f-ed4d84d667e6",
+	"name": "wk6 ships",
+	"allTests": [],
+	"timestamp": "2018-11-05T05:41:55.619Z",
+	"collection_id": "0a1de7ef-501d-436e-822b-85ccb6e892b9",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "0",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "0a1de7ef-501d-436e-822b-85ccb6e892b9",
+		"name": "wk6 ships",
+		"description": "",
+		"auth": null,
+		"events": null,
+		"variables": [],
+		"order": [
+			"12a937cc-86f8-40c3-9a50-461b0fbd8a35",
+			"818430eb-79c6-4983-9c21-e5c2e4b9b228",
+			"a9017a31-e9b3-4862-a180-74d5093a0eca",
+			"89d21e72-0524-4780-9fd8-99fe81242839",
+			"13e8be50-dada-4e0b-a529-8d4fc5f668ff",
+			"9fb2a41a-6b29-45b3-8eb2-f59d4d6abecb",
+			"f1762014-b780-4372-ab77-a3cbf5c7422d",
+			"d3b69853-1156-4dbe-bbf1-cfa82d9655cd",
+			"1790bec5-13ef-4cfc-aa47-cefe3b76232f",
+			"56640b36-1406-4111-8900-cd4e3d27bb5e",
+			"08e57d87-049f-41d8-8195-e62cc5c6d5a4",
+			"e0341843-1de1-4379-b5e2-5116ff543d12",
+			"178241b7-8e52-4df1-a337-dade67dcea84",
+			"8cb80054-620f-4810-b32f-287c1a09b422",
+			"da6fe5ef-f167-4cba-adfd-1e994cb310ea",
+			"39de3550-5cbe-49c9-9802-f50bf7662174",
+			"8e73c478-069d-48db-8e74-5f54af2a8069",
+			"5d6af0f5-cb36-406b-b572-5ccba32fb13d",
+			"b2d8320b-7016-446c-a728-9d1e007934be",
+			"02b6999a-dd82-47d4-9faa-5657a95ea4c3"
+		],
+		"folders_order": [],
+		"owner": "5540709",
+		"permissions": {},
+		"favorite": false,
+		"shared": false,
+		"type": "collection",
+		"depth": 0
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"value": {
+				"description": "d",
+				"public": "true",
+				"files": {
+					"test.txt": "test file"
+				}
+			},
+			"key": "contentsObj",
+			"enabled": true
+		},
+		{
+			"value": "{\"description\":\"d\",\"public\": true,\"files\":{ \"test.txt\":  {\"content\": \"test file\" }}}",
+			"key": "contentsString",
+			"enabled": true
+		},
+		{
+			"value": "8e5b8117bd03b0a3d7ae2233ab71fbf2",
+			"key": "id",
+			"enabled": true
+		},
+		{
+			"value": "{\"description\":\"a\",\"files\":{ \"test2.txt\":  {\"content\": \"test file2\" }}}",
+			"key": "contentsString2",
+			"enabled": true
+		},
+		{
+			"value": 16,
+			"key": "len",
+			"enabled": true
+		},
+		{
+			"value": "starredGists",
+			"key": "starredGists",
+			"enabled": true
+		},
+		{
+			"value": "ids",
+			"key": "ids",
+			"enabled": true
+		},
+		{
+			"value": "testship",
+			"key": "ship",
+			"enabled": true
+		},
+		{
+			"value": 5186378094608384,
+			"key": "ship_id",
+			"enabled": true
+		},
+		{
+			"value": 20,
+			"key": "ship_length",
+			"enabled": true
+		},
+		{
+			"value": "testship",
+			"key": "ship_name",
+			"enabled": true
+		},
+		{
+			"value": "rowboat",
+			"key": "ship_type",
+			"enabled": true
+		},
+		{
+			"value": "",
+			"key": "slip_arrival_date",
+			"enabled": true
+		},
+		{
+			"value": "",
+			"key": "slip_current_ship",
+			"enabled": true
+		},
+		{
+			"value": 5736627494191104,
+			"key": "slip_id",
+			"enabled": true
+		},
+		{
+			"value": "5",
+			"key": "slip_number",
+			"enabled": true
+		},
+		{
+			"value": 30,
+			"key": "invalid_ship_length",
+			"enabled": true
+		},
+		{
+			"value": 5,
+			"key": "invalid_ship_name",
+			"enabled": true
+		},
+		{
+			"value": 2,
+			"key": "invalid_ship_type",
+			"enabled": true
+		},
+		{
+			"value": "10/21/2001",
+			"key": "invalid_slip_arrival",
+			"enabled": true
+		},
+		{
+			"value": "h",
+			"key": "invalid_slip_number",
+			"enabled": true
+		},
+		{
+			"value": 2000,
+			"key": "mod_ship_length",
+			"enabled": true
+		},
+		{
+			"value": "thunder",
+			"key": "mod_ship_name",
+			"enabled": true
+		},
+		{
+			"value": "cruise ship",
+			"key": "mod_ship_type",
+			"enabled": true
+		},
+		{
+			"value": 200,
+			"key": "mod_slip_number",
+			"enabled": true
+		},
+		{
+			"value": 5752256343310336,
+			"key": "slip2_id",
+			"enabled": true
+		},
+		{
+			"value": 5734055144325120,
+			"key": "ship2_id",
+			"enabled": true
+		},
+		{
+			"value": "cool stuff",
+			"key": "cargo_content",
+			"enabled": true
+		},
+		{
+			"value": "1/1/2019",
+			"key": "cargo_delivery_date",
+			"enabled": true
+		},
+		{
+			"value": 6,
+			"key": "cargo_weight",
+			"enabled": true
+		},
+		{
+			"value": 5126463837700096,
+			"key": "cargo_id",
+			"enabled": true
+		},
+		{
+			"value": "1/1/1999",
+			"key": "mod_cargo_arrival_date",
+			"enabled": true
+		},
+		{
+			"value": "cheese",
+			"key": "mod_cargo_content ",
+			"enabled": true
+		},
+		{
+			"value": 20,
+			"key": "mod_cargo_weight",
+			"enabled": true
+		},
+		{
+			"value": 5682446615969792,
+			"key": "cargo2_id",
+			"enabled": true
+		},
+		{
+			"value": 4,
+			"key": "invalid_cargo_content",
+			"enabled": true
+		},
+		{
+			"value": 5758578199625728,
+			"key": "cargo3_id",
+			"enabled": true
+		},
+		{
+			"value": "cheese",
+			"key": "mod_cargo_content",
+			"enabled": true
+		},
+		{
+			"value": 5719666668339200,
+			"key": "cargo4_id",
+			"enabled": true
+		},
+		{
+			"value": {},
+			"key": "cargo_next",
+			"enabled": true
+		},
+		{
+			"value": null,
+			"key": "ship_next",
+			"enabled": true
+		},
+		{
+			"value": 5636635823702016,
+			"key": "ship3_id",
+			"enabled": true
+		},
+		{
+			"value": 5731568492478464,
+			"key": "ship4_id",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080/ships/5186378094608384",
+			"key": "ship_self",
+			"enabled": true
+		},
+		{
+			"value": "http://week5proj2992929.appspot.com/cargo/5126463837700096",
+			"key": "cargo_self",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080/ships/5186378094608384",
+			"key": "loc",
+			"enabled": true
+		}
+	],
+	"results": [
+		{
+			"name": "405 status: delete all ships",
+			"id": "12a937cc-86f8-40c3-9a50-461b0fbd8a35",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"59"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "59",
+			"totalRequestTime": "59",
+			"iterationResults": {}
+		},
+		{
+			"name": "201 status: add ship",
+			"id": "818430eb-79c6-4983-9c21-e5c2e4b9b228",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"122"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "122",
+			"totalRequestTime": "122",
+			"iterationResults": {}
+		},
+		{
+			"name": "200 status: get ship + match added ship contents and id",
+			"id": "a9017a31-e9b3-4862-a180-74d5093a0eca",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"146"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "146",
+			"totalRequestTime": "146",
+			"iterationResults": {}
+		},
+		{
+			"name": "406 status: get application/xml for specific ship",
+			"id": "89d21e72-0524-4780-9fd8-99fe81242839",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 406,
+				"name": "Not Acceptable",
+				"detail": {
+					"name": "Not Acceptable",
+					"detail": "The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"225"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "225",
+			"totalRequestTime": "225",
+			"iterationResults": {}
+		},
+		{
+			"name": "check json returned for ship",
+			"id": "13e8be50-dada-4e0b-a529-8d4fc5f668ff",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"198"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "198",
+			"totalRequestTime": "198",
+			"iterationResults": {}
+		},
+		{
+			"name": "check html returned for ship",
+			"id": "9fb2a41a-6b29-45b3-8eb2-f59d4d6abecb",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"224"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "224",
+			"totalRequestTime": "224",
+			"iterationResults": {}
+		},
+		{
+			"name": "add ship2",
+			"id": "f1762014-b780-4372-ab77-a3cbf5c7422d",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"119"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "119",
+			"totalRequestTime": "119",
+			"iterationResults": {}
+		},
+		{
+			"name": "add ship3",
+			"id": "d3b69853-1156-4dbe-bbf1-cfa82d9655cd",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"123"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "123",
+			"totalRequestTime": "123",
+			"iterationResults": {}
+		},
+		{
+			"name": "200 status: get list of ships",
+			"id": "1790bec5-13ef-4cfc-aa47-cefe3b76232f",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"185"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "185",
+			"totalRequestTime": "185",
+			"iterationResults": {}
+		},
+		{
+			"name": "400 status: add ship with invalid info",
+			"id": "56640b36-1406-4111-8900-cd4e3d27bb5e",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"90"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "90",
+			"totalRequestTime": "90",
+			"iterationResults": {}
+		},
+		{
+			"name": "get list of ships, make sure invalid ship was not added and all ships are there",
+			"id": "08e57d87-049f-41d8-8195-e62cc5c6d5a4",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"161"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "161",
+			"totalRequestTime": "161",
+			"iterationResults": {}
+		},
+		{
+			"name": "303 status: modify ship",
+			"id": "e0341843-1de1-4379-b5e2-5116ff543d12",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 303,
+				"name": "See Other",
+				"detail": {
+					"name": "See Other",
+					"detail": "The response to the request can be found under another URI using a GET method. When received in response to a POST (or PUT/DELETE), it should be assumed that the server has received the data and the redirect should be issued with a separate GET message."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"145"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "145",
+			"totalRequestTime": "145",
+			"iterationResults": {}
+		},
+		{
+			"name": "check modified redirect url and match put content",
+			"id": "178241b7-8e52-4df1-a337-dade67dcea84",
+			"url": "http://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"224"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "224",
+			"totalRequestTime": "224",
+			"iterationResults": {}
+		},
+		{
+			"name": "modify ship with invalid info check 400 bad request",
+			"id": "8cb80054-620f-4810-b32f-287c1a09b422",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"47"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "47",
+			"totalRequestTime": "47",
+			"iterationResults": {}
+		},
+		{
+			"name": "make sure ship was not modified with invalid info",
+			"id": "da6fe5ef-f167-4cba-adfd-1e994cb310ea",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"179"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "179",
+			"totalRequestTime": "179",
+			"iterationResults": {}
+		},
+		{
+			"name": "204 status: delete ship",
+			"id": "39de3550-5cbe-49c9-9802-f50bf7662174",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"196"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "196",
+			"totalRequestTime": "196",
+			"iterationResults": {}
+		},
+		{
+			"name": "make sure ship is deleted",
+			"id": "8e73c478-069d-48db-8e74-5f54af2a8069",
+			"url": "https://week6ships.appspot.com/ships",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"193"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "193",
+			"totalRequestTime": "193",
+			"iterationResults": {}
+		},
+		{
+			"name": "405 status: put on ship collection",
+			"id": "5d6af0f5-cb36-406b-b572-5ccba32fb13d",
+			"url": "https://week6ships.appspot.com/ships/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"49"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "49",
+			"totalRequestTime": "49",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete ship 2",
+			"id": "b2d8320b-7016-446c-a728-9d1e007934be",
+			"url": "https://week6ships.appspot.com/ships/5673261526417408",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"180"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "180",
+			"totalRequestTime": "180",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete ship 3",
+			"id": "02b6999a-dd82-47d4-9faa-5657a95ea4c3",
+			"url": "https://week6ships.appspot.com/ships/6193071117041664",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"98"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "98",
+			"totalRequestTime": "98",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 20,
+	"totalFail": 0,
+	"totalTime": 2963,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "405 status: delete all ships",
+			"id": "12a937cc-86f8-40c3-9a50-461b0fbd8a35",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "201 status: add ship",
+			"id": "818430eb-79c6-4983-9c21-e5c2e4b9b228",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "200 status: get ship + match added ship contents and id",
+			"id": "a9017a31-e9b3-4862-a180-74d5093a0eca",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "406 status: get application/xml for specific ship",
+			"id": "89d21e72-0524-4780-9fd8-99fe81242839",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 406,
+				"name": "Not Acceptable",
+				"detail": {
+					"name": "Not Acceptable",
+					"detail": "The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "check json returned for ship",
+			"id": "13e8be50-dada-4e0b-a529-8d4fc5f668ff",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "check html returned for ship",
+			"id": "9fb2a41a-6b29-45b3-8eb2-f59d4d6abecb",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add ship2",
+			"id": "f1762014-b780-4372-ab77-a3cbf5c7422d",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add ship3",
+			"id": "d3b69853-1156-4dbe-bbf1-cfa82d9655cd",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "200 status: get list of ships",
+			"id": "1790bec5-13ef-4cfc-aa47-cefe3b76232f",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "400 status: add ship with invalid info",
+			"id": "56640b36-1406-4111-8900-cd4e3d27bb5e",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get list of ships, make sure invalid ship was not added and all ships are there",
+			"id": "08e57d87-049f-41d8-8195-e62cc5c6d5a4",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "303 status: modify ship",
+			"id": "e0341843-1de1-4379-b5e2-5116ff543d12",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 303,
+				"name": "See Other",
+				"detail": {
+					"name": "See Other",
+					"detail": "The response to the request can be found under another URI using a GET method. When received in response to a POST (or PUT/DELETE), it should be assumed that the server has received the data and the redirect should be issued with a separate GET message."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "check modified redirect url and match put content",
+			"id": "178241b7-8e52-4df1-a337-dade67dcea84",
+			"url": "http://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "modify ship with invalid info check 400 bad request",
+			"id": "8cb80054-620f-4810-b32f-287c1a09b422",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request",
+				"detail": {
+					"name": "Bad Request",
+					"detail": "The request cannot be fulfilled due to bad syntax."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "make sure ship was not modified with invalid info",
+			"id": "da6fe5ef-f167-4cba-adfd-1e994cb310ea",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "204 status: delete ship",
+			"id": "39de3550-5cbe-49c9-9802-f50bf7662174",
+			"url": "https://week6ships.appspot.com/ships/5700921115803648",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "make sure ship is deleted",
+			"id": "8e73c478-069d-48db-8e74-5f54af2a8069",
+			"url": "https://week6ships.appspot.com/ships",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "405 status: put on ship collection",
+			"id": "5d6af0f5-cb36-406b-b572-5ccba32fb13d",
+			"url": "https://week6ships.appspot.com/ships/",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete ship 2",
+			"id": "b2d8320b-7016-446c-a728-9d1e007934be",
+			"url": "https://week6ships.appspot.com/ships/5673261526417408",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete ship 3",
+			"id": "02b6999a-dd82-47d4-9faa-5657a95ea4c3",
+			"url": "https://week6ships.appspot.com/ships/6193071117041664",
+			"time": "2018-11-05T05:41:55.619Z",
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}
