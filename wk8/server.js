@@ -15,12 +15,12 @@ const bodyParser = require('body-parser');
 const jwt = require('express-jwt');
 const jwksRsa = require('jwks-rsa');
 
-const projectId = 'week6ships';
+const projectId = 'wk8jwt';
 const datastore = new Datastore({projectId:projectId});
 
-const SHIP = "Ship";
+const WISH_LIST = "Wish_list";
 const SLIP = "Slip";
-const CARGO = "Cargo";
+const ITEM = "Item";
 
 const router = express.Router();
 var rp = require('request-promise');
@@ -98,76 +98,174 @@ const checkJwt = jwt({
 });
 
 
-/* ------------- Begin Ship Model Functions ------------- */
+/* ------------- Begin Model Functions ------------- */
+//users: first name, last name, birthdate 
+//wish_lists: title, wish_list date, category
+//items: name, price, department
+
+
 //creates a new ship
-function post_ship(name, type, length, user){
-    var key = datastore.key(SHIP);
-	const new_ship = {"name": name, "type": type, "length": length, "owner": user};
-	return datastore.save({"key":key, "data":new_ship}).then(() => {return key});
+function post_item(name, price, department){
+    var key = datastore.key(ITEM);
+    const new_item= {"name": name, "price": price, "department": department};
+    return datastore.save({"key":key, "data":new_item}).then(() => {return key});
+}
+
+//creates a new ship
+function post_wish_list(name, date, type){
+    var key = datastore.key(WISH_LIST);
+	const new_wish_list = {"name": name, "date": date, "type": type};
+	return datastore.save({"key":key, "data":new_wish_list}).then(() => {return key});
 }
 
 
 //returns a list of all ship entities
-function get_ships(req){
-    var shipQuery = datastore.createQuery(SHIP);
+function get_wish_lists(req){
+    var wish_list_query = datastore.createQuery(WISH_LIST).limit(5);
+    var wish_list_query_l = datastore.createQuery(WISH_LIST);
+    var wish_list_query
     var cargoQuery = datastore.createQuery(CARGO);
     var all = {};
-    var path = "/ships/"
+    var path = "/wish_lists/"
     if (Object.keys(req.query).includes("cursor")){
-        shipQuery = shipQuery.start(req.query.cursor);
+        wish_list_query = wish_list_query.start(req.query.cursor);
     }
-    return datastore.runQuery(shipQuery).then( (queryResults) => {
-            //console.log("printing end cursor from get ships " + queryResults[1].endCursor);
-            queryResults[0].map(fromDatastore);
-            addSelfURLs(queryResults[0], "ships", req);
-            /*return datastore.runQuery(cargoQuery).then( (cargoResults) => {
-                cargoResults[0].map(fromDatastore);
-                 addSelfURLs(cargoResults[0], "cargo", req);
-                for (var i = 0; i < queryResults[0].length; i++){
-                    queryResults[0][i].cargo = [];
-                    for (var j = 0; j < cargoResults[0].length; j++){
-                        if (queryResults[0][i].id === cargoResults[0][j].carrier){
-                            var carg = new Object();
-                            carg.id = cargoResults[0][j].id;
-                            carg.self = cargoResults[0][j].self;
-                            queryResults[0][i].cargo.push(carg);
+     return datastore.runQuery(wish_list_query_l).then( (queryResultsl) => {
+       all.collection_size = queryResultsl[0].length;
+        return datastore.runQuery(wish_list_query).then( (queryResults) => {
+                //console.log("printing end cursor from get shaips " + queryResults[1].endCursor);
+                queryResults[0].map(fromDatastore);
+                addSelfURLs(queryResults[0], "wish_lists", req);
+                return datastore.runQuery(cargoQuery).then( (cargoResults) => {
+                    cargoResults[0].map(fromDatastore);
+                     addSelfURLs(cargoResults[0], "cargo", req);
+                    for (var i = 0; i < queryResults[0].length; i++){
+                        queryResults[0][i].cargo = [];
+                        for (var j = 0; j < cargoResults[0].length; j++){
+                            if (queryResults[0][i].id === cargoResults[0][j].carrier){
+                                var carg = new Object();
+                                carg.id = cargoResults[0][j].id;
+                                carg.self = cargoResults[0][j].self;
+                                queryResults[0][i].cargo.push(carg);
+                            }
                         }
-                    }*/
-                    return queryResults[0];
-                    //console.log("printing query Results[0][i] " + queryResults[0][i]);
-                });
-                //all.items = queryResults[0];
-                //all.next = addNextURL(queryResults[1], req, path, "cursor");
-                
-       // });
+                        //return queryResults[0];
+                        console.log("printing query Results[0][i] " + queryResults[0][i]);
+                    }
+                    //col = list(queryResults.fetch());
+                    //all.collection_size = len(col);
+                    all.items = queryResults[0];
 
+                    all.next = addNextURL(queryResults[1], req, path, "cursor");
+                    return all;
+            });
+
+        });
+    });
+}
+
+//gets cargo data singular
+function get_item(id, req){
+    var brief_wish_list = {};
+    var key = datastore.key([ITEM, parseInt(id,10)]);
+    return datastore.get(key).then(results => {
+        const entity = results[0];
+        if (entity.parent_wish_list){
+            const sId = entity.parent_wish_list;
+            var wish_list_key = datastore.key([WISH_LIST, parseInt(sId,10)]);
+            return datastore.get(wish_list_key).then((wish_list) => {
+                brief_wish_list.id = entity.carrier;
+                brief_wish_list.name = wish_list[0].name;
+                addSelfURL(brief_wish_list, "wish_lists", req);
+                entity.parent_wish_list = brief_wish_list;
+                entity.id = id;
+                addSelfURL(entity, "item", req);
+                return entity;
+            });
+        }
+        else{
+            entity.id = id;
+            addSelfURL(entity, "wish_list", req);
+            return entity;
+        }
+    });       
 }
 
 
-//gets ship singular
-function get_ship(id, req){
+//returns list of all cargo
+function get_all_items(req){
+    var query = datastore.createQuery(ITEM).limit(3);
+    var wish_list_query = datastore.createQuery(WISH_LIST);
+    var all = {};
+
+    if (Object.keys(req.query).includes("cursor")){
+        query = query.start(req.query.cursor);
+    }
+    return datastore.runQuery(query).then( (queryResults) => {
+            queryResults[0].map(fromDatastore);
+            addSelfURLs(queryResults[0], "items", req);
+            return datastore.runQuery(wish_list_query).then((wish_list_results) => {
+                wish_list_results[0].map(fromDatastore);
+                addSelfURLs(wish_list_results[0], "wish_lists", req);
+                for(var i = 0; i < queryResults[0].length; i++){
+                     var wish_list = new Object();
+                    for(var j = 0; j < wish_list_results[0].length; j++){
+                        if (queryResults[0][i].parent_wish_list === wish_list_results[0][j].id){
+                            wish_list.id = wish_list_results[0][j].id;
+                            wish_list.name = wish_list_results[0][j].name;
+                            wish_list.self = wish_list_results[0][j].self;
+                            queryResults[0][i].parent_wish_list = wish_list;
+                        }
+
+                    }
+                }
+            all.items = queryResults[0];
+            all.next = addNextURL(queryResults[1], req, "item", "cursor");
+            return all;
+            });
+        });
+
+}
+
+//used https://cloud.google.com/datastore/docs/concepts/entities
+//for help with this function. Returns a single slip
+function get_slip(id, req){
     //returns undefined if id does not exist
-        const key = datastore.key([SHIP, parseInt(id,10)]);
+        const key = datastore.key([SLIP, parseInt(id,10)]);
+        return datastore.get(key).then(results => {
+            //returns entity if id does exist
+            const entity = results[0];
+            addShipURL(entity, req);
+            fromDatastore(entity);
+            addSelfURL(entity, "slips", req);
+            return entity;
+    });
+}
+
+//gets ship singular
+function get_wish_list(id, req){
+    //returns undefined if id does not exist
+        const key = datastore.key([WISH_LIST, parseInt(id,10)]);
         //console.log("logging key" + key);
-        //var cargoQuery = datastore.createQuery(CARGO);
+        var cargoQuery = datastore.createQuery(CARGO);
         return datastore.get(key).then(results => {
             //returns entity if id does exist
             const entity = results[0];
             entity.id = id;
-            //entity.cargo = [];
-            addSelfURL(entity, "ships", req);
-            //return datastore.runQuery(cargoQuery).then( (cargoResults) => {
-                //cargoResults[0].map(fromDatastore);
-                //for (var i = 0; i < cargoResults[0].length; i++){
-                    //if (cargoResults[0][i].carrier === entity.id){
-                       // var tempCargo = new Object();
-                        //tempCargo.id = cargoResults[0][i].id;
-                        //addSelfURL(tempCargo, "cargo", req);
-                        //entity.cargo.push(tempCargo);
-                    //}
-                //}
+            entity.cargo = [];
+            addSelfURL(entity, "wish_lists", req);
+            return datastore.runQuery(cargoQuery).then( (cargoResults) => {
+                cargoResults[0].map(fromDatastore);
+                for (var i = 0; i < cargoResults[0].length; i++){
+                    if (cargoResults[0][i].carrier === entity.id){
+                        var tempCargo = new Object();
+                        tempCargo.id = cargoResults[0][i].id;
+                        addSelfURL(tempCargo, "cargo", req);
+                        entity.cargo.push(tempCargo);
+                    }
+                }
                 return entity;
-            //});
+            });
     });
 }
 
@@ -179,16 +277,16 @@ function get_ships_by_owner(owner){
 }
 
 //Changes all data in ship to passed in data
-function put_ship(id, name, type, length){
-    const key = datastore.key([SHIP, parseInt(id,10)]);
-    const current_ship = {"name": name, "type": type, "length": length};
-    return datastore.save({"key": key, "data": current_ship});
+function put_wish_list(id, name, type, date){
+    const key = datastore.key([WISH_LIST, parseInt(id,10)]);
+    const wish_list = {"name": name, "type": type, "date": date};
+    return datastore.save({"key": key, "data": wish_list});
 }
 
 //deletes ship and removes it from slip if it is docked
-function delete_ship(id, req){
-    const key = datastore.key([SHIP, parseInt(id,10)]);
-    const ship = datastore.get(key);
+function delete_wish_list(id, req){
+    const key = datastore.key([WISH_LIST, parseInt(id,10)]);
+    const wish_list = datastore.get(key);
     //const slips = get_slips(req);
     //const blank1 = '';
     //const blank2 = '';
@@ -197,9 +295,9 @@ function delete_ship(id, req){
     //console.log("test!");
     //const slipQuery = datastore.createQuery(SLIP);
     //added return 10-27-18
-    //const cargoQuery = datastore.createQuery(CARGO);
+    const cargoQuery = datastore.createQuery(CARGO);
 
-    /*return datastore.runQuery(slipQuery).then( (results) => {
+/*    return datastore.runQuery(slipQuery).then( (results) => {
         //gcloud documentation
         const slips = results[0].map(fromDatastore);
         //console.log(slips.length);
@@ -209,7 +307,7 @@ function delete_ship(id, req){
                 //console.log("found boat");
                  put_slip(slips[i].id, slips[i].number, blank1, blank2);
             }
-        }
+        }*/
         //console.log("before return");
         return datastore.runQuery(cargoQuery).then((cargoResults) =>{
             //console.log("after return");
@@ -220,25 +318,42 @@ function delete_ship(id, req){
                     put_cargo(cargo[i].id, cargo[i].weight, 
                         cargo[i].content);
                 }
-            }*/
+            }
             return datastore.delete(key);
-        //});
+        });
     //});  
 }
 
+//loads cargo on ship
+function load(wish_list_id, item_id){
+    const key = datastore.key([ITEM, parseInt(item_id,10)]);
+    return datastore.get(key).then( result => {
+        const item = result[0];
+        if (!(item.parent_wish_list)){
+            item.parent_wish_list = wish_list_id;
+            return datastore.save({"key":key, "data":item});
+            //(return true);
+           // changed 10/27/18
+            //return true;
+        }
+        else {
+            return false;
+        }
+    });
+}
 
 //deletes all ships
-function delete_all_ships(){
-    const shipQuery = datastore.createQuery(SHIP);
+function delete_all_wish_lists(){
+    const wish_listQuery = datastore.createQuery(WISH_LIST);
     //got error unless used return here. Has something to do with promises, but not sure
     //exactly what the problem is
-    return datastore.runQuery(shipQuery).then( (results) => {
+    return datastore.runQuery(wish_listQuery).then( (results) => {
         //gcloud documentation
-        const ships = results[0].map(fromDatastore);
+        const wish_lists = results[0].map(fromDatastore);
         //console.log(slips.length);
-        for (var i = 0; i < ships.length; i++){
+        for (var i = 0; i < wish_lists.length; i++){
         //console.log("in loop")
-            delete_ship(ships[i].id);
+            delete_ship(wish_lists[i].id);
         }
         //Did not complete request unless return statement was here. Seems that
         //promises require this, but needs more investigation. *This was actually
@@ -320,46 +435,60 @@ router.post('/login', function(req, res){
 });
 
 
+//GET list of slips
+router.get('/wish_lists', function(req, res){
+    const wish_lists = get_wish_lists(req)
+    .then( (slips) => {
+        //console.log(slips);
+        res.status(200).json(slips);
+    });
+});
+
+
 //GET list of ships
-router.get('/ships', function(req, res){
+router.get('/wish_list', function(req, res){
     const accepts = req.accepts(['application/json']);
     if(!accepts){
             res.status(406).send('Not Acceptable');
         }
     else{
-        const ships = get_ships(req)
-	   .then( (ships) => {
+        const wish_list = get_wish_list(req)
+	   .then( (wish_list) => {
         //console.log(ships);
-        res.status(200).json(ships);
+        res.status(200).json(wish_list);
      });
     }
 });
 
-router.get('/users/:userid/ships', checkJwt, function(req, res){
+router.get('/users/:userid/wish_lists', checkJwt, function(req, res){
     const accepts = req.accepts(['application/json']);
     const u = req.params.userid;
     if(!accepts){
             res.status(406).send('Not Acceptable');
         }
     else if (u === req.user.name) {
-       const ships = get_ships_by_owner(req.user.name)
-        .then( (ships) => {
-        res.status(200).json(ships);
+       const wish_lists = get_wish_lists_by_user(req.user.name)
+        .then( (wish_lists) => {
+        res.status(200).json(wish_lists);
     });
     }
 });
 
+//users: first name, last name, birthdate 
+//wish_lists: name, wish_list date, category
+//items: name, price, department
+
 //POST to create new ship
-router.post('/ships', checkJwt, function(req, res){
+router.post('/items', function(req, res){
     //console.log(req.body);
     //console.log(typeof req.body.name);
     //console.log(typeof req.body.length);
-    if (!((typeof req.body.name == 'string') && (typeof req.body.type == 'string')
-     && (typeof req.body.length == 'number'))){
+    if (!((typeof req.body.name == 'string') && (typeof req.body.price == 'number')
+     && (typeof req.body.department == 'string'))){
         res.status(400).send("invalid info");
     }
     else{
-    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/ships/';
+    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/items/';
     const accepts = req.accepts(['application/json']);
     if(req.get('content-type') !== 'application/json'){
         res.status(415).send('The server only accepts application/json data.');
@@ -367,7 +496,7 @@ router.post('/ships', checkJwt, function(req, res){
     if(!accepts){
             res.status(406).send('Not Acceptable');
     }
-    post_ship(req.body.name, req.body.type, req.body.length, req.user.name)
+    post_item(req.body.name, req.body.price, req.body.department)
         .then( key => 
         {
             res.location(reqUrl + key.id);
@@ -376,37 +505,100 @@ router.post('/ships', checkJwt, function(req, res){
     }
 });
 
+//POST to create new ship
+router.post('/wish_list', checkJwt, function(req, res){
+    //console.log(req.body);
+    //console.log(typeof req.body.name);
+    //console.log(typeof req.body.length);
+    if (!((typeof req.body.name == 'string') && (typeof req.body.date == 'string')
+     && (typeof req.body.type == 'string'))){
+        res.status(400).send("invalid info");
+    }
+    else{
+    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/wish_lists/';
+    const accepts = req.accepts(['application/json']);
+    if(req.get('content-type') !== 'application/json'){
+        res.status(415).send('The server only accepts application/json data.');
+    }
+    if(!accepts){
+            res.status(406).send('Not Acceptable');
+    }
+    post_wish_list(req.body.name, req.body.date, req.body.type, req.user.name)
+        .then( key => 
+        {
+            res.location(reqUrl + key.id);
+            res.status(201).send('{ "id": ' + key.id + ' }');
+        });
+    }
+});
+
+//GET list of cargo
+router.get('/items', function(req, res){
+    const items = get_all_items(req)
+    .then( (items) => {
+        //console.log(slips);
+        res.status(200).json(items);
+    });
+});
+
 //GET specific ship
-router.get('/ships/:id', function(req, res){
+router.get('/wish_lists/:id', function(req, res){
     //add 404 not found cases
     //add 415 cases
    
-    findObject(req.params.id, SHIP).then(result => {
+    findObject(req.params.id, WISH_LIST).then(result => {
         const accepts = req.accepts(['application/json', 'text/html']);
         if (result === true){
-            get_ship(req.params.id, req).then( (ship) => {
-        //console.log(ship);
+            get_wish_list(req.params.id, req).then( (wish_list) => {
+        //console.log(ship);y
         if(!accepts){
             res.status(406).send('Not Acceptable');
         }
         else if(accepts === 'application/json'){
-            res.status(200).json(ship);
+            res.status(200).json(wish_list);
         }
         /*if (ship.id){
             res.status(200).json(ship);
         }*/
         else if(accepts === 'text/html'){
             res.set('Content-Type', 'text/html');
-            res.status(200).send(new Buffer(`<ul>
-                                    <li>name</li> 
-                                    <li>${ship.name}</li> 
-                                    <li>id</li> 
-                                    <li>${ship.id}</li> 
-                                    <li>type</li> 
-                                    <li>${ship.type}</li> 
-                                </ul>`
-                                ));
-            //res.status(200).send(json2html(ship).slice(1,-1);
+            res.status(200).json(wish_list);
+        }
+        else{
+            res.status(500).send("There was an error with the content type");
+        }
+        
+    });
+        }
+        else{
+            res.status(404).end();
+        }
+    });
+    
+});
+
+//GET specific ship
+router.get('/items/:id', function(req, res){
+    //add 404 not found cases
+    //add 415 cases
+   
+    findObject(req.params.id, ITEM).then(result => {
+        const accepts = req.accepts(['application/json', 'text/html']);
+        if (result === true){
+            get_item(req.params.id, req).then( (item) => {
+        //console.log(ship);y
+        if(!accepts){
+            res.status(406).send('Not Acceptable');
+        }
+        else if(accepts === 'application/json'){
+            res.status(200).json(item);
+        }
+        /*if (ship.id){
+            res.status(200).json(ship);
+        }*/
+        else if(accepts === 'text/html'){
+            res.set('Content-Type', 'text/html');
+            res.status(200).json(item);
         }
         else{
             res.status(500).send("There was an error with the content type");
@@ -422,19 +614,19 @@ router.get('/ships/:id', function(req, res){
 });
 
 //PUT to edit specific ship
-/*router.put('/ships/:id', function(req, res){
+router.put('/wish_lists/:id', function(req, res){
     if (!((typeof req.body.name == 'string') && (typeof req.body.type == 'string')
-     && (typeof req.body.length == 'number'))){
+     && (typeof req.body.date== 'string'))){
         res.status(400).end();
     }
     else {
-    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/ships/';
-    findObject(req.params.id, SHIP).then(result => {
+    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/wish_lists/';
+    findObject(req.params.id, WISH_LIST).then(result => {
         if (result === true){
             if(req.get('content-type') !== 'application/json'){
                 res.status(415).send('The server only accepts application/json data.');
             }
-            put_ship(req.params.id, req.body.name, req.body.type, req.body.length)
+            put_wish_list(req.params.id, req.body.name, req.body.type, req.body.date)
             .then(() =>
                 {
                     var location = reqUrl + req.params.id;
@@ -448,16 +640,16 @@ router.get('/ships/:id', function(req, res){
     });
 }
     
-});*/
+});
 
 //delete specific ship
-router.delete('/ships/:id', function(req, res){
+router.delete('/wish_lists/:id', function(req, res){
     //console.log('test');
-    findObject(req.params.id, SHIP).then((result) => {
+    findObject(req.params.id, WISH_LIST).then((result) => {
         //console.log("logging result " + result);
        if (result){
             //console.log('deleting ship');
-            delete_ship(req.params.id).then(res.status(204).end());
+            delete_wish_list(req.params.id).then(res.status(204).end());
         }
         else{
             res.status(404).end();
@@ -467,11 +659,30 @@ router.delete('/ships/:id', function(req, res){
 });
 
 //delete all ships
-router.delete('/ships', function(req, res){
+router.delete('/wish_lists', function(req, res){
     //res.set('Accept', 'GET, POST');
     //res.status(405).end();
-    delete_all_ships().then(res.status(200).end());
+    delete_all_wish_lists().then(res.status(200).end());
 });
+
+//add cargo to ship
+router.put('/wish_lists/:wish_list_id/items/:item_id', function(req, res){
+        add_item(req.params.wish_list_id, req.params.item_id).then( (value) => {
+            if (value){
+                res.status(200).end();
+            }
+            else{
+                //return if slip is already taken
+                res.status(403).end('cargo already on another ship');
+            }
+        }); 
+});
+
+//remove cargo from ship
+router.delete('/ships/:ship_id/cargo/:cargo_id', function(req, res){
+    unload(req.params.ship_id, req.params.cargo_id).then(res.status(200).end());
+});
+
 
 //delete all ships
 router.put('/ships', function(req, res){
