@@ -18,9 +18,9 @@ const jwksRsa = require('jwks-rsa');
 const projectId = 'wk8jwt';
 const datastore = new Datastore({projectId:projectId});
 
-const WISH_LIST = "Wish_list";
+const PROJECT = "Project";
 const SLIP = "Slip";
-const ITEM = "Item";
+const EMPLOYEE = "Employee";
 
 const router = express.Router();
 var rp = require('request-promise');
@@ -105,48 +105,63 @@ const checkJwt = jwt({
 
 
 //creates a new ship
-function post_item(name, price, department){
+function post_employee(name, job_title, department){
     var key = datastore.key(ITEM);
-    const new_item= {"name": name, "price": price, "department": department};
-    return datastore.save({"key":key, "data":new_item}).then(() => {return key});
+    const new_employee = {"name": name, "job_title": job_title, "department": department};
+    return datastore.save({"key":key, "data":new_employee}).then(() => {return key});
 }
 
 //creates a new ship
-function post_wish_list(name, date, type){
+function post_project(name, start_date, deadline){
     var key = datastore.key(WISH_LIST);
-	const new_wish_list = {"name": name, "date": date, "type": type};
-	return datastore.save({"key":key, "data":new_wish_list}).then(() => {return key});
+	const new_project = {"name": name, "start_date": start_date, "deadline": deadline};
+	return datastore.save({"key":key, "data":new_project}).then(() => {return key});
 }
 
+//Changes all data in cargo item
+function put_employee(id, name, job_title, department){
+    const key = datastore.key([EMPLOYEE, parseInt(id,10)]);
+    const employee = datastore.get(key);
+    var assignment = {};
+
+    if (employee.assignment){
+        assignment = employee.assignment;
+        const employee = {"name": name, "job_title": job_title, "department": department, "assignment": assignment};
+    }
+    else{
+        const employee = {"name": name, "job_title": job_title, "department": department};
+    }
+    return datastore.save({"key": key, "data": employee});
+}
 
 //returns a list of all ship entities
-function get_wish_lists(req){
-    var wish_list_query = datastore.createQuery(WISH_LIST).limit(5);
-    var wish_list_query_l = datastore.createQuery(WISH_LIST);
-    var wish_list_query
-    var cargoQuery = datastore.createQuery(CARGO);
+function get_projects(req){
+    var projects_query = datastore.createQuery(PROJECT).limit(5);
+    var projects_query_l = datastore.createQuery(PROJECT);
+
+    var employee_query = datastore.createQuery(EMPLOYEE);
     var all = {};
-    var path = "/wish_lists/"
+    var path = "/projects/"
     if (Object.keys(req.query).includes("cursor")){
-        wish_list_query = wish_list_query.start(req.query.cursor);
+        projects_query = projects_query.start(req.query.cursor);
     }
-     return datastore.runQuery(wish_list_query_l).then( (queryResultsl) => {
+     return datastore.runQuery(projects_query_l).then( (queryResultsl) => {
        all.collection_size = queryResultsl[0].length;
-        return datastore.runQuery(wish_list_query).then( (queryResults) => {
+        return datastore.runQuery(projects_query).then( (queryResults) => {
                 //console.log("printing end cursor from get shaips " + queryResults[1].endCursor);
                 queryResults[0].map(fromDatastore);
-                addSelfURLs(queryResults[0], "wish_lists", req);
-                return datastore.runQuery(cargoQuery).then( (cargoResults) => {
-                    cargoResults[0].map(fromDatastore);
-                     addSelfURLs(cargoResults[0], "cargo", req);
+                addSelfURLs(queryResults[0], "projects", req);
+                return datastore.runQuery(employee_query).then( (employeeResults) => {
+                    employeeResults[0].map(fromDatastore);
+                     addSelfURLs(employeeResults[0], "employees", req);
                     for (var i = 0; i < queryResults[0].length; i++){
-                        queryResults[0][i].cargo = [];
-                        for (var j = 0; j < cargoResults[0].length; j++){
-                            if (queryResults[0][i].id === cargoResults[0][j].carrier){
-                                var carg = new Object();
-                                carg.id = cargoResults[0][j].id;
-                                carg.self = cargoResults[0][j].self;
-                                queryResults[0][i].cargo.push(carg);
+                        queryResults[0][i].employees = [];
+                        for (var j = 0; j < employeeResults[0].length; j++){
+                            if (queryResults[0][i].id === employeeResults[0][j].assignment){
+                                var emp= new Object();
+                                emp.id = employeeResults[0][j].id;
+                                emp.self = employeeResults[0][j].self;
+                                queryResults[0][i].employees.push(emp);
                             }
                         }
                         //return queryResults[0];
@@ -165,27 +180,27 @@ function get_wish_lists(req){
 }
 
 //gets cargo data singular
-function get_item(id, req){
-    var brief_wish_list = {};
-    var key = datastore.key([ITEM, parseInt(id,10)]);
+function get_employee(id, req){
+    var brief_project = {};
+    var key = datastore.key([EMPLOYEE, parseInt(id,10)]);
     return datastore.get(key).then(results => {
         const entity = results[0];
-        if (entity.parent_wish_list){
-            const sId = entity.parent_wish_list;
-            var wish_list_key = datastore.key([WISH_LIST, parseInt(sId,10)]);
-            return datastore.get(wish_list_key).then((wish_list) => {
-                brief_wish_list.id = entity.carrier;
-                brief_wish_list.name = wish_list[0].name;
-                addSelfURL(brief_wish_list, "wish_lists", req);
-                entity.parent_wish_list = brief_wish_list;
+        if (entity.assignment){
+            const sId = entity.assignment;
+            var assignment_key = datastore.key([PROJECT, parseInt(sId,10)]);
+            return datastore.get(assignment_key).then((assignment) => {
+                brief_project.id = entity.assignment;
+                brief_project.name = assignment[0].name;
+                addSelfURL(brief_project, "projects", req);
+                entity.assignment = brief_project;
                 entity.id = id;
-                addSelfURL(entity, "item", req);
+                addSelfURL(entity, "employees", req);
                 return entity;
             });
         }
         else{
             entity.id = id;
-            addSelfURL(entity, "wish_list", req);
+            addSelfURL(entity, "projects", req);
             return entity;
         }
     });       
@@ -193,9 +208,9 @@ function get_item(id, req){
 
 
 //returns list of all cargo
-function get_all_items(req){
-    var query = datastore.createQuery(ITEM).limit(3);
-    var wish_list_query = datastore.createQuery(WISH_LIST);
+function get_all_employees(req){
+    var query = datastore.createQuery(EMPLOYEE).limit(5);
+    var project_query = datastore.createQuery(PROJECT);
     var all = {};
 
     if (Object.keys(req.query).includes("cursor")){
@@ -203,18 +218,18 @@ function get_all_items(req){
     }
     return datastore.runQuery(query).then( (queryResults) => {
             queryResults[0].map(fromDatastore);
-            addSelfURLs(queryResults[0], "items", req);
-            return datastore.runQuery(wish_list_query).then((wish_list_results) => {
-                wish_list_results[0].map(fromDatastore);
-                addSelfURLs(wish_list_results[0], "wish_lists", req);
+            addSelfURLs(queryResults[0], "employees", req);
+            return datastore.runQuery(project_query).then((project_results) => {
+                project_results[0].map(fromDatastore);
+                addSelfURLs(project_results[0], "wish_lists", req);
                 for(var i = 0; i < queryResults[0].length; i++){
-                     var wish_list = new Object();
-                    for(var j = 0; j < wish_list_results[0].length; j++){
-                        if (queryResults[0][i].parent_wish_list === wish_list_results[0][j].id){
-                            wish_list.id = wish_list_results[0][j].id;
-                            wish_list.name = wish_list_results[0][j].name;
-                            wish_list.self = wish_list_results[0][j].self;
-                            queryResults[0][i].parent_wish_list = wish_list;
+                     var project = new Object();
+                    for(var j = 0; j < project_results[0].length; j++){
+                        if (queryResults[0][i].assignment === project_results[0][j].id){
+                            project.id = project_results[0][j].id;
+                            project.name = project_results[0][j].name;
+                            project.self = project_results[0][j].self;
+                            queryResults[0][i].assignment = project;
                         }
 
                     }
@@ -227,7 +242,7 @@ function get_all_items(req){
 
 }
 
-//used https://cloud.google.com/datastore/docs/concepts/entities
+/*//used https://cloud.google.com/datastore/docs/concepts/entities
 //for help with this function. Returns a single slip
 function get_slip(id, req){
     //returns undefined if id does not exist
@@ -241,27 +256,27 @@ function get_slip(id, req){
             return entity;
     });
 }
-
+*/
 //gets ship singular
-function get_wish_list(id, req){
+function get_project(id, req){
     //returns undefined if id does not exist
-        const key = datastore.key([WISH_LIST, parseInt(id,10)]);
+        const key = datastore.key([PROJECT, parseInt(id,10)]);
         //console.log("logging key" + key);
-        var cargoQuery = datastore.createQuery(CARGO);
+        var employeeQuery = datastore.createQuery(EMPLOYEE);
         return datastore.get(key).then(results => {
             //returns entity if id does exist
             const entity = results[0];
             entity.id = id;
-            entity.cargo = [];
-            addSelfURL(entity, "wish_lists", req);
-            return datastore.runQuery(cargoQuery).then( (cargoResults) => {
-                cargoResults[0].map(fromDatastore);
-                for (var i = 0; i < cargoResults[0].length; i++){
-                    if (cargoResults[0][i].carrier === entity.id){
-                        var tempCargo = new Object();
-                        tempCargo.id = cargoResults[0][i].id;
-                        addSelfURL(tempCargo, "cargo", req);
-                        entity.cargo.push(tempCargo);
+            entity.employees = [];
+            addSelfURL(entity, "projects", req);
+            return datastore.runQuery(employeeQuery).then( (employeeResults) => {
+                employeeResults[0].map(fromDatastore);
+                for (var i = 0; i < employeeResults[0].length; i++){
+                    if (employeeResults[0][i].assignment === entity.id){
+                        var tempEmployee = new Object();
+                        tempEmployee.id = employeeResults[0][i].id;
+                        addSelfURL(tempEmployee, "employees", req);
+                        entity.employees.push(tempEmployee);
                     }
                 }
                 return entity;
@@ -269,54 +284,32 @@ function get_wish_list(id, req){
     });
 }
 
-function get_ships_by_owner(owner){
-    const q = datastore.createQuery(SHIP);
+function get_projects_by_owner(owner){
+    const q = datastore.createQuery(PROJECT);
     return datastore.runQuery(q).then( (entities) => {
-            return entities[0].map(fromDatastore).filter( item => item.owner === owner );
+            return entities[0].map(fromDatastore).filter( item => item.supervisor === owner );
         });
 }
 
 //Changes all data in ship to passed in data
-function put_wish_list(id, name, type, date){
-    const key = datastore.key([WISH_LIST, parseInt(id,10)]);
-    const wish_list = {"name": name, "type": type, "date": date};
-    return datastore.save({"key": key, "data": wish_list});
+function put_project(id, name, start_date, deadline){
+    const key = datastore.key([PROJECT, parseInt(id,10)]);
+    const project = {"name": name, "start_date": start_date, "deadline": deadline};
+    return datastore.save({"key": key, "data": project});
 }
 
 //deletes ship and removes it from slip if it is docked
-function delete_wish_list(id, req){
-    const key = datastore.key([WISH_LIST, parseInt(id,10)]);
-    const wish_list = datastore.get(key);
-    //const slips = get_slips(req);
-    //const blank1 = '';
-    //const blank2 = '';
-    //const carrier = '';
-    //const delivery_date = '';
-    //console.log("test!");
-    //const slipQuery = datastore.createQuery(SLIP);
-    //added return 10-27-18
-    const cargoQuery = datastore.createQuery(CARGO);
-
-/*    return datastore.runQuery(slipQuery).then( (results) => {
-        //gcloud documentation
-        const slips = results[0].map(fromDatastore);
-        //console.log(slips.length);
-        for (var i = 0; i < slips.length; i++){
-        //console.log("in loop");
-            if (slips[i].current_boat == id){
-                //console.log("found boat");
-                 put_slip(slips[i].id, slips[i].number, blank1, blank2);
-            }
-        }*/
-        //console.log("before return");
-        return datastore.runQuery(cargoQuery).then((cargoResults) =>{
+function delete_project(id, req){
+    const key = datastore.key([PROJECT, parseInt(id,10)]);
+    const project = datastore.get(key);
+    const emloyeeQuery = datastore.createQuery(EMPLOYEE);
+        return datastore.runQuery(employeeQuery).then((employeeResults) =>{
             //console.log("after return");
-            const cargo = cargoResults[0].map(fromDatastore);
+            const employees = employeeResults[0].map(fromDatastore);
            // console.log("logging cargo" + cargo);
-            for (var j = 0; j < cargo.length; j++){
-                if (cargo[i].carrier === id){
-                    put_cargo(cargo[i].id, cargo[i].weight, 
-                        cargo[i].content);
+            for (var j = 0; j < employees.length; j++){
+                if (employees[i].assignment === id){
+                    unassign(id, employees[i].id);
                 }
             }
             return datastore.delete(key);
@@ -325,13 +318,13 @@ function delete_wish_list(id, req){
 }
 
 //loads cargo on ship
-function load(wish_list_id, item_id){
-    const key = datastore.key([ITEM, parseInt(item_id,10)]);
+function assign(project_id, employee_id){
+    const key = datastore.key([EMPLOYEE, parseInt(employee_id,10)]);
     return datastore.get(key).then( result => {
-        const item = result[0];
-        if (!(item.parent_wish_list)){
-            item.parent_wish_list = wish_list_id;
-            return datastore.save({"key":key, "data":item});
+        const employee = result[0];
+        if (!(employee.assignment)){
+            employee.assignment = project_id;
+            return datastore.save({"key":key, "data":employee});
             //(return true);
            // changed 10/27/18
             //return true;
@@ -343,17 +336,17 @@ function load(wish_list_id, item_id){
 }
 
 //deletes all ships
-function delete_all_wish_lists(){
-    const wish_listQuery = datastore.createQuery(WISH_LIST);
+function delete_all_projects(){
+    const projectQuery = datastore.createQuery(PROJECT);
     //got error unless used return here. Has something to do with promises, but not sure
     //exactly what the problem is
-    return datastore.runQuery(wish_listQuery).then( (results) => {
+    return datastore.runQuery(projectQuery).then( (results) => {
         //gcloud documentation
-        const wish_lists = results[0].map(fromDatastore);
+        const projects = results[0].map(fromDatastore);
         //console.log(slips.length);
-        for (var i = 0; i < wish_lists.length; i++){
+        for (var i = 0; i < projects.length; i++){
         //console.log("in loop")
-            delete_ship(wish_lists[i].id);
+            delete_project(projects[i].id);
         }
         //Did not complete request unless return statement was here. Seems that
         //promises require this, but needs more investigation. *This was actually
@@ -362,15 +355,56 @@ function delete_all_wish_lists(){
     });
 }
 
+//deletes cargo
+function delete_employee(id){
+    //deletes slip
+    const key = datastore.key([EMPLOYEE, parseInt(id,10)]);
+    return datastore.delete(key);
+}
+
+//deletes all cargo
+function delete_all_cargo(){
+    const cargoQuery = datastore.createQuery(CARGO);
+    //got error unless used return here. Has something to do with promises, but not sure
+    //exactly what the problem is
+    return datastore.runQuery(cargoQuery).then( (results) => {
+        //gcloud documentation
+        const cargo = results[0].map(fromDatastore);
+        //console.log(slips.length);
+        for (var i = 0; i < cargo.length; i++){
+        //console.log("in loop");
+            //console.log("found boat");
+            delete_cargo(cargo[i].id);
+        }
+        //Did not complete request unless return statement was here. Seems that
+        //promises require this, but needs more investigation. *This was actually
+        //an issue with the response.
+        //return true;
+    });
+}
+
+//unloads cargo from ship
+function unassign(project_id, employee_id){
+     const key = datastore.key([EMPLOYEE, parseInt(employee_id,10)]);
+    return datastore.get(key).then(result => {
+        const employee = result[0];
+        if (employee.assignment == project_id){
+            employee.assignment = '';
+            return datastore.save({"key":key, "data":employee});
+        }
+    });
+}
 
 /* ------------- End Model Functions ------------- */
 
 /* ------------- Begin Ship Controller Functions ------------- */
 
 router.post('/users', function(req, res){
-    const username = req.body.username;
+    const email = req.body.email;
     const pass = req.body.password;
-    console.log(username);
+    const nickname = req.body.nickname;
+    const name = req.body.name;
+    //console.log(username);
     var options = {
         method: 'POST',
         url: 'https://wk8jwt.auth0.com/api/v2/users',
@@ -381,7 +415,9 @@ router.post('/users', function(req, res){
         body:
         {
             connection: "Username-Password-Authentication",
-            email: username,
+            email: email,
+            name: name,
+            nickname: nickname,
             password: pass,
             email_verified: false,
             verify_email: false
@@ -434,6 +470,131 @@ router.post('/login', function(req, res){
         
 });
 
+router.delete('/users/:userid', function(req, res){
+    const username = req.body.username;
+    const pass = req.body.password;
+    const u = req.params.userid;
+    console.log(username);
+    var options = {
+        method: 'DELETE',
+        url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
+        },
+        body:
+        {
+            
+        },
+        json: true
+    };
+
+    rp(options)
+    .then(function (body) {
+        console.log("delete worked" + body);
+        //res.render('info', parsedBody.displayName);
+        res.send(body);
+    })
+    .catch(function (error) {
+        console.log("info could not load error is " + error);
+    });
+        
+});
+
+router.put('/users/:userid', function(req, res){
+    const email = req.body.email;
+    const pass = req.body.password;
+    const nickname = req.body.nickname;
+    const name = req.body.name;
+    const u = req.params.userid;
+    var options = {
+        method: 'PATCH',
+        url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
+        },
+        body:
+        {
+            email: email,
+            password: pass,
+            nickname: nickname,
+            name: name
+        },
+        json: true
+    };
+
+    rp(options)
+    .then(function (body) {
+        console.log("put worked" + body);
+        //res.render('info', parsedBody.displayName);
+        res.send(body);
+    })
+    .catch(function (error) {
+        console.log("info could not load error is " + error);
+    });
+        
+});
+
+router.get('/users', function(req, res){
+    const username = req.body.username;
+    const pass = req.body.password;
+
+    var options = {
+        method: 'GET',
+        url: 'https://wk8jwt.auth0.com/api/v2/users',
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
+        },
+        body:
+        {
+           
+        },
+        json: true
+    };
+
+    rp(options)
+    .then(function (body) {
+        console.log("put worked" + body);
+        //res.render('info', parsedBody.displayName);
+        res.send(body);
+    })
+    .catch(function (error) {
+        console.log("info could not load error is " + error);
+    });
+        
+});
+
+router.get('/users/:userid', function(req, res){
+    const username = req.body.username;
+    const pass = req.body.password;
+    const u = req.params.userid;
+    var options = {
+        method: 'GET',
+        url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
+        headers: {
+            'content-type': 'application/json',
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
+        },
+        body:
+        {
+            
+        },
+        json: true
+    };
+
+    rp(options)
+    .then(function (body) {
+        console.log("put worked" + body);
+        //res.render('info', parsedBody.displayName);
+        res.send(body);
+    })
+    .catch(function (error) {
+        console.log("info could not load error is " + error);
+    });
+        
+});
 
 //GET list of slips
 router.get('/wish_lists', function(req, res){
