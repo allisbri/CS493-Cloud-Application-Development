@@ -104,18 +104,20 @@ const checkJwt = jwt({
 //items: name, price, department
 
 function check_relationship(employee_id, project_id){
-    var key = datastore.key([EMPLOYEE, parseInt(id,10)]);
+    var key = datastore.key([EMPLOYEE, parseInt(employee_id,10)]);
     return datastore.get(key).then((results) => {
-        if (results[0].assignment === project_id){
-            return 0;
+        if (results[0].assignment){
+            if (results[0].assignment === project_id){
+                return zero;
+            }
             //equal assignment
         }
         else if (!results[0].assignment){
-            return 1;
+            return one;
             //no assignment
         }
         else{
-            return 2;
+            return two;
             //unequal assignment
         }
     });
@@ -143,12 +145,12 @@ function put_employee(id, name, job_title, department){
 
     if (employee.assignment){
         assignment = employee.assignment;
-        const employee = {"name": name, "job_title": job_title, "department": department, "assignment": assignment};
+        var emp = {"name": name, "job_title": job_title, "department": department, "assignment": assignment};
     }
     else{
-        const employee = {"name": name, "job_title": job_title, "department": department};
+        var emp = {"name": name, "job_title": job_title, "department": department};
     }
-    return datastore.save({"key": key, "data": employee});
+    return datastore.save({"key": key, "data": emp});
 }
 
 //returns a list of all ship entities
@@ -227,7 +229,7 @@ function get_employees(req){
                     }
                 }
             all.items = queryResults[0];
-            all.next = addNextURL(queryResults[1], req, "item", "cursor");
+            all.next = addNextURL(queryResults[1], req, "/employees/", "cursor");
             return all;
             });
         });
@@ -256,7 +258,7 @@ function get_employee(id, req){
         }
         else{
             entity.id = id;
-            addSelfURL(entity, "projects", req);
+            addSelfURL(entity, "employees", req);
             return entity;
         }
     });       
@@ -316,8 +318,8 @@ function delete_project(id, req){
             const employees = employeeResults[0].map(fromDatastore);
            // console.log("logging cargo" + cargo);
             for (var j = 0; j < employees.length; j++){
-                if (employees[i].assignment === id){
-                    unassign(id, employees[i].id);
+                if (employees[j].assignment === id){
+                    unassign(id, employees[j].id);
                 }
             }
             return datastore.delete(key);
@@ -333,13 +335,31 @@ function assign(project_id, employee_id){
         if (!(employee.assignment)){
             employee.assignment = project_id;
             return datastore.save({"key":key, "data":employee});
-            //(return true);
-           // changed 10/27/18
-            //return true;
         }
         else {
             return false;
         }
+    });
+}
+
+function delete_projects_of_leader(project_leader){
+    const projectQuery = datastore.createQuery(PROJECT);
+    const employeeQuery = datastore.createQuery(EMPLOYEE);
+
+    return datastore.runQuery(projectQuery).then( (results) => {
+        return datastore.runQuery(employeeQuery).then((empres) => {
+            //gcloud documentation
+            const projects = results[0].map(fromDatastore);
+            const employees = empres[0].map(fromDatastore);
+            //console.log(slips.length);
+            for (var i = 0; i < projects.length; i++){
+            //console.log("in loop")
+                if (projects[i].project_leader === project_leader){
+                        delete_project(projects[i].id);
+                }
+                
+            }
+        });
     });
 }
 
@@ -509,8 +529,9 @@ router.delete('/users/:userid', checkJwt, function(req, res){
         rp(options)
         .then(function (body) {
             console.log("delete worked" + body);
+            delete_projects_of_leader(req.user.name);
             //res.render('info', parsedBody.displayName);
-            res.send(body);
+            res.status(204).send(body);
         })
         .catch(function (error) {
             console.log("info could not load error is " + error);
@@ -667,6 +688,7 @@ router.post('/projects', checkJwt, function(req, res){
     if (!req.user.name){
         res.status(401).end();
     }
+    else{
     var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/projects/';
     post_project(req.body.name, req.body.start_date, req.body.deadline, req.user.name)
         .then( key => 
@@ -674,6 +696,7 @@ router.post('/projects', checkJwt, function(req, res){
             res.location(reqUrl + key.id);
             res.status(201).send('{ "id": ' + key.id + ' }');
         });
+    }
 });
 
 
@@ -686,8 +709,10 @@ router.get('/projects/:id', function(req, res){
         const accepts = req.accepts(['application/json']);
         if (result !== true){
             res.status(404).end();
+            console.log("here");
         }
-
+        else{
+        console.log("here2");
         get_project(req.params.id, req).then( (project) => {
         //console.log(ship);y
         
@@ -699,7 +724,11 @@ router.get('/projects/:id', function(req, res){
             } 
 
         });
+        }
         
+    })
+    .catch((error) => {
+        res.status(404).end();
     });
     
 });
@@ -711,12 +740,17 @@ router.get('/employees/:id', function(req, res){
         if (result !== true){
             res.status(404).end();
         }
-        if(!accepts){
-            res.status(406).send('Not Acceptable');
+        else{
+            if(!accepts){
+                res.status(406).send('Not Acceptable');
+            }
+            else{
+                get_employee(req.params.id, req).then( (employee) => {
+                    res.status(200).json(employee);  
+                });
+        
+            }
         }
-        get_employee(req.params.id, req).then( (employee) => {
-        res.status(200).json(employee);  
-    });
     }); 
 });
 
@@ -738,76 +772,91 @@ router.put('/projects/:id', checkJwt, function(req, res){
         if (!req.user.name){
             res.status(401).end();
         }
+        else {
         var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/projects/';
         findObject(req.params.id, PROJECT).then((result) => {
         console.log("find result is " + result);
         if (result !== true){
             res.status(404).end();
         }
+        else{
         const proj = get_project(id, req).then((proj) => {
             console.log("get proj result is " + proj);
             if (!(proj.project_leader === req.user.name)){
                 res.status(403).end();
             }
+            else{
             put_project(req.params.id, req.body.name, req.body.start_date, req.body.deadline, req.user.name)
             .then(() =>
             {
                 res.status(200).end();
             });
+            }
         });
-        
+        }
     });  
+    }
 });
 
-router.put('/employees', function(req, res){
+router.put('/employees/:id', function(req, res){
         var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/employees/';
-        findObject(req.params.id, PROJECT).then(result => {
-            if (result !== true){
-                res.status(404).end();
-            }
-            put_project(req.params.id, req.body.name, req.body.start_date, req.body.deadline, req.user.name)
+        const id = req.params.id;
+
+        findObject(id, EMPLOYEE).then((result) => {
+        console.log("find result is " + result);
+        if (result !== true){
+            res.status(404).end();
+        }
+        else{
+        const emp = get_employee(id, req).then((emp) => {
+            console.log("get emp result is " + emp);
+            put_employee(req.params.id, req.body.name, req.body.job_title, req.body.department)
             .then(() =>
-                {
-                    res.status(200).end();
-                });
-    });   
+            {
+                res.status(200).end();
+            });
+        });
+        }
+    }); 
 });
 
 //delete specific ship
 router.delete('/projects/:id', checkJwt, function(req, res){
     //console.log('test');
     const id = req.params.id;
-        if (!req.user.name){
-            res.status(401).end();
-        }
+    if (!req.user.name){
+        res.status(401).end();
+    }
+    else{
         var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/projects/';
         findObject(req.params.id, PROJECT).then((result) => {
         console.log("find result is " + result);
         if (result !== true){
             res.status(404).end();
         }
-        const proj = get_project(id, req).then((proj) => {
-            console.log("get proj result is " + proj);
-            if (!(proj.project_leader === req.user.name)){
-                res.status(403).end();
-            }
-            delete_project(req.params.id).
-            then(() =>
-            {
-                res.status(204).end();
+        else{
+            const proj = get_project(id, req).then((proj) => {
+                console.log("get proj result is " + proj);
+                if (!(proj.project_leader === req.user.name)){
+                    res.status(403).end();
+                }
+                else{
+                    delete_project(req.params.id).
+                    then(() =>
+                    {
+                        res.status(204).end();
+                    });
+                }
             });
-        });
-        
-    });  
-    
+        }
+        });  
+    }
 });
 
 //delete specific ship
-router.delete('/employees/:id', checkJwt, function(req, res){
+router.delete('/employees/:id', function(req, res){
     //console.log('test');
     findObject(req.params.id, EMPLOYEE).then((result) => {
-        //console.log("logging result " + result);
-        const u = req.params.userid;
        if (result){
             //console.log('deleting ship');
             delete_employee(req.params.id).then(res.status(204).end());
@@ -852,17 +901,19 @@ router.put('/projects/:project_id/employees/:employee_id', function(req, res){
         {
             res.status(404).end();
         }
-        if (check_relationship(req.params.project_id) === 2){
+        else if (check_relationship(req.params.employee_id, req.params.project_id) === 2){
             res.status(404).end();
         }
-        if (check_relationship(req.params.project_id) === 0){
+        else if (check_relationship(req.params.employee_id, req.params.project_id) === 0){
             res.status(405).end();
         }
-        assign(req.params.project_id, req.params.employee_id).then( (value) => {
-            if (value){
-                res.status(200).end();
-            }
-        }); 
+        else{
+            assign(req.params.project_id, req.params.employee_id).then( (value) => {
+                if (value){
+                    res.status(200).end();
+                }
+            }); 
+        }
 });
 });
 });
@@ -875,10 +926,12 @@ router.delete('/projects/:project_id/employees/:employee_id', function(req, res)
         {
             res.status(404).end();
         }
-        if (!(check_relationship(req.params.project_id) === 0)){
+        else if (!(check_relationship(req.params.employee_id, req.params.project_id) === 0)){
             res.status(404).end();
         }
-        unassign(req.params.project_id, req.params.employee_id).then(res.status(200).end());
+        else{
+            unassign(req.params.project_id, req.params.employee_id).then(res.status(200).end());
+        }
     });
 });
 });
