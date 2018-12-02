@@ -103,18 +103,35 @@ const checkJwt = jwt({
 //wish_lists: title, wish_list date, category
 //items: name, price, department
 
+function check_relationship(employee_id, project_id){
+    var key = datastore.key([EMPLOYEE, parseInt(id,10)]);
+    return datastore.get(key).then((results) => {
+        if (results[0].assignment === project_id){
+            return 0;
+            //equal assignment
+        }
+        else if (!results[0].assignment){
+            return 1;
+            //no assignment
+        }
+        else{
+            return 2;
+            //unequal assignment
+        }
+    });
+}
 
 //creates a new ship
 function post_employee(name, job_title, department){
-    var key = datastore.key(ITEM);
+    var key = datastore.key(EMPLOYEE);
     const new_employee = {"name": name, "job_title": job_title, "department": department};
     return datastore.save({"key":key, "data":new_employee}).then(() => {return key});
 }
 
 //creates a new ship
-function post_project(name, start_date, deadline){
-    var key = datastore.key(WISH_LIST);
-	const new_project = {"name": name, "start_date": start_date, "deadline": deadline};
+function post_project(name, start_date, deadline, project_leader){
+    var key = datastore.key(PROJECT);
+	const new_project = {"name": name, "start_date": start_date, "deadline": deadline, "project_leader": project_leader};
 	return datastore.save({"key":key, "data":new_project}).then(() => {return key});
 }
 
@@ -179,6 +196,45 @@ function get_projects(req){
     });
 }
 
+//returns list of all cargo
+function get_employees(req){
+    var query = datastore.createQuery(EMPLOYEE).limit(5);
+    var project_query = datastore.createQuery(PROJECT);
+    var query_l = datastore.createQuery(EMPLOYEE);
+    var all = {};
+
+    if (Object.keys(req.query).includes("cursor")){
+        query = query.start(req.query.cursor);
+    }
+    return datastore.runQuery(query).then( (queryResults) => {
+        return datastore.runQuery(query_l).then( (query_lResults) => {
+            all.collection_size = query_lResults[0].length;
+            queryResults[0].map(fromDatastore);
+            addSelfURLs(queryResults[0], "employees", req);
+            return datastore.runQuery(project_query).then((project_results) => {
+                project_results[0].map(fromDatastore);
+                addSelfURLs(project_results[0], "wish_lists", req);
+                for(var i = 0; i < queryResults[0].length; i++){
+                     var project = new Object();
+                    for(var j = 0; j < project_results[0].length; j++){
+                        if (queryResults[0][i].assignment === project_results[0][j].id){
+                            project.id = project_results[0][j].id;
+                            project.name = project_results[0][j].name;
+                            project.self = project_results[0][j].self;
+                            queryResults[0][i].assignment = project;
+                        }
+
+                    }
+                }
+            all.items = queryResults[0];
+            all.next = addNextURL(queryResults[1], req, "item", "cursor");
+            return all;
+            });
+        });
+    });
+
+}
+
 //gets cargo data singular
 function get_employee(id, req){
     var brief_project = {};
@@ -207,56 +263,8 @@ function get_employee(id, req){
 }
 
 
-//returns list of all cargo
-function get_all_employees(req){
-    var query = datastore.createQuery(EMPLOYEE).limit(5);
-    var project_query = datastore.createQuery(PROJECT);
-    var all = {};
 
-    if (Object.keys(req.query).includes("cursor")){
-        query = query.start(req.query.cursor);
-    }
-    return datastore.runQuery(query).then( (queryResults) => {
-            queryResults[0].map(fromDatastore);
-            addSelfURLs(queryResults[0], "employees", req);
-            return datastore.runQuery(project_query).then((project_results) => {
-                project_results[0].map(fromDatastore);
-                addSelfURLs(project_results[0], "wish_lists", req);
-                for(var i = 0; i < queryResults[0].length; i++){
-                     var project = new Object();
-                    for(var j = 0; j < project_results[0].length; j++){
-                        if (queryResults[0][i].assignment === project_results[0][j].id){
-                            project.id = project_results[0][j].id;
-                            project.name = project_results[0][j].name;
-                            project.self = project_results[0][j].self;
-                            queryResults[0][i].assignment = project;
-                        }
 
-                    }
-                }
-            all.items = queryResults[0];
-            all.next = addNextURL(queryResults[1], req, "item", "cursor");
-            return all;
-            });
-        });
-
-}
-
-/*//used https://cloud.google.com/datastore/docs/concepts/entities
-//for help with this function. Returns a single slip
-function get_slip(id, req){
-    //returns undefined if id does not exist
-        const key = datastore.key([SLIP, parseInt(id,10)]);
-        return datastore.get(key).then(results => {
-            //returns entity if id does exist
-            const entity = results[0];
-            addShipURL(entity, req);
-            fromDatastore(entity);
-            addSelfURL(entity, "slips", req);
-            return entity;
-    });
-}
-*/
 //gets ship singular
 function get_project(id, req){
     //returns undefined if id does not exist
@@ -284,17 +292,17 @@ function get_project(id, req){
     });
 }
 
-function get_projects_by_owner(owner){
+function get_projects_by_user(owner){
     const q = datastore.createQuery(PROJECT);
     return datastore.runQuery(q).then( (entities) => {
-            return entities[0].map(fromDatastore).filter( item => item.supervisor === owner );
+            return entities[0].map(fromDatastore).filter( item => item.project_leader === owner );
         });
 }
 
 //Changes all data in ship to passed in data
-function put_project(id, name, start_date, deadline){
+function put_project(id, name, start_date, deadline, user){
     const key = datastore.key([PROJECT, parseInt(id,10)]);
-    const project = {"name": name, "start_date": start_date, "deadline": deadline};
+    const project = {"name": name, "start_date": start_date, "deadline": deadline, "project_leader": user};
     return datastore.save({"key": key, "data": project});
 }
 
@@ -302,7 +310,7 @@ function put_project(id, name, start_date, deadline){
 function delete_project(id, req){
     const key = datastore.key([PROJECT, parseInt(id,10)]);
     const project = datastore.get(key);
-    const emloyeeQuery = datastore.createQuery(EMPLOYEE);
+    const employeeQuery = datastore.createQuery(EMPLOYEE);
         return datastore.runQuery(employeeQuery).then((employeeResults) =>{
             //console.log("after return");
             const employees = employeeResults[0].map(fromDatastore);
@@ -363,18 +371,18 @@ function delete_employee(id){
 }
 
 //deletes all cargo
-function delete_all_cargo(){
-    const cargoQuery = datastore.createQuery(CARGO);
+function delete_all_employees(){
+    const employeeQuery = datastore.createQuery(EMPLOYEE);
     //got error unless used return here. Has something to do with promises, but not sure
     //exactly what the problem is
-    return datastore.runQuery(cargoQuery).then( (results) => {
+    return datastore.runQuery(employeeQuery).then( (results) => {
         //gcloud documentation
-        const cargo = results[0].map(fromDatastore);
+        const employees = results[0].map(fromDatastore);
         //console.log(slips.length);
-        for (var i = 0; i < cargo.length; i++){
+        for (var i = 0; i < employees.length; i++){
         //console.log("in loop");
             //console.log("found boat");
-            delete_cargo(cargo[i].id);
+            delete_employee(employees[i].id);
         }
         //Did not complete request unless return statement was here. Seems that
         //promises require this, but needs more investigation. *This was actually
@@ -410,7 +418,7 @@ router.post('/users', function(req, res){
         url: 'https://wk8jwt.auth0.com/api/v2/users',
         headers: {
             'content-type': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoidk1VMWZCZzBDQzZHa1hkMk0wNnNYYzdoOVAyRXgyWmRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQzNzMzMDI2LCJleHAiOjE1NDYzMjUwMjYsImF6cCI6InZNVTFmQmcwQ0M2R2tYZDJNMDZzWGM3aDlQMkV4MlpkIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.ujTh3qxgzcgqwMQzUK_nO3IjRklscblxyGJJhXQZ3dkM2QeZFLvNEl_ktzOqpFRwY6_tXdRXjRAWWsH8uJMbYhrCKkQZzvJAn6XkYDlFC-nXHB2UYlUu4WEARb-qkYa0_xv_f7tnkHE7SHnmfIQgj4vckeBr_XOtQ5XP263bfWUyUyXh3kOdQgXdBfadatu1bl4tgAO6qN6AfFp1Z5-ugOnwkPHgDQ_sSnL6FPLKA1zXdk3d4eaV9Li7Ws156bGfS5rG4jHMhveu-6XzAkwv4wjqgfB4CwcwMyMkJW0a_k_FFJMUMsNjyuG2K7BcWxZC0C84fW_bFKxh0Amzfr9SuQ'
         },
         body:
         {
@@ -433,6 +441,7 @@ router.post('/users', function(req, res){
     })
     .catch(function (error) {
         console.log("info could not load error is " + error);
+        res.status(error.statusCode).end();
     });
         
 });
@@ -466,77 +475,101 @@ router.post('/login', function(req, res){
     })
     .catch(function (error) {
         console.log("info could not load error is " + error);
+        res.status(error.statusCode).end();
     });
         
 });
 
-router.delete('/users/:userid', function(req, res){
+router.delete('/users/:userid', checkJwt, function(req, res){
     const username = req.body.username;
     const pass = req.body.password;
     const u = req.params.userid;
     console.log(username);
-    var options = {
-        method: 'DELETE',
-        url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
-        },
-        body:
-        {
-            
-        },
-        json: true
-    };
+    if (!req.user.name){
+        res.status(401).end();
+    }
+    else if (u !== req.user.sub){
+        res.status(403).end();
+    }
+    else{
+        var options = {
+            method: 'DELETE',
+            url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoidk1VMWZCZzBDQzZHa1hkMk0wNnNYYzdoOVAyRXgyWmRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQzNzMzMDI2LCJleHAiOjE1NDYzMjUwMjYsImF6cCI6InZNVTFmQmcwQ0M2R2tYZDJNMDZzWGM3aDlQMkV4MlpkIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.ujTh3qxgzcgqwMQzUK_nO3IjRklscblxyGJJhXQZ3dkM2QeZFLvNEl_ktzOqpFRwY6_tXdRXjRAWWsH8uJMbYhrCKkQZzvJAn6XkYDlFC-nXHB2UYlUu4WEARb-qkYa0_xv_f7tnkHE7SHnmfIQgj4vckeBr_XOtQ5XP263bfWUyUyXh3kOdQgXdBfadatu1bl4tgAO6qN6AfFp1Z5-ugOnwkPHgDQ_sSnL6FPLKA1zXdk3d4eaV9Li7Ws156bGfS5rG4jHMhveu-6XzAkwv4wjqgfB4CwcwMyMkJW0a_k_FFJMUMsNjyuG2K7BcWxZC0C84fW_bFKxh0Amzfr9SuQ'
+            },
+            body:
+            {
+                
+            },
+            json: true
+        };
 
-    rp(options)
-    .then(function (body) {
-        console.log("delete worked" + body);
-        //res.render('info', parsedBody.displayName);
-        res.send(body);
-    })
-    .catch(function (error) {
-        console.log("info could not load error is " + error);
-    });
+        rp(options)
+        .then(function (body) {
+            console.log("delete worked" + body);
+            //res.render('info', parsedBody.displayName);
+            res.send(body);
+        })
+        .catch(function (error) {
+            console.log("info could not load error is " + error);
+            res.status(error.statusCode).end();
+        });
+    }
         
 });
 
-router.put('/users/:userid', function(req, res){
+router.put('/users/:userid', checkJwt, function(req, res){
+    const u = req.params.userid;
     const email = req.body.email;
     const pass = req.body.password;
     const nickname = req.body.nickname;
     const name = req.body.name;
-    const u = req.params.userid;
-    var options = {
-        method: 'PATCH',
-        url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
-        },
-        body:
-        {
-            email: email,
-            password: pass,
-            nickname: nickname,
-            name: name
-        },
-        json: true
-    };
+    //console.log("logging u " + u);
+    //console.log("logging req.user.user_id " + JSON.parse(req.user));
+    if (!req.user.name){
+        res.status(401).end();
+    }
+    else if (!(u === req.user.sub)){
+        res.status(403).end();
+    }
+    else{
+        var options = {
+            method: 'PATCH',
+            url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoidk1VMWZCZzBDQzZHa1hkMk0wNnNYYzdoOVAyRXgyWmRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQzNzMzMDI2LCJleHAiOjE1NDYzMjUwMjYsImF6cCI6InZNVTFmQmcwQ0M2R2tYZDJNMDZzWGM3aDlQMkV4MlpkIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.ujTh3qxgzcgqwMQzUK_nO3IjRklscblxyGJJhXQZ3dkM2QeZFLvNEl_ktzOqpFRwY6_tXdRXjRAWWsH8uJMbYhrCKkQZzvJAn6XkYDlFC-nXHB2UYlUu4WEARb-qkYa0_xv_f7tnkHE7SHnmfIQgj4vckeBr_XOtQ5XP263bfWUyUyXh3kOdQgXdBfadatu1bl4tgAO6qN6AfFp1Z5-ugOnwkPHgDQ_sSnL6FPLKA1zXdk3d4eaV9Li7Ws156bGfS5rG4jHMhveu-6XzAkwv4wjqgfB4CwcwMyMkJW0a_k_FFJMUMsNjyuG2K7BcWxZC0C84fW_bFKxh0Amzfr9SuQ'
+            },
+            body:
+            {
+                email: email,
+                nickname: nickname,
+                name: name
+            },
+            json: true
+        };
 
-    rp(options)
-    .then(function (body) {
-        console.log("put worked" + body);
-        //res.render('info', parsedBody.displayName);
-        res.send(body);
-    })
-    .catch(function (error) {
-        console.log("info could not load error is " + error);
-    });
-        
+        rp(options)
+        .then(function (body) {
+            console.log("put worked" + body);
+            //res.render('info', parsedBody.displayName);
+            res.send(body);
+        })
+        .catch(function (error) {
+            console.log("info could not load error is " + error);
+            res.status(error.statusCode).end();
+        });
+   }     
 });
 
+
 router.get('/users', function(req, res){
+    const accepts = req.accepts(['application/json', 'text/html']);
+        if(!accepts){
+            res.status(406).send('Not Acceptable');
+        }
     const username = req.body.username;
     const pass = req.body.password;
 
@@ -545,7 +578,7 @@ router.get('/users', function(req, res){
         url: 'https://wk8jwt.auth0.com/api/v2/users',
         headers: {
             'content-type': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoidk1VMWZCZzBDQzZHa1hkMk0wNnNYYzdoOVAyRXgyWmRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQzNzMzMDI2LCJleHAiOjE1NDYzMjUwMjYsImF6cCI6InZNVTFmQmcwQ0M2R2tYZDJNMDZzWGM3aDlQMkV4MlpkIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.ujTh3qxgzcgqwMQzUK_nO3IjRklscblxyGJJhXQZ3dkM2QeZFLvNEl_ktzOqpFRwY6_tXdRXjRAWWsH8uJMbYhrCKkQZzvJAn6XkYDlFC-nXHB2UYlUu4WEARb-qkYa0_xv_f7tnkHE7SHnmfIQgj4vckeBr_XOtQ5XP263bfWUyUyXh3kOdQgXdBfadatu1bl4tgAO6qN6AfFp1Z5-ugOnwkPHgDQ_sSnL6FPLKA1zXdk3d4eaV9Li7Ws156bGfS5rG4jHMhveu-6XzAkwv4wjqgfB4CwcwMyMkJW0a_k_FFJMUMsNjyuG2K7BcWxZC0C84fW_bFKxh0Amzfr9SuQ'
         },
         body:
         {
@@ -562,6 +595,7 @@ router.get('/users', function(req, res){
     })
     .catch(function (error) {
         console.log("info could not load error is " + error);
+        res.status(error.statusCode).end();
     });
         
 });
@@ -575,7 +609,7 @@ router.get('/users/:userid', function(req, res){
         url: 'https://wk8jwt.auth0.com/api/v2/users/' + u,
         headers: {
             'content-type': 'application/json',
-            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw'
+            'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoidk1VMWZCZzBDQzZHa1hkMk0wNnNYYzdoOVAyRXgyWmRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQzNzMzMDI2LCJleHAiOjE1NDYzMjUwMjYsImF6cCI6InZNVTFmQmcwQ0M2R2tYZDJNMDZzWGM3aDlQMkV4MlpkIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.ujTh3qxgzcgqwMQzUK_nO3IjRklscblxyGJJhXQZ3dkM2QeZFLvNEl_ktzOqpFRwY6_tXdRXjRAWWsH8uJMbYhrCKkQZzvJAn6XkYDlFC-nXHB2UYlUu4WEARb-qkYa0_xv_f7tnkHE7SHnmfIQgj4vckeBr_XOtQ5XP263bfWUyUyXh3kOdQgXdBfadatu1bl4tgAO6qN6AfFp1Z5-ugOnwkPHgDQ_sSnL6FPLKA1zXdk3d4eaV9Li7Ws156bGfS5rG4jHMhveu-6XzAkwv4wjqgfB4CwcwMyMkJW0a_k_FFJMUMsNjyuG2K7BcWxZC0C84fW_bFKxh0Amzfr9SuQ'
         },
         body:
         {
@@ -592,225 +626,191 @@ router.get('/users/:userid', function(req, res){
     })
     .catch(function (error) {
         console.log("info could not load error is " + error);
+        res.status(error.statusCode).end();
     });
         
-});
-
-//GET list of slips
-router.get('/wish_lists', function(req, res){
-    const wish_lists = get_wish_lists(req)
-    .then( (slips) => {
-        //console.log(slips);
-        res.status(200).json(slips);
-    });
 });
 
 
 //GET list of ships
-router.get('/wish_list', function(req, res){
+router.get('/projects', function(req, res){
     const accepts = req.accepts(['application/json']);
     if(!accepts){
             res.status(406).send('Not Acceptable');
         }
     else{
-        const wish_list = get_wish_list(req)
-	   .then( (wish_list) => {
+        const projects = get_projects(req)
+	   .then( (projects) => {
         //console.log(ships);
-        res.status(200).json(wish_list);
+        res.status(200).json(projects);
      });
     }
 });
 
-router.get('/users/:userid/wish_lists', checkJwt, function(req, res){
+router.get('/employees', function(req, res){
     const accepts = req.accepts(['application/json']);
+    if(!accepts){
+            res.status(406).send('Not Acceptable');
+        }
+    else{
+        const employees = get_employees(req)
+       .then( (employees) => {
+        //console.log(ships);
+        res.status(200).json(employees);
+     });
+    }
+});
+
+//POST to create new ship
+router.post('/projects', checkJwt, function(req, res){
     const u = req.params.userid;
-    if(!accepts){
-            res.status(406).send('Not Acceptable');
-        }
-    else if (u === req.user.name) {
-       const wish_lists = get_wish_lists_by_user(req.user.name)
-        .then( (wish_lists) => {
-        res.status(200).json(wish_lists);
-    });
+    if (!req.user.name){
+        res.status(401).end();
     }
-});
-
-//users: first name, last name, birthdate 
-//wish_lists: name, wish_list date, category
-//items: name, price, department
-
-//POST to create new ship
-router.post('/items', function(req, res){
-    //console.log(req.body);
-    //console.log(typeof req.body.name);
-    //console.log(typeof req.body.length);
-    if (!((typeof req.body.name == 'string') && (typeof req.body.price == 'number')
-     && (typeof req.body.department == 'string'))){
-        res.status(400).send("invalid info");
-    }
-    else{
-    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/items/';
-    const accepts = req.accepts(['application/json']);
-    if(req.get('content-type') !== 'application/json'){
-        res.status(415).send('The server only accepts application/json data.');
-    }
-    if(!accepts){
-            res.status(406).send('Not Acceptable');
-    }
-    post_item(req.body.name, req.body.price, req.body.department)
+    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/projects/';
+    post_project(req.body.name, req.body.start_date, req.body.deadline, req.user.name)
         .then( key => 
         {
             res.location(reqUrl + key.id);
             res.status(201).send('{ "id": ' + key.id + ' }');
         });
-    }
+});
+
+
+//GET specific ship
+router.get('/projects/:id', function(req, res){
+    //add 404 not found cases
+    //add 415 cases
+   
+    findObject(req.params.id, PROJECT).then(result => {
+        const accepts = req.accepts(['application/json']);
+        if (result !== true){
+            res.status(404).end();
+        }
+
+        get_project(req.params.id, req).then( (project) => {
+        //console.log(ship);y
+        
+            if(!accepts){
+                res.status(406).send('Not Acceptable');
+            }
+            else if(accepts === 'application/json'){
+                res.status(200).json(project);
+            } 
+
+        });
+        
+    });
+    
+});
+
+//GET specific ship
+router.get('/employees/:id', function(req, res){
+    findObject(req.params.id, EMPLOYEE).then(result => {
+        const accepts = req.accepts(['application/json']);
+        if (result !== true){
+            res.status(404).end();
+        }
+        if(!accepts){
+            res.status(406).send('Not Acceptable');
+        }
+        get_employee(req.params.id, req).then( (employee) => {
+        res.status(200).json(employee);  
+    });
+    }); 
 });
 
 //POST to create new ship
-router.post('/wish_list', checkJwt, function(req, res){
-    //console.log(req.body);
-    //console.log(typeof req.body.name);
-    //console.log(typeof req.body.length);
-    if (!((typeof req.body.name == 'string') && (typeof req.body.date == 'string')
-     && (typeof req.body.type == 'string'))){
-        res.status(400).send("invalid info");
-    }
-    else{
-    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/wish_lists/';
+router.post('/employees', function(req, res){
+    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/employees/';
     const accepts = req.accepts(['application/json']);
-    if(req.get('content-type') !== 'application/json'){
-        res.status(415).send('The server only accepts application/json data.');
-    }
-    if(!accepts){
-            res.status(406).send('Not Acceptable');
-    }
-    post_wish_list(req.body.name, req.body.date, req.body.type, req.user.name)
+    post_employee(req.body.name, req.body.job_title, req.body.department)
         .then( key => 
         {
             res.location(reqUrl + key.id);
             res.status(201).send('{ "id": ' + key.id + ' }');
         });
-    }
-});
-
-//GET list of cargo
-router.get('/items', function(req, res){
-    const items = get_all_items(req)
-    .then( (items) => {
-        //console.log(slips);
-        res.status(200).json(items);
-    });
-});
-
-//GET specific ship
-router.get('/wish_lists/:id', function(req, res){
-    //add 404 not found cases
-    //add 415 cases
-   
-    findObject(req.params.id, WISH_LIST).then(result => {
-        const accepts = req.accepts(['application/json', 'text/html']);
-        if (result === true){
-            get_wish_list(req.params.id, req).then( (wish_list) => {
-        //console.log(ship);y
-        if(!accepts){
-            res.status(406).send('Not Acceptable');
-        }
-        else if(accepts === 'application/json'){
-            res.status(200).json(wish_list);
-        }
-        /*if (ship.id){
-            res.status(200).json(ship);
-        }*/
-        else if(accepts === 'text/html'){
-            res.set('Content-Type', 'text/html');
-            res.status(200).json(wish_list);
-        }
-        else{
-            res.status(500).send("There was an error with the content type");
-        }
-        
-    });
-        }
-        else{
-            res.status(404).end();
-        }
-    });
-    
-});
-
-//GET specific ship
-router.get('/items/:id', function(req, res){
-    //add 404 not found cases
-    //add 415 cases
-   
-    findObject(req.params.id, ITEM).then(result => {
-        const accepts = req.accepts(['application/json', 'text/html']);
-        if (result === true){
-            get_item(req.params.id, req).then( (item) => {
-        //console.log(ship);y
-        if(!accepts){
-            res.status(406).send('Not Acceptable');
-        }
-        else if(accepts === 'application/json'){
-            res.status(200).json(item);
-        }
-        /*if (ship.id){
-            res.status(200).json(ship);
-        }*/
-        else if(accepts === 'text/html'){
-            res.set('Content-Type', 'text/html');
-            res.status(200).json(item);
-        }
-        else{
-            res.status(500).send("There was an error with the content type");
-        }
-        
-    });
-        }
-        else{
-            res.status(404).end();
-        }
-    });
-    
 });
 
 //PUT to edit specific ship
-router.put('/wish_lists/:id', function(req, res){
-    if (!((typeof req.body.name == 'string') && (typeof req.body.type == 'string')
-     && (typeof req.body.date== 'string'))){
-        res.status(400).end();
-    }
-    else {
-    var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/wish_lists/';
-    findObject(req.params.id, WISH_LIST).then(result => {
-        if (result === true){
-            if(req.get('content-type') !== 'application/json'){
-                res.status(415).send('The server only accepts application/json data.');
-            }
-            put_wish_list(req.params.id, req.body.name, req.body.type, req.body.date)
-            .then(() =>
-                {
-                    var location = reqUrl + req.params.id;
-                    res.location(location);
-                    res.status(303).end();
-                });
+router.put('/projects/:id', checkJwt, function(req, res){
+        const id = req.params.id;
+        if (!req.user.name){
+            res.status(401).end();
         }
-        else{
+        var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/projects/';
+        findObject(req.params.id, PROJECT).then((result) => {
+        console.log("find result is " + result);
+        if (result !== true){
             res.status(404).end();
         }
-    });
-}
+        const proj = get_project(id, req).then((proj) => {
+            console.log("get proj result is " + proj);
+            if (!(proj.project_leader === req.user.name)){
+                res.status(403).end();
+            }
+            put_project(req.params.id, req.body.name, req.body.start_date, req.body.deadline, req.user.name)
+            .then(() =>
+            {
+                res.status(200).end();
+            });
+        });
+        
+    });  
+});
+
+router.put('/employees', function(req, res){
+        var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/employees/';
+        findObject(req.params.id, PROJECT).then(result => {
+            if (result !== true){
+                res.status(404).end();
+            }
+            put_project(req.params.id, req.body.name, req.body.start_date, req.body.deadline, req.user.name)
+            .then(() =>
+                {
+                    res.status(200).end();
+                });
+    });   
+});
+
+//delete specific ship
+router.delete('/projects/:id', checkJwt, function(req, res){
+    //console.log('test');
+    const id = req.params.id;
+        if (!req.user.name){
+            res.status(401).end();
+        }
+        var reqUrl = req.protocol + "://" + req.get('host') + req.baseUrl + '/projects/';
+        findObject(req.params.id, PROJECT).then((result) => {
+        console.log("find result is " + result);
+        if (result !== true){
+            res.status(404).end();
+        }
+        const proj = get_project(id, req).then((proj) => {
+            console.log("get proj result is " + proj);
+            if (!(proj.project_leader === req.user.name)){
+                res.status(403).end();
+            }
+            delete_project(req.params.id).
+            then(() =>
+            {
+                res.status(204).end();
+            });
+        });
+        
+    });  
     
 });
 
 //delete specific ship
-router.delete('/wish_lists/:id', function(req, res){
+router.delete('/employees/:id', checkJwt, function(req, res){
     //console.log('test');
-    findObject(req.params.id, WISH_LIST).then((result) => {
+    findObject(req.params.id, EMPLOYEE).then((result) => {
         //console.log("logging result " + result);
+        const u = req.params.userid;
        if (result){
             //console.log('deleting ship');
-            delete_wish_list(req.params.id).then(res.status(204).end());
+            delete_employee(req.params.id).then(res.status(204).end());
         }
         else{
             res.status(404).end();
@@ -820,205 +820,69 @@ router.delete('/wish_lists/:id', function(req, res){
 });
 
 //delete all ships
-router.delete('/wish_lists', function(req, res){
+router.delete('/employees', function(req, res){
     //res.set('Accept', 'GET, POST');
     //res.status(405).end();
-    delete_all_wish_lists().then(res.status(200).end());
+    delete_all_employees().then(res.status(200).end());
 });
-
-//add cargo to ship
-router.put('/wish_lists/:wish_list_id/items/:item_id', function(req, res){
-        add_item(req.params.wish_list_id, req.params.item_id).then( (value) => {
-            if (value){
-                res.status(200).end();
-            }
-            else{
-                //return if slip is already taken
-                res.status(403).end('cargo already on another ship');
-            }
-        }); 
-});
-
-//remove cargo from ship
-router.delete('/ships/:ship_id/cargo/:cargo_id', function(req, res){
-    unload(req.params.ship_id, req.params.cargo_id).then(res.status(200).end());
-});
-
 
 //delete all ships
-router.put('/ships', function(req, res){
+router.delete('/projects', function(req, res){
+    //res.set('Accept', 'GET, POST');
+    //res.status(405).end();
+    delete_all_projects().then(res.status(200).end());
+});
+
+router.put('/employees', function(req, res){
     res.set('Accept', 'GET, POST');
     res.status(405).end();
 });
-/* ------------- End Ship Controller Functions ------------- */
 
-/*//PUT to edit specific ship
-router.get('/ships/:id/cargo', function(req, res){
-    get_ship_cargo(req.params.id, req).then( (cargo) => {
-    res.status(200).json(cargo);
-        //res.status(200).send("invalid info");
-    });
-});
-
-//remove ship from slip
-router.delete('/slips/:slip_id/ships/:ship_id', function(req, res){
-    undock(req.params.slip_id, req.params.ship_id).then(res.status(200).end());
-});
-
-//add ship to slip
-router.post('/slips/:slip_id/ships/:ship_id', function(req, res){
-    if(typeof req.body.arrival_date == 'string'){
-        dock(req.params.slip_id, req.params.ship_id, req.body.arrival_date).then( (value) => {
-            //console.log("printing value " + value);
-            if (value){
-                res.status(200).end();
-            }
-            else{
-                //return if slip is already taken
-                res.status(403).end('slip occupied');
-            }
-        })
-    }
-    else{
-        res.status(200).send('invalid info');
-    }
-  
+//delete all ships
+router.put('/projects', function(req, res){
+    res.set('Accept', 'GET, POST');
+    res.status(405).end();
 });
 
 //add cargo to ship
-router.post('/ships/:ship_id/cargo/:cargo_id', function(req, res){
-    if(typeof req.body.delivery_date == 'string'){
-        load(req.params.ship_id, req.params.cargo_id, req.body.delivery_date).then( (value) => {
+router.put('/projects/:project_id/employees/:employee_id', function(req, res){
+    findObject(req.params.project_id, PROJECT).then(result1 => {
+    findObject(req.params.employee_id, EMPLOYEE).then( (result2) => {
+        if (!(result1 && result2))
+        {
+            res.status(404).end();
+        }
+        if (check_relationship(req.params.project_id) === 2){
+            res.status(404).end();
+        }
+        if (check_relationship(req.params.project_id) === 0){
+            res.status(405).end();
+        }
+        assign(req.params.project_id, req.params.employee_id).then( (value) => {
             if (value){
                 res.status(200).end();
             }
-            else{
-                //return if slip is already taken
-                res.status(403).end('cargo already on another ship');
-            }
-        })
-    }
-    else{
-        res.status(200).send('invalid info');
-    }
-  
+        }); 
+});
+});
 });
 
 //remove cargo from ship
-router.delete('/ships/:ship_id/cargo/:cargo_id', function(req, res){
-    unload(req.params.ship_id, req.params.cargo_id).then(res.status(200).end());
-});
-
-
-//add cargo
-router.post('/cargo', function(req, res){
-    //console.log(req.body);
-    //console.log(typeof req.body.name);
-    //console.log(typeof req.body.length);
-    if ((typeof req.body.weight == 'number')
-     && (typeof req.body.content == 'string')) {
-        post_cargo(req.body.weight, req.body.content, req.body.delivery_date )
-        .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')});
-    }
-    else{
-        res.status(200).send("invalid info");
-    }
-});
-
-//GET list of slips
-router.get('/slips', function(req, res){
-    const slips = get_slips(req)
-    .then( (slips) => {
-        //console.log(slips);
-        res.status(200).json(slips);
+router.delete('/projects/:project_id/employees/:employee_id', function(req, res){
+     findObject(req.params.project_id, PROJECT).then(result1 => {
+        findObject(req.params.employee_id, PROJECT).then( (result2) => {
+        if (!(result1 && result2))
+        {
+            res.status(404).end();
+        }
+        if (!(check_relationship(req.params.project_id) === 0)){
+            res.status(404).end();
+        }
+        unassign(req.params.project_id, req.params.employee_id).then(res.status(200).end());
     });
 });
-
-//GET list of cargo
-router.get('/cargo', function(req, res){
-    const cargo = get_all_cargo(req)
-    .then( (cargo) => {
-        //console.log(slips);
-        res.status(200).json(cargo);
-    });
 });
 
-//POST to create new slip
-router.post('/slips', function(req, res){
-    //console.log(req.body);
-    if (typeof req.body.number == 'number') {
-         post_slip(req.body.number)
-        .then( key => {res.status(200).send('{ "id": ' + key.id + ' }')} );
-    }
-    else{
-        res.status(200).send("invalid info");
-    }
-});
-
-//GET specific slip
-router.get('/slips/:id', function(req, res){
-        get_slip(req.params.id, req).then( (slip) => {
-        //console.log(slip);
-        res.status(200).json(slip);
-    });
-});
-
-//get cargo info
-router.get('/cargo/:id', function(req, res){
-    get_cargo(req.params.id, req).then( (cargo) => {
-        //console.log(ship);
-        res.status(200).json(cargo);
-    });
-});
-
-//PUT to edit specific slip
-router.put('/cargo/:id', function(req, res){
-    if ((typeof req.body.weight == 'number') && (typeof req.body.content == 'string')
-        && ((typeof req.body.delivery_date == 'string') || (typeof req.body.delivery_date == 'undefined'))) {
-        put_cargo(req.params.id, req.body.weight, req.body.content, req.body.delivery_date)
-        .then(res.status(200).end());
-    }
-    else{
-        res.status(200).send("invalid info");
-    }
-});
-
-//PUT to edit specific slip
-router.put('/slips/:id', function(req, res){
-    if ((typeof req.body.number == 'number') && (typeof req.body.current_boat == 'string')
-        && (typeof req.body.arrival_date == 'string')) {
-        put_slip(req.params.id, req.body.number, req.body.current_boat, req.body.arrival_date)
-        .then(res.status(200).end());
-    }
-    else{
-        res.status(200).send("invalid info");
-    }
-});
-
-
-
-//delete specific slip
-router.delete('/slips/:id', function(req, res){
-    delete_slip(req.params.id).then(res.status(200).end());
-});
-
-//delete cargo
-router.delete('/cargo/:id', function(req, res){
-    delete_cargo(req.params.id).then(res.status(200).end());
-});
-
-
-//delete all ships
-router.delete('/cargo', function(req, res){
-    delete_all_cargo().then(res.status(200).end());
-});
-
-//delete all slips
-router.delete('/slips', function(req, res){
-    delete_all_slips().then(res.status(200).end());
-});
-
-*/
 
 /* ------------- End Controller Functions ------------- */
 
