@@ -141,10 +141,8 @@ function post_project(name, start_date, deadline, project_leader){
 function put_employee(id, name, job_title, department){
     const key = datastore.key([EMPLOYEE, parseInt(id,10)]);
     const employee = datastore.get(key);
-    var assignment = {};
-
-    if (employee.assignment){
-        assignment = employee.assignment;
+    var assignment = employee.assignment;
+    if (assignment){
         var emp = {"name": name, "job_title": job_title, "department": department, "assignment": assignment};
     }
     else{
@@ -417,7 +415,7 @@ function unassign(project_id, employee_id){
     return datastore.get(key).then(result => {
         const employee = result[0];
         if (employee.assignment == project_id){
-            employee.assignment = '';
+            employee.assignment = undefined;
             return datastore.save({"key":key, "data":employee});
         }
     });
@@ -580,7 +578,9 @@ router.put('/users/:userid', checkJwt, function(req, res){
         })
         .catch(function (error) {
             console.log("info could not load error is " + error);
-            res.status(error.statusCode).end();
+            if (error.statusCode === 400){
+                 res.status(404).end();
+        }
         });
    }     
 });
@@ -612,7 +612,14 @@ router.get('/users', function(req, res){
     .then(function (body) {
         console.log("put worked" + body);
         //res.render('info', parsedBody.displayName);
-        res.send(body);
+        for (var i = 0; i < body.length; i++){
+            console.log("logging body user id " + body[i].user_id);
+            body[i].self = req.protocol + "://" + req.get('host') + req.baseUrl + '/users/' + req.params.user_id;
+        }
+        var all = {};
+        all.collection_size = body.length;
+        all.items = body;
+        res.send(all);
     })
     .catch(function (error) {
         console.log("info could not load error is " + error);
@@ -641,13 +648,19 @@ router.get('/users/:userid', function(req, res){
 
     rp(options)
     .then(function (body) {
-        console.log("put worked" + body);
         //res.render('info', parsedBody.displayName);
+        body.self = req.protocol + "://" + req.get('host') + req.baseUrl + '/users/' + body.user_id;
         res.send(body);
     })
     .catch(function (error) {
         console.log("info could not load error is " + error);
-        res.status(error.statusCode).end();
+        //auth0 gives 400 response when user doesn't exist
+        if (error.statusCode === 400){
+            res.status(404).end();
+        }
+        else{
+            res.status(404).end();
+        }
     });
         
 });
@@ -869,17 +882,31 @@ router.delete('/employees/:id', function(req, res){
 });
 
 //delete all ships
+router.delete('/users', function(req, res){
+    res.set('Accept', 'GET, POST');
+    res.status(405).end();
+    //delete_all_employees().then(res.status(200).end());
+});
+
+
+//delete all ships
 router.delete('/employees', function(req, res){
-    //res.set('Accept', 'GET, POST');
-    //res.status(405).end();
-    delete_all_employees().then(res.status(200).end());
+    res.set('Accept', 'GET, POST');
+    res.status(405).end();
+    //delete_all_employees().then(res.status(200).end());
+});
+
+//delete all ships
+router.put('/users', function(req, res){
+    res.set('Accept', 'GET, POST');
+    res.status(405).end();
 });
 
 //delete all ships
 router.delete('/projects', function(req, res){
-    //res.set('Accept', 'GET, POST');
-    //res.status(405).end();
-    delete_all_projects().then(res.status(200).end());
+    res.set('Accept', 'GET, POST');
+    res.status(405).end();
+    //delete_all_projects().then(res.status(200).end());
 });
 
 router.put('/employees', function(req, res){
@@ -895,45 +922,53 @@ router.put('/projects', function(req, res){
 
 //add cargo to ship
 router.put('/projects/:project_id/employees/:employee_id', function(req, res){
-    findObject(req.params.project_id, PROJECT).then(result1 => {
+    findObject(req.params.project_id, PROJECT).then((result1) => {
     findObject(req.params.employee_id, EMPLOYEE).then( (result2) => {
-        if (!(result1 && result2))
-        {
-            res.status(404).end();
+        var key = datastore.key([EMPLOYEE, parseInt(req.params.employee_id,10)]);
+        return datastore.get(key).then((results) => {
+        if (results[0].assignment){
+            if (results[0].assignment === req.params.project_id){
+                res.status(400).end();
+            }
+            else{
+                res.status(404).end();
+            }
+            //equal assignment
         }
-        else if (check_relationship(req.params.employee_id, req.params.project_id) === 2){
-            res.status(404).end();
-        }
-        else if (check_relationship(req.params.employee_id, req.params.project_id) === 0){
-            res.status(405).end();
-        }
-        else{
+        else {
             assign(req.params.project_id, req.params.employee_id).then( (value) => {
                 if (value){
                     res.status(200).end();
                 }
             }); 
         }
-});
-});
+    });
+}).catch((error) => {res.status(404).end()});
+}).catch((error) => {res.status(404).end()});
 });
 
 //remove cargo from ship
 router.delete('/projects/:project_id/employees/:employee_id', function(req, res){
-     findObject(req.params.project_id, PROJECT).then(result1 => {
+     findObject(req.params.project_id, PROJECT).then((result1) => {
         findObject(req.params.employee_id, PROJECT).then( (result2) => {
-        if (!(result1 && result2))
-        {
-            res.status(404).end();
+            console.log('here1');
+        var key = datastore.key([EMPLOYEE, parseInt(req.params.employee_id,10)]);
+        return datastore.get(key).then((results) => {
+            console.log("here2");
+        if (results[0].assignment){
+            if (results[0].assignment !== req.params.project_id){
+                res.status(400).end();
+            }
+            else{
+                console.log('here');
+                unassign(req.params.project_id, req.params.employee_id).then(res.status(200).end());
+            }
         }
-        else if (!(check_relationship(req.params.employee_id, req.params.project_id) === 0)){
-            res.status(404).end();
-        }
-        else{
-            unassign(req.params.project_id, req.params.employee_id).then(res.status(200).end());
-        }
+        else{res.status(400).end();}
+        
     });
-});
+   }).catch((error) => {res.status(404).end()});
+}).catch((error) => {res.status(404).end()});
 });
 
 

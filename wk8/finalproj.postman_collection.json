@@ -1,0 +1,3829 @@
+{
+	"info": {
+		"_postman_id": "5a7b5008-d0fc-4732-b175-c3fca5355509",
+		"name": "finalproj",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get users: get user collection size",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var userCount = res.collection_size;\r",
+							"pm.globals.set(\"userCount\", userCount);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							"console.log(pm.globals.get(\"newUser\") + \" \" + pm.globals.get(\"password\") );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoidk1VMWZCZzBDQzZHa1hkMk0wNnNYYzdoOVAyRXgyWmRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNTE5NjU5LCJleHAiOjE1NDUxMTE2NTksImF6cCI6InZNVTFmQmcwQ0M2R2tYZDJNMDZzWGM3aDlQMkV4MlpkIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.eiesHLFZcbZUFVVPJhmU5FT9Msd69vpyrbf6KAAIMwexcvJgqmsScVqweJ0Bm4-J0XMWV8UUPiyRF6q73r8QzzFghkTX9ZCut8T6OL5ANtNszCdLryZHX1iLugAW-o4wNp7ieE_Vki7UjdsMoveS10IJWl3ULfqEJgxdV83eRAAyegri80ym3E96EzjcUK0ac2jSOtTQpV8PfmukFzoE56sFx9Ys-9Kx1n6uEfHsh3DikJc3e1RQeAt9bwYeNSNrYU7uAUa_y4Uk6kzXfQADIbih54xNBNfUFSymEL9IOioI7Zw00hX_F3TOGPFzN8ZZAli8kBfmccKu6BFi3HUOxg",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var user1 = res.user_id;\r",
+							"pm.globals.set(\"user1\", user1);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							"var rand = _.random(1, 20000);",
+							"var rand2 = _.random(1111111111, 99999999999);",
+							"var newNickname = \"jd\" + rand;",
+							"var newEmail = newNickname + \"@somewhere.com\";",
+							"var n = \"name \" + rand2;",
+							"var password = newNickname + \"p\";",
+							"//pm.globals.set(\"num\", num);",
+							"pm.globals.set(\"newNickname\", newNickname);",
+							"pm.globals.set(\"password\", password);",
+							"pm.globals.set(\"newEmail\", newEmail);",
+							"pm.globals.set(\"newName\", n);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{newEmail}}\",\r\n  \"name\": \"{{newName}}\",\r\n  \"nickname\": \"{{newNickname}}\",\r\n  \"password\": \"{{password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user1: match put details and match self-link test 200",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(String(pm.globals.get(\"user1\"))).to.equal(res.user_id);\r",
+							"    pm.expect(pm.globals.get(\"newEmail\")).to.equal(res.email);\r",
+							"    pm.expect(res.self === \"https://wk8jwt.appspot.com/users/\" + pm.globals.get(\"user1\"));\r",
+							"    pm.expect(res.self !== null);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user1}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user error:  check for 404 when user doesn't exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							"console.log(pm.globals.get(\"newUser\") + \" \" + pm.globals.get(\"password\") );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/8989898989",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"8989898989"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var user2 = res.user_id;\r",
+							"pm.globals.set(\"user2\", user2);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							"var rand = _.random(1, 20000);",
+							"var rand2 = _.random(1111111111, 99999999999);",
+							"var newNickname2 = \"jd\" + rand;",
+							"var newEmail = newNickname2 + \"@somewhere.com\";",
+							"var n = \"name \" + rand2;",
+							"var password = newNickname2 + \"p\";",
+							"//pm.globals.set(\"num\", num);",
+							"pm.globals.set(\"newNickname2\", newNickname2);",
+							"pm.globals.set(\"password2\", password);",
+							"pm.globals.set(\"newEmail2\", newEmail);",
+							"pm.globals.set(\"newName2\", n);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{newEmail2}}\",\r\n  \"name\": \"{{newName2}}\",\r\n  \"nickname\": \"{{newNickname2}}\",\r\n  \"password\": \"{{password2}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var user3 = res.user_id;\r",
+							"pm.globals.set(\"user3\", user3);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							"var rand = _.random(1, 20000);",
+							"var rand2 = _.random(1111111111, 99999999999);",
+							"var newNickname2 = \"jd\" + rand;",
+							"var newEmail2 = newNickname2 + \"@somewhere.com\";",
+							"var n2 = \"name \" + rand2;",
+							"var password2 = newNickname2 + \"p\";",
+							"//pm.globals.set(\"num\", num);",
+							"pm.globals.set(\"newNickname3\", newNickname2);",
+							"pm.globals.set(\"password3\", password2);",
+							"pm.globals.set(\"newEmail3\", newEmail2);",
+							"pm.globals.set(\"newName3\", n2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoiMWhnSE5FODRmald0MFM3YUFka1hjTWNmQUxIYmJVc1pAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNDM5Mjc1LCJleHAiOjE1NDUwMzEyNzUsImF6cCI6IjFoZ0hORTg0ZmpXdDBTN2FBZGtYY01jZkFMSGJiVXNaIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.TmO7BtHu66ZLuXcVGwMvFLY0BfaBXLo5HigoOKBCGFqBddfCYIIEV9pg_UyYdRlU3oU-U5pnGr_7fuKa-qzFCwfY6XQGhEIANcbE4R51PgJAjYirlaavc-NB9-VloZMvQ2AFaBEBkpmnsTGjevmjtiZuhmCI3i_iR9609q_ZzFE-dREWqh8iWevot-F9hlp-jMJchGy5CDx84toaC8qHQRSBcPPBJRuOwEuN7CzdoiDNSUwgmqqITi9_7eB1_1mq-Y9-NFgNM1UpDwKQFXbCzVweJZiHyPdrJ9-4zXU8fNxnVNfVhUPe7Hz_EpOXvP9_lg8Txqc6g9ZSx7ZVwDBjbw",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{newEmail3}}\",\r\n  \"name\": \"{{newName3}}\",\r\n  \"nickname\": \"{{newNickname3}}\",\r\n  \"password\": \"{{password3}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get users: test count - verify collection size, check for all 3 users details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    var userCount = res.collection_size;\r",
+							"    var userAccum = 0;\r",
+							"    for (var i = 0; i < res.items.length; i++){\r",
+							"        if (res.items[i].user_id === pm.globals.get(\"user1\") \r",
+							"        || res.items[i].user_id === pm.globals.get(\"user2\") \r",
+							"        || res.items[i].user_id === pm.globals.get(\"user3\")) {\r",
+							"        userAccum++;\r",
+							"        }\r",
+							"    }\r",
+							"    \r",
+							"    var prevCount = pm.globals.get(\"userCount\");\r",
+							"    pm.expect(userAccum).to.equal(3);\r",
+							"    pm.expect(userCount).to.equal(prevCount);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							"console.log(pm.globals.get(\"newUser\") + \" \" + pm.globals.get(\"password\") );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJpc3MiOiJodHRwczovL3drOGp3dC5hdXRoMC5jb20vIiwic3ViIjoidk1VMWZCZzBDQzZHa1hkMk0wNnNYYzdoOVAyRXgyWmRAY2xpZW50cyIsImF1ZCI6Imh0dHBzOi8vd2s4and0LmF1dGgwLmNvbS9hcGkvdjIvIiwiaWF0IjoxNTQyNTE5NjU5LCJleHAiOjE1NDUxMTE2NTksImF6cCI6InZNVTFmQmcwQ0M2R2tYZDJNMDZzWGM3aDlQMkV4MlpkIiwic2NvcGUiOiJyZWFkOmNsaWVudF9ncmFudHMgY3JlYXRlOmNsaWVudF9ncmFudHMgZGVsZXRlOmNsaWVudF9ncmFudHMgdXBkYXRlOmNsaWVudF9ncmFudHMgcmVhZDp1c2VycyB1cGRhdGU6dXNlcnMgZGVsZXRlOnVzZXJzIGNyZWF0ZTp1c2VycyByZWFkOnVzZXJzX2FwcF9tZXRhZGF0YSB1cGRhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGRlbGV0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgY3JlYXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcl90aWNrZXRzIHJlYWQ6Y2xpZW50cyB1cGRhdGU6Y2xpZW50cyBkZWxldGU6Y2xpZW50cyBjcmVhdGU6Y2xpZW50cyByZWFkOmNsaWVudF9rZXlzIHVwZGF0ZTpjbGllbnRfa2V5cyBkZWxldGU6Y2xpZW50X2tleXMgY3JlYXRlOmNsaWVudF9rZXlzIHJlYWQ6Y29ubmVjdGlvbnMgdXBkYXRlOmNvbm5lY3Rpb25zIGRlbGV0ZTpjb25uZWN0aW9ucyBjcmVhdGU6Y29ubmVjdGlvbnMgcmVhZDpyZXNvdXJjZV9zZXJ2ZXJzIHVwZGF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGRlbGV0ZTpyZXNvdXJjZV9zZXJ2ZXJzIGNyZWF0ZTpyZXNvdXJjZV9zZXJ2ZXJzIHJlYWQ6ZGV2aWNlX2NyZWRlbnRpYWxzIHVwZGF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgZGVsZXRlOmRldmljZV9jcmVkZW50aWFscyBjcmVhdGU6ZGV2aWNlX2NyZWRlbnRpYWxzIHJlYWQ6cnVsZXMgdXBkYXRlOnJ1bGVzIGRlbGV0ZTpydWxlcyBjcmVhdGU6cnVsZXMgcmVhZDpydWxlc19jb25maWdzIHVwZGF0ZTpydWxlc19jb25maWdzIGRlbGV0ZTpydWxlc19jb25maWdzIHJlYWQ6ZW1haWxfcHJvdmlkZXIgdXBkYXRlOmVtYWlsX3Byb3ZpZGVyIGRlbGV0ZTplbWFpbF9wcm92aWRlciBjcmVhdGU6ZW1haWxfcHJvdmlkZXIgYmxhY2tsaXN0OnRva2VucyByZWFkOnN0YXRzIHJlYWQ6dGVuYW50X3NldHRpbmdzIHVwZGF0ZTp0ZW5hbnRfc2V0dGluZ3MgcmVhZDpsb2dzIHJlYWQ6c2hpZWxkcyBjcmVhdGU6c2hpZWxkcyBkZWxldGU6c2hpZWxkcyB1cGRhdGU6dHJpZ2dlcnMgcmVhZDp0cmlnZ2VycyByZWFkOmdyYW50cyBkZWxldGU6Z3JhbnRzIHJlYWQ6Z3VhcmRpYW5fZmFjdG9ycyB1cGRhdGU6Z3VhcmRpYW5fZmFjdG9ycyByZWFkOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGRlbGV0ZTpndWFyZGlhbl9lbnJvbGxtZW50cyBjcmVhdGU6Z3VhcmRpYW5fZW5yb2xsbWVudF90aWNrZXRzIHJlYWQ6dXNlcl9pZHBfdG9rZW5zIGNyZWF0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIGRlbGV0ZTpwYXNzd29yZHNfY2hlY2tpbmdfam9iIHJlYWQ6Y3VzdG9tX2RvbWFpbnMgZGVsZXRlOmN1c3RvbV9kb21haW5zIGNyZWF0ZTpjdXN0b21fZG9tYWlucyByZWFkOmVtYWlsX3RlbXBsYXRlcyBjcmVhdGU6ZW1haWxfdGVtcGxhdGVzIHVwZGF0ZTplbWFpbF90ZW1wbGF0ZXMgcmVhZDptZmFfcG9saWNpZXMgdXBkYXRlOm1mYV9wb2xpY2llcyByZWFkOnJvbGVzIGNyZWF0ZTpyb2xlcyBkZWxldGU6cm9sZXMgdXBkYXRlOnJvbGVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIn0.eiesHLFZcbZUFVVPJhmU5FT9Msd69vpyrbf6KAAIMwexcvJgqmsScVqweJ0Bm4-J0XMWV8UUPiyRF6q73r8QzzFghkTX9ZCut8T6OL5ANtNszCdLryZHX1iLugAW-o4wNp7ieE_Vki7UjdsMoveS10IJWl3ULfqEJgxdV83eRAAyegri80ym3E96EzjcUK0ac2jSOtTQpV8PfmukFzoE56sFx9Ys-9Kx1n6uEfHsh3DikJc3e1RQeAt9bwYeNSNrYU7uAUa_y4Uk6kzXfQADIbih54xNBNfUFSymEL9IOioI7Zw00hX_F3TOGPFzN8ZZAli8kBfmccKu6BFi3HUOxg",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login: check for successful login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var user1tok = res.id_token;\r",
+							"console.log(res.id_token);\r",
+							"pm.globals.set(\"user1tok\", user1tok);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							"console.log(pm.globals.get(\"newUser\") + \" \" + pm.globals.get(\"password\") );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{newEmail}}\",\n\t\"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/login",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							"var rand = _.random(1, 20000);",
+							"var rand2 = _.random(1111111111, 99999999999);",
+							"var newNickname2 = \"jd\" + rand;",
+							"var newEmail2 = newNickname2 + \"@somewhere.com\";",
+							"var n2 = \"name \" + 2;",
+							"//pm.globals.set(\"num\", num);",
+							"pm.globals.set(\"putEmail\", newEmail2);",
+							"console.log(n2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{putEmail}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user1}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put user no JWT token: test 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							"var rand = _.random(1, 20000);",
+							"var rand2 = _.random(1111111111, 99999999999);",
+							"var newNickname2 = \"jd\" + rand;",
+							"var newEmail2 = newNickname2 + \"@somewhere.com\";",
+							"var n2 = \"name \" + 2;",
+							"//pm.globals.set(\"num\", num);",
+							"pm.globals.set(\"bad1Email\", newEmail2);",
+							"console.log(n2);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{putEmail}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user1}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put user2 wrong JWT token: test 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"{{newEmail2}}2\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user2}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user: verify details from valid put",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(String(pm.globals.get(\"user1\"))).to.equal(res.user_id);\r",
+							"    pm.expect(pm.globals.get(\"putEmail\")).to.equal(res.email);\r",
+							"    pm.expect(res.self === \"https://wk8jwt.appspot.com/users/\" + pm.globals.get(\"user1\"));\r",
+							"    pm.expect(res.self !== null);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user1}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user no  JWT token: test 401",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user1}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user JWT wrong token: test 403",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user2}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete user1: test 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "4be6ebc0-e9ac-4928-a495-0e223cd23b1a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user1tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user1}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user1: verify 404 user was deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users/{{user1}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users",
+						"{{user1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var user2tok = res.id_token;\r",
+							"console.log(res.id_token);\r",
+							"pm.globals.set(\"user2tok\", user2tok);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							"console.log(pm.globals.get(\"newUser\") + \" \" + pm.globals.get(\"password\") );"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{newEmail2}}\",\n\t\"password\": \"{{password2}}\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/login",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list of projects: store project count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.globals.set(\"projCount\", res.collection_size);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add project1 as user2: test 201",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							"",
+							"proj_name = \"testproj\";",
+							"proj_start_date = \"12/1/2018\";",
+							"proj_deadline = \"12/20/2018\";",
+							"",
+							"pm.globals.set(\"proj_name\", proj_name);",
+							"pm.globals.set(\"proj_start_date\", proj_start_date);",
+							"pm.globals.set(\"proj_deadline\", proj_deadline);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var proj1_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"proj1_id\", proj1_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name}}\",\n\t\"start_date\": \"{{proj_start_date}}\",\n\t\"deadline\": \"{{proj_deadline}}\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get project1: match details for added project, check self-link",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ffd9300-58bd-4553-a165-83fd6499f420",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(String(pm.globals.get(\"proj1_id\"))).to.equal(res.id);\r",
+							"    pm.expect(res.self === \"http://wk8jwt.appspot.com/projects/\" + pm.globals.get(\"proj1_id\"));\r",
+							"    pm.expect(pm.globals.get(\"proj_name\")).to.equal(res.name);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj1_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add project2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var proj1_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"proj2_id\", proj1_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name}}2\",\n\t\"start_date\": \"{{proj_start_date}}2\",\n\t\"deadline\": \"{{proj_deadline}}2\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add project3",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var proj1_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"proj3_id\", proj1_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name}}3\",\n\t\"start_date\": \"{{proj_start_date}}3\",\n\t\"deadline\": \"{{proj_deadline}}3\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add project4",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var proj1_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"proj4_id\", proj1_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name}}4\",\n\t\"start_date\": \"{{proj_start_date}}4\",\n\t\"deadline\": \"{{proj_deadline}}4\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add project5",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var proj1_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"proj5_id\", proj1_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name}}5\",\n\t\"start_date\": \"{{proj_start_date}}5\",\n\t\"deadline\": \"{{proj_deadline}}5\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add project 6",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var proj1_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"proj6_id\", proj1_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name}}6\",\n\t\"start_date\": \"{{proj_start_date}}6\",\n\t\"deadline\": \"{{proj_deadline}}6\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add project 7",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var proj1_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"proj7_id\", proj1_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name}}7\",\n\t\"start_date\": \"{{proj_start_date}}7\",\n\t\"deadline\": \"{{proj_deadline}}7\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put project1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ffd9300-58bd-4553-a165-83fd6499f420",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "533e63e7-df6f-48dd-bcc7-9513778adaf1",
+						"exec": [
+							"proj_name = \"testprojput\";",
+							"proj_start_date = \"1/1/2018\";",
+							"proj_deadline = \"2/2/2018\";",
+							"",
+							"pm.globals.set(\"pproj_name\", proj_name);",
+							"pm.globals.set(\"pproj_start_date\", proj_start_date);",
+							"pm.globals.set(\"pproj_deadline\", proj_deadline);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{pproj_name}}\",\n\t\"start_date\": \"{{pproj_start_date}}\",\n\t\"deadline\": \"{{pproj_deadline}}\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj1_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get project1: match details for put project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ffd9300-58bd-4553-a165-83fd6499f420",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(String(pm.globals.get(\"proj1_id\"))).to.equal(res.id);\r",
+							"    pm.expect(res.self === \"http://localhost:8080/users/\" + pm.globals.get(\"pproj_id\"));\r",
+							"    pm.expect(pm.globals.get(\"pproj_name\")).to.equal(res.name);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj1_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list of projects page 1: verify 5 per page and 7 added to proj count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    var newCount = res.collection_size;\r",
+							"    var nextlist = res.next;\r",
+							"    var prevCount = pm.globals.get(\"projCount\");\r",
+							"    var accum = newCount - prevCount;\r",
+							"    pm.globals.set(\"nextlist\", nextlist);\r",
+							"    pm.expect(accum).to.equal(7);\r",
+							"    pm.expect(res.items.length).to.equal(5);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "pagination: check next page of results",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{nextlist}}",
+					"host": [
+						"{{nextlist}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete project 1: correct JWT token test 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "559ded17-7a3a-449c-8094-38314bd54887",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user2tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj1_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get deleted project: test 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "559ded17-7a3a-449c-8094-38314bd54887",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj1_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj1_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put project2 with no JWT token, test 401",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "03b7c56d-9b37-42f1-8691-4b98c6f8fc3a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "12cd7f28-9f18-4e15-8076-81a9038e97a1",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name2}}3\",\n\t\"start_date\": \"{{proj_start_date2}}3\",\n\t\"deadline\": \"{{proj_deadline2}}3\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj2_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete project2 with no JWT token 401",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "03b7c56d-9b37-42f1-8691-4b98c6f8fc3a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bed1161c-d59e-4803-9c97-deff54bcf4ca",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name2}}5\",\n\t\"start_date\": \"{{proj_start_date2}}5\",\n\t\"deadline\": \"{{proj_deadline2}}5\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj2_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login as user3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0b88bbe9-fdb3-46ce-8cf4-75df66c3092b",
+						"exec": [
+							"var res = JSON.parse(responseBody);\r",
+							"var user3tok = res.id_token;\r",
+							"console.log(res.id_token);\r",
+							"pm.globals.set(\"user3tok\", user3tok);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7e8e3a48-e94f-4852-af1b-9ac322fe8a04",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"{{newEmail3}}\",\n\t\"password\": \"{{password3}}\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/login",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put project2 with wrong JWT token, test 403",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "03b7c56d-9b37-42f1-8691-4b98c6f8fc3a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "12cd7f28-9f18-4e15-8076-81a9038e97a1",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user3tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name2}}3\",\n\t\"start_date\": \"{{proj_start_date2}}3\",\n\t\"deadline\": \"{{proj_deadline2}}3\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj2_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete project2 with wrong JWT token test 403",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "03b7c56d-9b37-42f1-8691-4b98c6f8fc3a",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bed1161c-d59e-4803-9c97-deff54bcf4ca",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{user3tok}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"{{proj_name2}}5\",\n\t\"start_date\": \"{{proj_start_date2}}5\",\n\t\"deadline\": \"{{proj_deadline2}}5\"\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj2_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee: test 201",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							"//get id for problem 4",
+							"employee_name = \"emp name1\";",
+							"employee_job_title = \"emp job title1\"",
+							"employee_department = \"emp department1\"",
+							"",
+							"pm.globals.set(\"employee_name\", employee_name );",
+							"pm.globals.set(\"employee_job_title\", employee_job_title);",
+							"pm.globals.set(\"employee_department\", employee_department);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"//get id for problem 4\r",
+							"var res = JSON.parse(responseBody);\r",
+							"var emp_id = res.id;\r",
+							"\r",
+							"//console.log(\"id is: \" + id);\r",
+							"\r",
+							"pm.globals.set(\"emp_id\", emp_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name}}\",\r\n\t\"job_title\": \"{{employee_job_title}}\",\r\n\t\"department\": \"{{employee_department}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get employee test 200 and check added details and self link",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.expect(String(pm.globals.get(\"emp_id\"))).to.equal(res.id);\r",
+							"    \r",
+							"    pm.expect(pm.globals.get(\"employee_name\")).to.equal(res.name);\r",
+							"    pm.expect(pm.globals.get(\"employee_job_title\")).to.equal(res.job_title);\r",
+							"    pm.expect(pm.globals.get(\"employee_department\")).to.equal(res.department);\r",
+							"    pm.expect(\"http://wk8jwt.appspot.com/employees/\" + pm.globals.get(\"emp_id\")).to.equal(res.self);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee to project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7d9053ee-01e8-401f-a656-e5d7aaabde61",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name2}}\",\r\n\t\"job_title\": \"{{employee_job_title2}}\",\r\n\t\"department\": \"{{employee_department2}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj2_id}}/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj2_id}}",
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get employee and check project relationship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(pm.globals.get(\"employee_name\")).to.equal(res.name);\r",
+							"    pm.expect(pm.globals.get(\"employee_job_title\")).to.equal(res.job_title);\r",
+							"    pm.expect(pm.globals.get(\"employee_department\")).to.equal(res.department);\r",
+							"    pm.expect(\"\" + pm.globals.get(\"emp_id\")).to.equal(res.id);\r",
+							"    pm.expect(\"\" + pm.globals.get(\"proj2_id\")).to.equal(res.assignment.id);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete employee from project",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj2_id}}/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj2_id}}",
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get employee and check for no project relationship",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(pm.globals.get(\"employee_name\")).to.equal(res.name);\r",
+							"    pm.expect(pm.globals.get(\"employee_job_title\")).to.equal(res.job_title);\r",
+							"    pm.expect(pm.globals.get(\"employee_department\")).to.equal(res.department);\r",
+							"    pm.expect(\"\" + pm.globals.get(\"emp_id\")).to.equal(res.id);\r",
+							"    pm.expect(pm.globals.get(typeof(\"undefined\"))).to.equal(res.assignment);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put employee",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "7d9053ee-01e8-401f-a656-e5d7aaabde61",
+						"exec": [
+							"employee_name = \"emp name2\";",
+							"employee_job_title = \"emp job title2\";",
+							"employee_department = \"emp department2\";",
+							"",
+							"pm.globals.set(\"employee_name2\", employee_name );",
+							"pm.globals.set(\"employee_job_title2\", employee_job_title);",
+							"pm.globals.set(\"employee_department2\", employee_department);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name2}}\",\r\n\t\"job_title\": \"{{employee_job_title2}}\",\r\n\t\"department\": \"{{employee_department2}}\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get employee and check put details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    pm.expect(pm.globals.get(\"employee_name2\")).to.equal(res.name);\r",
+							"    pm.expect(pm.globals.get(\"employee_job_title2\")).to.equal(res.job_title);\r",
+							"    pm.expect(pm.globals.get(\"employee_department2\")).to.equal(res.department);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list of employees get collection size",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    var empCount = res.collection_size;\r",
+							"    pm.globals.set(\"empCount\", empCount);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"   var res = JSON.parse(responseBody);\r",
+							"    var emp2_id = res.id;\r",
+							"    pm.globals.set(\"emp2_id\", emp2_id);\r",
+							"\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name}}2\",\r\n\t\"job_title\": \"{{employee_job_title}}2\",\r\n\t\"department\": \"{{employee_department}}2\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee3",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name}}3\",\r\n\t\"job_title\": \"{{employee_job_title}}3\",\r\n\t\"department\": \"{{employee_department}}3\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee4",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name}}4\",\r\n\t\"job_title\": \"{{employee_job_title}}4\",\r\n\t\"department\": \"{{employee_department}}4\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee5",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name}}5\",\r\n\t\"job_title\": \"{{employee_job_title}}5\",\r\n\t\"department\": \"{{employee_department}}5\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add employee6",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "b93cd23b-a895-4eff-9ed1-02089d345a27",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "84860850-43c2-48a1-8028-8b2b174e0a5e",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \r\n\t\"name\": \"{{employee_name}}6\",\r\n\t\"job_title\": \"{{employee_job_title}}6\",\r\n\t\"department\": \"{{employee_department}}6\"\r\n}"
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list of employees collection size, 5 per page and 200 status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    var res = JSON.parse(responseBody);\r",
+							"    var newCount = res.collection_size;\r",
+							"    var nextlist = res.next;\r",
+							"    var prevCount = pm.globals.get(\"empCount\");\r",
+							"    var accum = newCount - prevCount;\r",
+							"    pm.globals.set(\"nextlistemp\", nextlist);\r",
+							"   // pm.expect(accum).to.equal(5);\r",
+							"    pm.expect(res.items.length).to.equal(5);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete employee test 204",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "acb9f7e1-a934-4342-a465-ae920d1b2240",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "try deleted employee test 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6ffd9300-58bd-4553-a165-83fd6499f420",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{emp_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{emp_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "406 status: get employee not application/json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/{{emp2_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						"{{emp2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "406 status: get project not application/json",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(406);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/{{proj2_id}}",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						"{{proj2_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405 status: delete projects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405 status: put projects",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/projects/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"projects",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405 status: delete employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees/",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405 status: put employees",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/employees",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405 status: delete users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "405 status: put users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b351066a-4ae6-4385-a0e1-6eda321b85e2",
+						"exec": [
+							"pm.test(\"\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/html"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/html"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "https://wk8jwt.appspot.com/users",
+					"protocol": "https",
+					"host": [
+						"wk8jwt",
+						"appspot",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "dff5deeb-095b-42be-91ea-0845800c7849",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e521c59b-8146-46a2-9441-28915c06094f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

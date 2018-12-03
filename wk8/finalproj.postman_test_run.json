@@ -1,0 +1,4016 @@
+{
+	"id": "f2f828c9-06eb-4fce-8270-e5f206bba89e",
+	"name": "finalproj",
+	"allTests": [],
+	"timestamp": "2018-12-03T12:13:06.463Z",
+	"collection_id": "5a7b5008-d0fc-4732-b175-c3fca5355509",
+	"folder_id": 0,
+	"target_type": "collection",
+	"environment_id": "0",
+	"data": [],
+	"delay": 0,
+	"count": 1,
+	"collection": {
+		"id": "5a7b5008-d0fc-4732-b175-c3fca5355509",
+		"name": "finalproj",
+		"description": null,
+		"auth": null,
+		"events": [
+			{
+				"listen": "prerequest",
+				"script": {
+					"id": "dff5deeb-095b-42be-91ea-0845800c7849",
+					"type": "text/javascript",
+					"exec": [
+						""
+					]
+				}
+			},
+			{
+				"listen": "test",
+				"script": {
+					"id": "e521c59b-8146-46a2-9441-28915c06094f",
+					"type": "text/javascript",
+					"exec": [
+						""
+					]
+				}
+			}
+		],
+		"variables": [],
+		"order": [
+			"814dedc2-1ba1-4d33-8ded-1d2c4e917ef9",
+			"b2db6e0a-e73c-433a-9970-021e5e7647ba",
+			"1fe14ef1-400c-456f-b665-0a6c44f899c6",
+			"ef1f0941-3879-427e-bb53-43633785a89a",
+			"2c9b2d7f-e686-46e6-9b3e-0a78bde71f27",
+			"731d8d37-7dbc-43f8-8b82-a1ed323f8430",
+			"d1b83775-22a8-4bfe-b961-d57ce63c2d93",
+			"ca915617-0cc5-45ad-934e-0d0894c1ed97",
+			"67a1b835-138d-4890-a455-f1ccc65bed61",
+			"76fa35ef-25c9-4e50-a0f7-d53a0d0b5294",
+			"86b2c3f8-9b5b-457f-b2b7-4adf5c40d1ec",
+			"8c8d04b7-2e92-4df8-b579-4a3519b7ad25",
+			"3bf8755e-0941-413d-8de5-b805ba84d61b",
+			"7fa69ec5-5f8a-4d27-8e77-fb61d99f54f5",
+			"9cbc2c45-54e1-4161-a715-8917dd987ed6",
+			"dcb1247c-b709-4382-8635-739891354801",
+			"4cdcaf2b-cf46-4b39-9750-a1f20bbad960",
+			"5f2e4fa5-293e-4732-bb10-9aa39eb1852b",
+			"9afa47c3-6fc3-4db6-b19f-73ed7185a4ac",
+			"2eca48e4-6dd7-4498-9f04-c8f89469ab87",
+			"d651672f-aa7b-44aa-842c-89e43f1172b1",
+			"385703a8-b314-4391-92d9-282b73838b99",
+			"02f616c3-c362-49ce-b34b-1c67bfced0bb",
+			"8b43a7ed-081e-450e-8f5b-3db82f140b9b",
+			"c7ca23a5-fd3f-48d6-971b-d0afe7541401",
+			"bd95f430-40cd-440e-ae52-52aba08359d3",
+			"befd2749-daea-4126-b572-b5c8cb915e9d",
+			"5718f739-6a70-441c-a087-c5d52b33fc69",
+			"ae42076f-a245-4458-940b-219b0786f7fb",
+			"0fcb937b-90a0-4858-bd3c-8354be95d5c3",
+			"62813d17-bba8-43de-81ed-4c3c693ebe49",
+			"98487004-a67d-4ed1-9105-ba82f60d487c",
+			"208b273f-5411-4520-88f0-0d6a2a0890dc",
+			"c4cbb328-bcc2-4a53-9209-f7645e12112a",
+			"ecf45c64-7e77-46c6-b999-ee5bb5c815ea",
+			"35a3c82e-cadb-4d83-90e7-8bdb8235088c",
+			"bf1f05ee-7bbe-487d-8610-8327c8afe9a1",
+			"4a870b3a-d895-4b8e-988c-d02bc4a5672b",
+			"418ae25f-c591-4706-b931-3d1fc1879c71",
+			"a92c683d-eb9d-40b1-ba35-238455b18677",
+			"885d5043-5ee6-44dc-85d2-e26788204cf0",
+			"3913fd62-05e9-44f8-a947-a7d97d2139b9",
+			"6e9489b3-993e-4ac9-afca-05739f1c6f28",
+			"77fbb616-8dd8-4591-96d9-4361590fba10",
+			"57051d0c-15d4-41af-b0fc-c56f8a210730",
+			"63786a62-43e0-4813-812b-40bc0712b23d",
+			"e0710107-5ec9-4dff-9833-117adfdc447e",
+			"072a11af-e72e-4acd-8d9d-9c3efda1905d",
+			"c637768e-28c4-4bd9-9907-037017627a53",
+			"3af5625b-d8ac-42a9-9392-8e05719e08e1",
+			"971dde2d-ed2b-4604-a58d-401fa7e2dc23",
+			"5a79bd0a-5d40-44cc-8954-a470616cfe6c",
+			"abf4566f-3524-4f47-b2dd-89abcb3d817b",
+			"9d495ae7-8490-4795-9068-b4267c2b961b",
+			"265df1c2-dc67-42fe-a665-c2166ebbc037",
+			"569c86ec-b970-45b6-b54d-e492488f4033",
+			"358f14a6-3137-4fa6-b308-4240fad4988d",
+			"867141d3-6540-4ed1-a2f2-caf9a76c98cc",
+			"b0ac0e49-a01e-481f-a781-7a2fdb1594c2",
+			"ac474446-419d-4a52-9215-86bf9afc152f",
+			"27cb4823-22e5-423c-8695-d1154bd80b51",
+			"d11dfbd1-197f-49cc-8ca4-37800837dca8"
+		],
+		"folders_order": [],
+		"owner": "5540709",
+		"permissions": {},
+		"favorite": false,
+		"shared": false,
+		"type": "collection",
+		"depth": 0
+	},
+	"folder": null,
+	"environment": null,
+	"globals": [
+		{
+			"value": {
+				"description": "d",
+				"public": "true",
+				"files": {
+					"test.txt": "test file"
+				}
+			},
+			"key": "contentsObj",
+			"enabled": true
+		},
+		{
+			"value": "{\"description\":\"d\",\"public\": true,\"files\":{ \"test.txt\":  {\"content\": \"test file\" }}}",
+			"key": "contentsString",
+			"enabled": true
+		},
+		{
+			"value": "8e5b8117bd03b0a3d7ae2233ab71fbf2",
+			"key": "id",
+			"enabled": true
+		},
+		{
+			"value": "{\"description\":\"a\",\"files\":{ \"test2.txt\":  {\"content\": \"test file2\" }}}",
+			"key": "contentsString2",
+			"enabled": true
+		},
+		{
+			"value": 16,
+			"key": "len",
+			"enabled": true
+		},
+		{
+			"value": "starredGists",
+			"key": "starredGists",
+			"enabled": true
+		},
+		{
+			"value": "ids",
+			"key": "ids",
+			"enabled": true
+		},
+		{
+			"value": "testship",
+			"key": "ship",
+			"enabled": true
+		},
+		{
+			"value": 5717023518621696,
+			"key": "ship_id",
+			"enabled": true
+		},
+		{
+			"value": 20,
+			"key": "ship_length",
+			"enabled": true
+		},
+		{
+			"value": "testship",
+			"key": "ship_name",
+			"enabled": true
+		},
+		{
+			"value": "rowboat",
+			"key": "ship_type",
+			"enabled": true
+		},
+		{
+			"value": "",
+			"key": "slip_arrival_date",
+			"enabled": true
+		},
+		{
+			"value": "",
+			"key": "slip_current_ship",
+			"enabled": true
+		},
+		{
+			"value": 5736627494191104,
+			"key": "slip_id",
+			"enabled": true
+		},
+		{
+			"value": "employee_name = \"emp name2\";\nemployee_job_title = \"emp job title2\";\nemployee_department = \"emp department2\";\n\npm.globals.set(\"employee_name2\", employee_name );\npm.globals.set(\"employee_job_title2\", employee_job_title);\npm.globals.set(\"employee_department2\", employee_department);",
+			"key": "slip_number",
+			"enabled": true
+		},
+		{
+			"value": 30,
+			"key": "invalid_ship_length",
+			"enabled": true
+		},
+		{
+			"value": 5,
+			"key": "invalid_ship_name",
+			"enabled": true
+		},
+		{
+			"value": 2,
+			"key": "invalid_ship_type",
+			"enabled": true
+		},
+		{
+			"value": "10/21/2001",
+			"key": "invalid_slip_arrival",
+			"enabled": true
+		},
+		{
+			"value": "h",
+			"key": "invalid_slip_number",
+			"enabled": true
+		},
+		{
+			"value": 2000,
+			"key": "mod_ship_length",
+			"enabled": true
+		},
+		{
+			"value": "thunder",
+			"key": "mod_ship_name",
+			"enabled": true
+		},
+		{
+			"value": "cruise ship",
+			"key": "mod_ship_type",
+			"enabled": true
+		},
+		{
+			"value": 200,
+			"key": "mod_slip_number",
+			"enabled": true
+		},
+		{
+			"value": 5752256343310336,
+			"key": "slip2_id",
+			"enabled": true
+		},
+		{
+			"value": 5639445604728832,
+			"key": "ship2_id",
+			"enabled": true
+		},
+		{
+			"value": "cool stuff",
+			"key": "cargo_content",
+			"enabled": true
+		},
+		{
+			"value": "1/1/2019",
+			"key": "cargo_delivery_date",
+			"enabled": true
+		},
+		{
+			"value": 6,
+			"key": "cargo_weight",
+			"enabled": true
+		},
+		{
+			"value": 5633226290757632,
+			"key": "cargo_id",
+			"enabled": true
+		},
+		{
+			"value": "1/1/1999",
+			"key": "mod_cargo_arrival_date",
+			"enabled": true
+		},
+		{
+			"value": "cheese",
+			"key": "mod_cargo_content ",
+			"enabled": true
+		},
+		{
+			"value": 20,
+			"key": "mod_cargo_weight",
+			"enabled": true
+		},
+		{
+			"value": 5682446615969792,
+			"key": "cargo2_id",
+			"enabled": true
+		},
+		{
+			"value": 4,
+			"key": "invalid_cargo_content",
+			"enabled": true
+		},
+		{
+			"value": 5758578199625728,
+			"key": "cargo3_id",
+			"enabled": true
+		},
+		{
+			"value": "cheese",
+			"key": "mod_cargo_content",
+			"enabled": true
+		},
+		{
+			"value": 5719666668339200,
+			"key": "cargo4_id",
+			"enabled": true
+		},
+		{
+			"value": {},
+			"key": "cargo_next",
+			"enabled": true
+		},
+		{
+			"value": null,
+			"key": "ship_next",
+			"enabled": true
+		},
+		{
+			"value": 5636635823702016,
+			"key": "ship3_id",
+			"enabled": true
+		},
+		{
+			"value": 5731568492478464,
+			"key": "ship4_id",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080/ships/5186378094608384",
+			"key": "ship_self",
+			"enabled": true
+		},
+		{
+			"value": "http://week5proj2992929.appspot.com/cargo/5126463837700096",
+			"key": "cargo_self",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080/ships/5186378094608384",
+			"key": "loc",
+			"enabled": true
+		},
+		{
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJuaWNrbmFtZSI6ImpkMTgwNTEiLCJuYW1lIjoibmFtZSAyOTc3NjQwNzY2MyIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci82OTM3Y2MxYmI2YTg1Mzc1ZjA5MTBmZDRjODg4NzRjZj9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm4yLnBuZyIsInVwZGF0ZWRfYXQiOiIyMDE4LTEyLTAzVDExOjM1OjUxLjMyNloiLCJlbWFpbCI6ImpkMTgwNTFAc29tZXdoZXJlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly93azhqd3QuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVjMDUxNTA2NzU4MmNlNDYwN2VlNmRhZSIsImF1ZCI6IkJPcTRDc0pDMUQwUlVYc05oejVMZFB4MUdyWjMxZ3pHIiwiaWF0IjoxNTQzODM2OTUxLCJleHAiOjE1NDM4NzI5NTF9.oCLKlXlDRoaUxmSFPg05Wn84KUUcabipz8dquCdRg8hVQj56PEgEdFgXhOI46XuUNnYPimVoUVpwbW2z13gOBrhIdQh7mzqXF1nIlNiinvO8oLuXojRpQ6q7_1px4EnyDRaYQDekoF_bf5c2JNCcIKC-Z8pFmR0HgAh8G_aaC7CnUJlTzgmIOCI9jNgkzryV_XBJTp9bjPZJdXCwzZhJ_HYMBwT8Cvg2BJeDPusHd0x_I3S636T2VkYfGvybSL1MPKxdKEC8a807wA_AINd_JcfrEUaoNPiB_AcdUUbKWN4FmPhD9hMu9JCSV-ChPL_6GMMWIPh7GLGlpPuCjUOGrQ",
+			"key": "user1tok",
+			"enabled": true
+		},
+		{
+			"value": "jd4467@somewhere.com",
+			"key": "newUser",
+			"enabled": true
+		},
+		{
+			"value": "jd9043p",
+			"key": "password",
+			"enabled": true
+		},
+		{
+			"value": 7,
+			"key": "num",
+			"enabled": true
+		},
+		{
+			"value": "jd9043@somewhere.com",
+			"key": "newEmail",
+			"enabled": true
+		},
+		{
+			"value": "+91898715323",
+			"key": "newPhone",
+			"enabled": true
+		},
+		{
+			"value": "jd9043",
+			"key": "newNickname",
+			"enabled": true
+		},
+		{
+			"value": "name 69304904896",
+			"key": "newName",
+			"enabled": true
+		},
+		{
+			"value": "12/20/2018",
+			"key": "proj_deadline",
+			"enabled": true
+		},
+		{
+			"value": "testproj",
+			"key": "proj_name",
+			"enabled": true
+		},
+		{
+			"value": "12/1/2018",
+			"key": "proj_start_date",
+			"enabled": true
+		},
+		{
+			"value": "auth0|5c051d8e119c392e85233703",
+			"key": "user1",
+			"enabled": true
+		},
+		{
+			"value": "jd19547@somewhere.com",
+			"key": "newEmail2",
+			"enabled": true
+		},
+		{
+			"value": "name 51327573950",
+			"key": "newName2",
+			"enabled": true
+		},
+		{
+			"value": "jd19547",
+			"key": "newNickname2",
+			"enabled": true
+		},
+		{
+			"value": 5668294832947200,
+			"key": "proj_id",
+			"enabled": true
+		},
+		{
+			"value": "2/3/2018",
+			"key": "proj_deadline2",
+			"enabled": true
+		},
+		{
+			"value": "testproj2",
+			"key": "proj_name2",
+			"enabled": true
+		},
+		{
+			"value": "1/2/2018",
+			"key": "proj_start_date2",
+			"enabled": true
+		},
+		{
+			"value": "emp department1",
+			"key": "employee_department",
+			"enabled": true
+		},
+		{
+			"value": "emp job title1",
+			"key": "employee_job_title",
+			"enabled": true
+		},
+		{
+			"value": "emp name1",
+			"key": "employee_name",
+			"enabled": true
+		},
+		{
+			"value": 5715319289020416,
+			"key": "emp_id",
+			"enabled": true
+		},
+		{
+			"value": "emp department2",
+			"key": "employee_department2",
+			"enabled": true
+		},
+		{
+			"value": "emp job title2",
+			"key": "employee_job_title2",
+			"enabled": true
+		},
+		{
+			"value": "emp name2",
+			"key": "employee_name2",
+			"enabled": true
+		},
+		{
+			"value": 8,
+			"key": "userCount",
+			"enabled": true
+		},
+		{
+			"value": "jd19547p",
+			"key": "password2",
+			"enabled": true
+		},
+		{
+			"value": "auth0|5c051d9e7582ce4607ee6e2b",
+			"key": "user2",
+			"enabled": true
+		},
+		{
+			"value": "jd15416@somewhere.com",
+			"key": "newEmail3",
+			"enabled": true
+		},
+		{
+			"value": "name 87741638201",
+			"key": "newName3",
+			"enabled": true
+		},
+		{
+			"value": "jd15416",
+			"key": "newNickname3",
+			"enabled": true
+		},
+		{
+			"value": "jd15416p",
+			"key": "password3",
+			"enabled": true
+		},
+		{
+			"value": "auth0|5c051da5301a9f3aa494923d",
+			"key": "user3",
+			"enabled": true
+		},
+		{
+			"value": "jd10416@somewhere.com",
+			"key": "putEmail",
+			"enabled": true
+		},
+		{
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJuaWNrbmFtZSI6ImpkMTgzNDEiLCJuYW1lIjoibmFtZSA0NTA2MDU2NTUwMCIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9hYjkyMTBkNzQ3NTNmM2VhMGI4MjY0ZjIxZDg0NjA0Mz9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm40LnBuZyIsInVwZGF0ZWRfYXQiOiIyMDE4LTEyLTAzVDA4OjM1OjMxLjg1MFoiLCJlbWFpbCI6ImpkMTgzNDFAc29tZXdoZXJlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly93azhqd3QuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVjMDRjZTMwMjNkZDg1MmRkNzIxZDJmZiIsImF1ZCI6IkJPcTRDc0pDMUQwUlVYc05oejVMZFB4MUdyWjMxZ3pHIiwiaWF0IjoxNTQzODI2MTMxLCJleHAiOjE1NDM4NjIxMzF9.J58zu0S23DA5NidWnf_KXl7X68O3CKpf3wg1BdXxeRlyc5z5cV5DYUPSxAxkyb6W9bJ6shpNESmaNut-3Mumsi9SRtxl5CXfWn5lyGkFmbNN6OyH_JUy_ygDUypKBg_kFP6UGDKlAiwKuqascraVYP1JivnludjIhMVPNlmhTo25U2IFSdFCBxx3l0ZRHoRSGfo4dSi0j_R1FYHJ3ZyZcBCRZDONCUcvdG20OpqF29j5BWsjI8UTQTNtAfYqVfwfLsmC-fnJAeuFer7SaxR8hGiGvB38VvVNN-OHoJ3uTx8H7lkzMUYENnMzuSX6VyOdSEkXQvWSS04CWTHJBLajQQ",
+			"key": "user2tok",
+			"enabled": true
+		},
+		{
+			"value": 5660771493085184,
+			"key": "proj1_id",
+			"enabled": true
+		},
+		{
+			"value": "2/2/2018",
+			"key": "pproj_deadline",
+			"enabled": true
+		},
+		{
+			"value": "testprojput",
+			"key": "pproj_name",
+			"enabled": true
+		},
+		{
+			"value": "1/1/2018",
+			"key": "pproj_start_date",
+			"enabled": true
+		},
+		{
+			"value": 7,
+			"key": "projCount",
+			"enabled": true
+		},
+		{
+			"value": null,
+			"key": "http://localhost:8080//projects/?cursor=CiYSIGoIcH53azhqd3RyFAsSB1Byb2plY3QYgICAoPmNgwoMGAAgAA==",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080//projects/?cursor=CiYSIGoIcH53azhqd3RyFAsSB1Byb2plY3QYgICAgJ2UhwoMGAAgAA==",
+			"key": "nextlist",
+			"enabled": true
+		},
+		{
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5USkdRelJEUWpWQlF6bEJNekV5TmtGR1FqRTNRelV5T0RaRVEwTkNOa00yTXprelJEZzJPUSJ9.eyJuaWNrbmFtZSI6ImpkMTgzNDEiLCJuYW1lIjoibmFtZSA0NTA2MDU2NTUwMCIsInBpY3R1cmUiOiJodHRwczovL3MuZ3JhdmF0YXIuY29tL2F2YXRhci9hYjkyMTBkNzQ3NTNmM2VhMGI4MjY0ZjIxZDg0NjA0Mz9zPTQ4MCZyPXBnJmQ9aHR0cHMlM0ElMkYlMkZjZG4uYXV0aDAuY29tJTJGYXZhdGFycyUyRm40LnBuZyIsInVwZGF0ZWRfYXQiOiIyMDE4LTEyLTAzVDA4OjM4OjQ5LjYxNloiLCJlbWFpbCI6ImpkMTgzNDFAc29tZXdoZXJlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiaXNzIjoiaHR0cHM6Ly93azhqd3QuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVjMDRjZTMwMjNkZDg1MmRkNzIxZDJmZiIsImF1ZCI6IkJPcTRDc0pDMUQwUlVYc05oejVMZFB4MUdyWjMxZ3pHIiwiaWF0IjoxNTQzODI2MzI5LCJleHAiOjE1NDM4NjIzMjl9.v7LQEgr3k3lzRkAUhw2YdGFUmV4ytn6txgamkbule5fhQaEeqHbzo6y0l0NFJEMkxmjofj5A994-_TDsdp2Tg6aTkTk6DBos5ItNVcyabJLFSoA79f2XzxjAtAf_SKb8iwnaSrKpptP5m3onVqlzMOwBJ4prrJz9nWsscVhQYsAjlMj2L0w03C17jcqmEpikFFMjZ1Fa-YdV0WWrbxKGi1-R87ceb2Rc3jM1kVTeKJnL54DdnwXXcWz0deCmfOFP_Le6GMjh_SDvX65PkXnFn1vJ7intVFVRVRHjnA3sCHO6JbGVtIOZBlsnD0WUMzCpCL0IgKHmhmuAIXAVj_-LcA",
+			"key": "user3tok",
+			"enabled": true
+		},
+		{
+			"value": 5727120147873792,
+			"key": "proj2_id",
+			"enabled": true
+		},
+		{
+			"value": "http://localhost:8080//employees/?cursor=CicSIWoIcH53azhqd3RyFQsSCEVtcGxveWVlGICAgKC77IAKDBgAIAA=",
+			"key": "nextlistemp",
+			"enabled": true
+		},
+		{
+			"value": 42,
+			"key": "empCount",
+			"enabled": true
+		},
+		{
+			"value": 5194384987389952,
+			"key": "emp2_id",
+			"enabled": true
+		},
+		{
+			"value": "jd9174@somewhere.com",
+			"key": "bad1Email",
+			"enabled": true
+		},
+		{
+			"value": 5660980839186432,
+			"key": "proj3_id",
+			"enabled": true
+		},
+		{
+			"value": 5637869485948928,
+			"key": "proj4_id",
+			"enabled": true
+		},
+		{
+			"value": 5722939567636480,
+			"key": "proj6_id",
+			"enabled": true
+		}
+	],
+	"results": [
+		{
+			"name": "get users: get user collection size",
+			"id": "814dedc2-1ba1-4d33-8ded-1d2c4e917ef9",
+			"url": "https://wk8jwt.appspot.com/users/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"436"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "436",
+			"totalRequestTime": "436",
+			"iterationResults": {}
+		},
+		{
+			"name": "create user1",
+			"id": "b2db6e0a-e73c-433a-9970-021e5e7647ba",
+			"url": "https://wk8jwt.appspot.com/users",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"616"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "616",
+			"totalRequestTime": "616",
+			"iterationResults": {}
+		},
+		{
+			"name": "get user1: match put details and match self-link test 200",
+			"id": "1fe14ef1-400c-456f-b665-0a6c44f899c6",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"403"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "403",
+			"totalRequestTime": "403",
+			"iterationResults": {}
+		},
+		{
+			"name": "get user error:  check for 404 when user doesn't exist",
+			"id": "ef1f0941-3879-427e-bb53-43633785a89a",
+			"url": "https://wk8jwt.appspot.com/users/8989898989",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"393"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "393",
+			"totalRequestTime": "393",
+			"iterationResults": {}
+		},
+		{
+			"name": "create user2",
+			"id": "2c9b2d7f-e686-46e6-9b3e-0a78bde71f27",
+			"url": "https://wk8jwt.appspot.com/users",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"526"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "526",
+			"totalRequestTime": "526",
+			"iterationResults": {}
+		},
+		{
+			"name": "create user3",
+			"id": "731d8d37-7dbc-43f8-8b82-a1ed323f8430",
+			"url": "https://wk8jwt.appspot.com/users",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"532"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "532",
+			"totalRequestTime": "532",
+			"iterationResults": {}
+		},
+		{
+			"name": "get users: test count - verify collection size, check for all 3 users details",
+			"id": "d1b83775-22a8-4bfe-b961-d57ce63c2d93",
+			"url": "https://wk8jwt.appspot.com/users/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "fail"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 0,
+					"fail": 1
+				}
+			},
+			"times": [
+				"414"
+			],
+			"allTests": [
+				{
+					"": false
+				}
+			],
+			"time": "414",
+			"totalRequestTime": "414",
+			"iterationResults": {}
+		},
+		{
+			"name": "login: check for successful login",
+			"id": "ca915617-0cc5-45ad-934e-0d0894c1ed97",
+			"url": "https://wk8jwt.appspot.com/login",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"552"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "552",
+			"totalRequestTime": "552",
+			"iterationResults": {}
+		},
+		{
+			"name": "put user",
+			"id": "67a1b835-138d-4890-a455-f1ccc65bed61",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"435"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "435",
+			"totalRequestTime": "435",
+			"iterationResults": {}
+		},
+		{
+			"name": "put user no JWT token: test 401",
+			"id": "76fa35ef-25c9-4e50-a0f7-d53a0d0b5294",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"45"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "45",
+			"totalRequestTime": "45",
+			"iterationResults": {}
+		},
+		{
+			"name": "put user2 wrong JWT token: test 403",
+			"id": "86b2c3f8-9b5b-457f-b2b7-4adf5c40d1ec",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd47582ce4607ee6e2d",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"51"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "51",
+			"totalRequestTime": "51",
+			"iterationResults": {}
+		},
+		{
+			"name": "get user: verify details from valid put",
+			"id": "8c8d04b7-2e92-4df8-b579-4a3519b7ad25",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"395"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "395",
+			"totalRequestTime": "395",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete user no  JWT token: test 401",
+			"id": "3bf8755e-0941-413d-8de5-b805ba84d61b",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"48"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "48",
+			"totalRequestTime": "48",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete user JWT wrong token: test 403",
+			"id": "7fa69ec5-5f8a-4d27-8e77-fb61d99f54f5",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd47582ce4607ee6e2d",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"48"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "48",
+			"totalRequestTime": "48",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete user1: test 204",
+			"id": "9cbc2c45-54e1-4161-a715-8917dd987ed6",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"435"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "435",
+			"totalRequestTime": "435",
+			"iterationResults": {}
+		},
+		{
+			"name": "get user1: verify 404 user was deleted",
+			"id": "dcb1247c-b709-4382-8635-739891354801",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"402"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "402",
+			"totalRequestTime": "402",
+			"iterationResults": {}
+		},
+		{
+			"name": "login as user2",
+			"id": "4cdcaf2b-cf46-4b39-9750-a1f20bbad960",
+			"url": "https://wk8jwt.appspot.com/login",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"547"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "547",
+			"totalRequestTime": "547",
+			"iterationResults": {}
+		},
+		{
+			"name": "get list of projects: store project count",
+			"id": "5f2e4fa5-293e-4732-bb10-9aa39eb1852b",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"592"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "592",
+			"totalRequestTime": "592",
+			"iterationResults": {}
+		},
+		{
+			"name": "add project1 as user2: test 201",
+			"id": "9afa47c3-6fc3-4db6-b19f-73ed7185a4ac",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"140"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "140",
+			"totalRequestTime": "140",
+			"iterationResults": {}
+		},
+		{
+			"name": "get project1: match details for added project, check self-link",
+			"id": "2eca48e4-6dd7-4498-9f04-c8f89469ab87",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"583"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "583",
+			"totalRequestTime": "583",
+			"iterationResults": {}
+		},
+		{
+			"name": "add project2",
+			"id": "d651672f-aa7b-44aa-842c-89e43f1172b1",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"122"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "122",
+			"totalRequestTime": "122",
+			"iterationResults": {}
+		},
+		{
+			"name": "add project3",
+			"id": "385703a8-b314-4391-92d9-282b73838b99",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"147"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "147",
+			"totalRequestTime": "147",
+			"iterationResults": {}
+		},
+		{
+			"name": "add project4",
+			"id": "02f616c3-c362-49ce-b34b-1c67bfced0bb",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"183"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "183",
+			"totalRequestTime": "183",
+			"iterationResults": {}
+		},
+		{
+			"name": "add project5",
+			"id": "8b43a7ed-081e-450e-8f5b-3db82f140b9b",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"129"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "129",
+			"totalRequestTime": "129",
+			"iterationResults": {}
+		},
+		{
+			"name": "add project 6",
+			"id": "c7ca23a5-fd3f-48d6-971b-d0afe7541401",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"243"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "243",
+			"totalRequestTime": "243",
+			"iterationResults": {}
+		},
+		{
+			"name": "add project 7",
+			"id": "bd95f430-40cd-440e-ae52-52aba08359d3",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"164"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "164",
+			"totalRequestTime": "164",
+			"iterationResults": {}
+		},
+		{
+			"name": "put project1",
+			"id": "befd2749-daea-4126-b572-b5c8cb915e9d",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"575"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "575",
+			"totalRequestTime": "575",
+			"iterationResults": {}
+		},
+		{
+			"name": "get project1: match details for put project",
+			"id": "5718f739-6a70-441c-a087-c5d52b33fc69",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"567"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "567",
+			"totalRequestTime": "567",
+			"iterationResults": {}
+		},
+		{
+			"name": "get list of projects page 1: verify 5 per page and 7 added to proj count",
+			"id": "ae42076f-a245-4458-940b-219b0786f7fb",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"767"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "767",
+			"totalRequestTime": "767",
+			"iterationResults": {}
+		},
+		{
+			"name": "pagination: check next page of results",
+			"id": "0fcb937b-90a0-4858-bd3c-8354be95d5c3",
+			"url": "http://wk8jwt.appspot.com//projects/?cursor=CiYSIGoIcH53azhqd3RyFAsSB1Byb2plY3QYgICAoOTJjgkMGAAgAA==",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"628"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "628",
+			"totalRequestTime": "628",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete project 1: correct JWT token test 204",
+			"id": "62813d17-bba8-43de-81ed-4c3c693ebe49",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"986"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "986",
+			"totalRequestTime": "986",
+			"iterationResults": {}
+		},
+		{
+			"name": "get deleted project: test 404",
+			"id": "98487004-a67d-4ed1-9105-ba82f60d487c",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"197"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "197",
+			"totalRequestTime": "197",
+			"iterationResults": {}
+		},
+		{
+			"name": "put project2 with no JWT token, test 401",
+			"id": "208b273f-5411-4520-88f0-0d6a2a0890dc",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"128"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "128",
+			"totalRequestTime": "128",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete project2 with no JWT token 401",
+			"id": "c4cbb328-bcc2-4a53-9209-f7645e12112a",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"153"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "153",
+			"totalRequestTime": "153",
+			"iterationResults": {}
+		},
+		{
+			"name": "login as user3",
+			"id": "ecf45c64-7e77-46c6-b999-ee5bb5c815ea",
+			"url": "https://wk8jwt.appspot.com/login",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {},
+			"times": [
+				"610"
+			],
+			"allTests": [
+				{}
+			],
+			"time": "610",
+			"totalRequestTime": "610",
+			"iterationResults": {}
+		},
+		{
+			"name": "put project2 with wrong JWT token, test 403",
+			"id": "35a3c82e-cadb-4d83-90e7-8bdb8235088c",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"592"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "592",
+			"totalRequestTime": "592",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete project2 with wrong JWT token test 403",
+			"id": "bf1f05ee-7bbe-487d-8610-8327c8afe9a1",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"441"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "441",
+			"totalRequestTime": "441",
+			"iterationResults": {}
+		},
+		{
+			"name": "add employee: test 201",
+			"id": "4a870b3a-d895-4b8e-988c-d02bc4a5672b",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"230"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "230",
+			"totalRequestTime": "230",
+			"iterationResults": {}
+		},
+		{
+			"name": "get employee test 200 and check added details and self link",
+			"id": "418ae25f-c591-4706-b931-3d1fc1879c71",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"310"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "310",
+			"totalRequestTime": "310",
+			"iterationResults": {}
+		},
+		{
+			"name": "add employee to project",
+			"id": "a92c683d-eb9d-40b1-ba35-238455b18677",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"519"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "519",
+			"totalRequestTime": "519",
+			"iterationResults": {}
+		},
+		{
+			"name": "get employee and check project relationship",
+			"id": "885d5043-5ee6-44dc-85d2-e26788204cf0",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"462"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "462",
+			"totalRequestTime": "462",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete employee from project",
+			"id": "3913fd62-05e9-44f8-a947-a7d97d2139b9",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"224"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "224",
+			"totalRequestTime": "224",
+			"iterationResults": {}
+		},
+		{
+			"name": "get employee and check for no project relationship",
+			"id": "6e9489b3-993e-4ac9-afca-05739f1c6f28",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"398"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "398",
+			"totalRequestTime": "398",
+			"iterationResults": {}
+		},
+		{
+			"name": "put employee",
+			"id": "77fbb616-8dd8-4591-96d9-4361590fba10",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"355"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "355",
+			"totalRequestTime": "355",
+			"iterationResults": {}
+		},
+		{
+			"name": "get employee and check put details",
+			"id": "57051d0c-15d4-41af-b0fc-c56f8a210730",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"375"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "375",
+			"totalRequestTime": "375",
+			"iterationResults": {}
+		},
+		{
+			"name": "get list of employees get collection size",
+			"id": "63786a62-43e0-4813-812b-40bc0712b23d",
+			"url": "https://wk8jwt.appspot.com/employees",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"664"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "664",
+			"totalRequestTime": "664",
+			"iterationResults": {}
+		},
+		{
+			"name": "add employee2",
+			"id": "e0710107-5ec9-4dff-9833-117adfdc447e",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"208"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "208",
+			"totalRequestTime": "208",
+			"iterationResults": {}
+		},
+		{
+			"name": "add employee3",
+			"id": "072a11af-e72e-4acd-8d9d-9c3efda1905d",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"184"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "184",
+			"totalRequestTime": "184",
+			"iterationResults": {}
+		},
+		{
+			"name": "add employee4",
+			"id": "c637768e-28c4-4bd9-9907-037017627a53",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"127"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "127",
+			"totalRequestTime": "127",
+			"iterationResults": {}
+		},
+		{
+			"name": "add employee5",
+			"id": "3af5625b-d8ac-42a9-9392-8e05719e08e1",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"137"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "137",
+			"totalRequestTime": "137",
+			"iterationResults": {}
+		},
+		{
+			"name": "add employee6",
+			"id": "971dde2d-ed2b-4604-a58d-401fa7e2dc23",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"140"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "140",
+			"totalRequestTime": "140",
+			"iterationResults": {}
+		},
+		{
+			"name": "get list of employees collection size, 5 per page and 200 status",
+			"id": "5a79bd0a-5d40-44cc-8954-a470616cfe6c",
+			"url": "https://wk8jwt.appspot.com/employees",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"568"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "568",
+			"totalRequestTime": "568",
+			"iterationResults": {}
+		},
+		{
+			"name": "delete employee test 204",
+			"id": "abf4566f-3524-4f47-b2dd-89abcb3d817b",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"272"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "272",
+			"totalRequestTime": "272",
+			"iterationResults": {}
+		},
+		{
+			"name": "try deleted employee test 404",
+			"id": "9d495ae7-8490-4795-9068-b4267c2b961b",
+			"url": "https://wk8jwt.appspot.com/projects/5733935958982656",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"93"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "93",
+			"totalRequestTime": "93",
+			"iterationResults": {}
+		},
+		{
+			"name": "406 status: get employee not application/json",
+			"id": "265df1c2-dc67-42fe-a665-c2166ebbc037",
+			"url": "https://wk8jwt.appspot.com/employees/5677451703222272",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 406,
+				"name": "Not Acceptable",
+				"detail": {
+					"name": "Not Acceptable",
+					"detail": "The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"208"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "208",
+			"totalRequestTime": "208",
+			"iterationResults": {}
+		},
+		{
+			"name": "406 status: get project not application/json",
+			"id": "569c86ec-b970-45b6-b54d-e492488f4033",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 406,
+				"name": "Not Acceptable",
+				"detail": {
+					"name": "Not Acceptable",
+					"detail": "The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"380"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "380",
+			"totalRequestTime": "380",
+			"iterationResults": {}
+		},
+		{
+			"name": "405 status: delete projects",
+			"id": "358f14a6-3137-4fa6-b308-4240fad4988d",
+			"url": "https://wk8jwt.appspot.com/projects/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"60"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "60",
+			"totalRequestTime": "60",
+			"iterationResults": {}
+		},
+		{
+			"name": "405 status: put projects",
+			"id": "867141d3-6540-4ed1-a2f2-caf9a76c98cc",
+			"url": "https://wk8jwt.appspot.com/projects/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"44"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "44",
+			"totalRequestTime": "44",
+			"iterationResults": {}
+		},
+		{
+			"name": "405 status: delete employees",
+			"id": "b0ac0e49-a01e-481f-a781-7a2fdb1594c2",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"45"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "45",
+			"totalRequestTime": "45",
+			"iterationResults": {}
+		},
+		{
+			"name": "405 status: put employees",
+			"id": "ac474446-419d-4a52-9215-86bf9afc152f",
+			"url": "https://wk8jwt.appspot.com/employees",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"47"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "47",
+			"totalRequestTime": "47",
+			"iterationResults": {}
+		},
+		{
+			"name": "405 status: delete users",
+			"id": "27cb4823-22e5-423c-8695-d1154bd80b51",
+			"url": "https://wk8jwt.appspot.com/users",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"48"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "48",
+			"totalRequestTime": "48",
+			"iterationResults": {}
+		},
+		{
+			"name": "405 status: put users",
+			"id": "d11dfbd1-197f-49cc-8ca4-37800837dca8",
+			"url": "https://wk8jwt.appspot.com/users",
+			"totalTime": 0,
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"tests": {
+				"name": "",
+				"status": "pass"
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				"47"
+			],
+			"allTests": [
+				{
+					"": true
+				}
+			],
+			"time": "47",
+			"totalRequestTime": "47",
+			"iterationResults": {}
+		}
+	],
+	"totalPass": 60,
+	"totalFail": 1,
+	"totalTime": 20370,
+	"lifecycle": "done",
+	"requests": [
+		{
+			"name": "get users: get user collection size",
+			"id": "814dedc2-1ba1-4d33-8ded-1d2c4e917ef9",
+			"url": "https://wk8jwt.appspot.com/users/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "create user1",
+			"id": "b2db6e0a-e73c-433a-9970-021e5e7647ba",
+			"url": "https://wk8jwt.appspot.com/users",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get user1: match put details and match self-link test 200",
+			"id": "1fe14ef1-400c-456f-b665-0a6c44f899c6",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get user error:  check for 404 when user doesn't exist",
+			"id": "ef1f0941-3879-427e-bb53-43633785a89a",
+			"url": "https://wk8jwt.appspot.com/users/8989898989",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "create user2",
+			"id": "2c9b2d7f-e686-46e6-9b3e-0a78bde71f27",
+			"url": "https://wk8jwt.appspot.com/users",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "create user3",
+			"id": "731d8d37-7dbc-43f8-8b82-a1ed323f8430",
+			"url": "https://wk8jwt.appspot.com/users",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get users: test count - verify collection size, check for all 3 users details",
+			"id": "d1b83775-22a8-4bfe-b961-d57ce63c2d93",
+			"url": "https://wk8jwt.appspot.com/users/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 0,
+					"fail": 1
+				}
+			}
+		},
+		{
+			"name": "login: check for successful login",
+			"id": "ca915617-0cc5-45ad-934e-0d0894c1ed97",
+			"url": "https://wk8jwt.appspot.com/login",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "put user",
+			"id": "67a1b835-138d-4890-a455-f1ccc65bed61",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "put user no JWT token: test 401",
+			"id": "76fa35ef-25c9-4e50-a0f7-d53a0d0b5294",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "put user2 wrong JWT token: test 403",
+			"id": "86b2c3f8-9b5b-457f-b2b7-4adf5c40d1ec",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd47582ce4607ee6e2d",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get user: verify details from valid put",
+			"id": "8c8d04b7-2e92-4df8-b579-4a3519b7ad25",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete user no  JWT token: test 401",
+			"id": "3bf8755e-0941-413d-8de5-b805ba84d61b",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete user JWT wrong token: test 403",
+			"id": "7fa69ec5-5f8a-4d27-8e77-fb61d99f54f5",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd47582ce4607ee6e2d",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete user1: test 204",
+			"id": "9cbc2c45-54e1-4161-a715-8917dd987ed6",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get user1: verify 404 user was deleted",
+			"id": "dcb1247c-b709-4382-8635-739891354801",
+			"url": "https://wk8jwt.appspot.com/users/auth0|5c051dd273e2ed2e18e8abc6",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "login as user2",
+			"id": "4cdcaf2b-cf46-4b39-9750-a1f20bbad960",
+			"url": "https://wk8jwt.appspot.com/login",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get list of projects: store project count",
+			"id": "5f2e4fa5-293e-4732-bb10-9aa39eb1852b",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add project1 as user2: test 201",
+			"id": "9afa47c3-6fc3-4db6-b19f-73ed7185a4ac",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get project1: match details for added project, check self-link",
+			"id": "2eca48e4-6dd7-4498-9f04-c8f89469ab87",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add project2",
+			"id": "d651672f-aa7b-44aa-842c-89e43f1172b1",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add project3",
+			"id": "385703a8-b314-4391-92d9-282b73838b99",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add project4",
+			"id": "02f616c3-c362-49ce-b34b-1c67bfced0bb",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add project5",
+			"id": "8b43a7ed-081e-450e-8f5b-3db82f140b9b",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add project 6",
+			"id": "c7ca23a5-fd3f-48d6-971b-d0afe7541401",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add project 7",
+			"id": "bd95f430-40cd-440e-ae52-52aba08359d3",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "put project1",
+			"id": "befd2749-daea-4126-b572-b5c8cb915e9d",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get project1: match details for put project",
+			"id": "5718f739-6a70-441c-a087-c5d52b33fc69",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get list of projects page 1: verify 5 per page and 7 added to proj count",
+			"id": "ae42076f-a245-4458-940b-219b0786f7fb",
+			"url": "https://wk8jwt.appspot.com/projects",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "pagination: check next page of results",
+			"id": "0fcb937b-90a0-4858-bd3c-8354be95d5c3",
+			"url": "http://wk8jwt.appspot.com//projects/?cursor=CiYSIGoIcH53azhqd3RyFAsSB1Byb2plY3QYgICAoOTJjgkMGAAgAA==",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete project 1: correct JWT token test 204",
+			"id": "62813d17-bba8-43de-81ed-4c3c693ebe49",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get deleted project: test 404",
+			"id": "98487004-a67d-4ed1-9105-ba82f60d487c",
+			"url": "https://wk8jwt.appspot.com/projects/5075400367538176",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "put project2 with no JWT token, test 401",
+			"id": "208b273f-5411-4520-88f0-0d6a2a0890dc",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete project2 with no JWT token 401",
+			"id": "c4cbb328-bcc2-4a53-9209-f7645e12112a",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized",
+				"detail": {
+					"name": "Unauthorized",
+					"detail": "Similar to 403 Forbidden, but specifically for use when authentication is possible but has failed or not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "login as user3",
+			"id": "ecf45c64-7e77-46c6-b999-ee5bb5c815ea",
+			"url": "https://wk8jwt.appspot.com/login",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {}
+		},
+		{
+			"name": "put project2 with wrong JWT token, test 403",
+			"id": "35a3c82e-cadb-4d83-90e7-8bdb8235088c",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete project2 with wrong JWT token test 403",
+			"id": "bf1f05ee-7bbe-487d-8610-8327c8afe9a1",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 403,
+				"name": "Forbidden",
+				"detail": {
+					"name": "Forbidden",
+					"detail": "The request was a legal request, but the server is refusing to respond to it. Unlike a 401 Unauthorized response, authenticating will make no difference."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add employee: test 201",
+			"id": "4a870b3a-d895-4b8e-988c-d02bc4a5672b",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get employee test 200 and check added details and self link",
+			"id": "418ae25f-c591-4706-b931-3d1fc1879c71",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add employee to project",
+			"id": "a92c683d-eb9d-40b1-ba35-238455b18677",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get employee and check project relationship",
+			"id": "885d5043-5ee6-44dc-85d2-e26788204cf0",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete employee from project",
+			"id": "3913fd62-05e9-44f8-a947-a7d97d2139b9",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get employee and check for no project relationship",
+			"id": "6e9489b3-993e-4ac9-afca-05739f1c6f28",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "put employee",
+			"id": "77fbb616-8dd8-4591-96d9-4361590fba10",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get employee and check put details",
+			"id": "57051d0c-15d4-41af-b0fc-c56f8a210730",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get list of employees get collection size",
+			"id": "63786a62-43e0-4813-812b-40bc0712b23d",
+			"url": "https://wk8jwt.appspot.com/employees",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add employee2",
+			"id": "e0710107-5ec9-4dff-9833-117adfdc447e",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add employee3",
+			"id": "072a11af-e72e-4acd-8d9d-9c3efda1905d",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add employee4",
+			"id": "c637768e-28c4-4bd9-9907-037017627a53",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add employee5",
+			"id": "3af5625b-d8ac-42a9-9392-8e05719e08e1",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "add employee6",
+			"id": "971dde2d-ed2b-4604-a58d-401fa7e2dc23",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 201,
+				"name": "Created",
+				"detail": {
+					"name": "Created",
+					"detail": "The request has been fulfilled and resulted in a new resource being created."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "get list of employees collection size, 5 per page and 200 status",
+			"id": "5a79bd0a-5d40-44cc-8954-a470616cfe6c",
+			"url": "https://wk8jwt.appspot.com/employees",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 200,
+				"name": "OK",
+				"detail": {
+					"name": "OK",
+					"detail": "Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request the response will contain an entity describing or containing the result of the action."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "delete employee test 204",
+			"id": "abf4566f-3524-4f47-b2dd-89abcb3d817b",
+			"url": "https://wk8jwt.appspot.com/employees/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 204,
+				"name": "No Content",
+				"detail": {
+					"name": "No Content",
+					"detail": "The server successfully processed the request, but is not returning any content."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "try deleted employee test 404",
+			"id": "9d495ae7-8490-4795-9068-b4267c2b961b",
+			"url": "https://wk8jwt.appspot.com/projects/5733935958982656",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found",
+				"detail": {
+					"name": "Not Found",
+					"detail": "The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "406 status: get employee not application/json",
+			"id": "265df1c2-dc67-42fe-a665-c2166ebbc037",
+			"url": "https://wk8jwt.appspot.com/employees/5677451703222272",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 406,
+				"name": "Not Acceptable",
+				"detail": {
+					"name": "Not Acceptable",
+					"detail": "The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "406 status: get project not application/json",
+			"id": "569c86ec-b970-45b6-b54d-e492488f4033",
+			"url": "https://wk8jwt.appspot.com/projects/5155898355875840",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 406,
+				"name": "Not Acceptable",
+				"detail": {
+					"name": "Not Acceptable",
+					"detail": "The requested resource is only capable of generating content not acceptable according to the Accept headers sent in the request."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "405 status: delete projects",
+			"id": "358f14a6-3137-4fa6-b308-4240fad4988d",
+			"url": "https://wk8jwt.appspot.com/projects/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "405 status: put projects",
+			"id": "867141d3-6540-4ed1-a2f2-caf9a76c98cc",
+			"url": "https://wk8jwt.appspot.com/projects/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "405 status: delete employees",
+			"id": "b0ac0e49-a01e-481f-a781-7a2fdb1594c2",
+			"url": "https://wk8jwt.appspot.com/employees/",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "405 status: put employees",
+			"id": "ac474446-419d-4a52-9215-86bf9afc152f",
+			"url": "https://wk8jwt.appspot.com/employees",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "405 status: delete users",
+			"id": "27cb4823-22e5-423c-8695-d1154bd80b51",
+			"url": "https://wk8jwt.appspot.com/users",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		},
+		{
+			"name": "405 status: put users",
+			"id": "d11dfbd1-197f-49cc-8ca4-37800837dca8",
+			"url": "https://wk8jwt.appspot.com/users",
+			"time": "2018-12-03T12:13:06.463Z",
+			"responseCode": {
+				"code": 405,
+				"name": "Method Not Allowed",
+				"detail": {
+					"name": "Method Not Allowed",
+					"detail": "A request was made of a resource using a request method not supported by that resource; for example, using GET on a form which requires data to be presented via POST, or using PUT on a read-only resource."
+				}
+			},
+			"testPassFailCounts": {
+				"": {
+					"pass": 1,
+					"fail": 0
+				}
+			}
+		}
+	],
+	"synced": false
+}
